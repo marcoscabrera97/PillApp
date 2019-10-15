@@ -1,0 +1,38 @@
+.bg-blue {
+    background-color: #0788FF;
+    a {
+        color: #FFF;
+    }
+}
+
+.navbar-toggler {
+    border-style: none !important;   
+}
+
+.img-navbar {
+    width: 27px;
+    height: 26px;
+    background-image: url("../../../assets/images/lines_navbar.png") !important; 
+}
+
+.navbar {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    li {
+        a{
+            color: #000;
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+    }
+}
+
+.navbar-brand {
+    margin-left: 15px;
+    padding-bottom: 9px;
+}
+
+.navbar-collapse {
+    background-color: #fff;
+}
