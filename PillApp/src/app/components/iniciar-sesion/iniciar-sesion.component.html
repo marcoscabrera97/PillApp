@@ -2,20 +2,22 @@
     PillApp
 </div>
 <div class="sign-in"> 
-    <mat-form-field>
-        <input matInput placeholder="Nombre de usuario">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Contraseña">
-    </mat-form-field>
-    <br>
-    <a class="link-sign-in" href="#">¿Olvidó la contraseña?</a>
-</div>
+    <form [formGroup]="signInForm">
+        <mat-form-field>
+            <input matInput placeholder="Nombre de usuario" formControlName="userName">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Contraseña" formControlName="password" type="password">
+        </mat-form-field>
+        <br>
+        <a class="link-sign-in" href="#">{{ 'sign.in.password_remember' | translate}}</a>
+    </form>
+</div> 
 <div class="center-button">
-    <button mat-raised-button class="sign-in-button">Iniciar sesión</button>
+    <button mat-raised-button class="sign-in-button" (click)="register()">{{ 'sign.in.button' | translate}}</button>
 </div>
 <div class="center-sign-up">
-    <span class="not-count-text">¿No tienes cuenta?</span>
-    <a class="link-sign-in" href="#">Crear cuenta</a>
+    <span class="not-count-text">{{ 'sign.up.text' | translate}}</span>
+    <a class="link-sign-in" routerLink="/crear_cuenta">{{ 'sign.up.link' | translate}}</a>
 </div>
 

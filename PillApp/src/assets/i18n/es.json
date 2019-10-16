@@ -1,0 +1,18 @@
+{
+    "sign": {
+        "in":{
+            "password_remember": "¿Olvidó la contraseña?",
+            "button": "Iniciar sesión"
+        },
+        "up":{
+            "text": "¿No tienes cuenta?",
+            "link": "Crear cuenta",
+            "title": "Crear nueva cuenta",
+            "name": "Nombre",
+            "surname": "Apellidos",
+            "username": "Nombre de usuario",
+            "password": "Contraseña",
+            "email": "Correo electrónico"
+        }
+    }
+}

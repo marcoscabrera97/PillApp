@@ -18,7 +18,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.component';
 
 
 
@@ -31,7 +35,8 @@ import { MatButtonModule } from '@angular/material/button';
     CitasComponent,
     FarmaciasComponent,
     InformeComponent,
-    IniciarSesionComponent
+    IniciarSesionComponent,
+    CrearCuentaComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,18 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [HttpClient]
+      }
+    }),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
