@@ -4,13 +4,13 @@
     </div>
     <form [formGroup]="signUpForm" class="sign-up-form">
         <mat-form-field>
-            <input matInput placeholder="{{ 'sign.up.name' | translate }}" formControlName="name">
+            <input matInput placeholder="{{ 'sign.up.name' | translate }}" formControlName="name" (keypress)="checkName($event)">
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="{{ 'sign.up.surname' | translate }}" formControlName="surname">
+            <input matInput placeholder="{{ 'sign.up.surname' | translate }}" formControlName="surname" (keypress)="checkName($event)">
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="{{ 'sign.up.username' | translate }}" formControlName="username">
+            <input matInput placeholder="{{ 'sign.up.username' | translate }}" formControlName="username" (keypress)="checkUsername($event)">
         </mat-form-field>
         <mat-form-field>
             <input matInput placeholder="{{ 'sign.up.password' | translate }}" formControlName="password1" type="password">

@@ -21,8 +21,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CrearCuentaComponent, DialogOverviewExampleDialog, DialogErrorRegistration } from './components/crear-cuenta/crear-cuenta.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+
 
 
 
@@ -36,7 +39,10 @@ import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.com
     FarmaciasComponent,
     InformeComponent,
     IniciarSesionComponent,
-    CrearCuentaComponent
+    CrearCuentaComponent,
+    AppComponent,
+    DialogOverviewExampleDialog,
+    DialogErrorRegistration
   ],
   imports: [
     BrowserModule,
@@ -56,9 +62,16 @@ import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.com
         deps: [HttpClient]
       }
     }),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    FormsModule,
+    CommonModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogOverviewExampleDialog,
+    DialogErrorRegistration
+  ]
 })
 export class AppModule { }
