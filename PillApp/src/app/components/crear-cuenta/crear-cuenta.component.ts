@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from './usuario.module';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +17,7 @@ export class CrearCuentaComponent implements OnInit {
   public userModule: Usuario;
   public registerOk: boolean;
   
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) { 
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private service: ServiceFirebaseService, private router: Router) { 
     this.buildForm();
     this.userModule = new Usuario();
   }
@@ -69,13 +71,23 @@ export class CrearCuentaComponent implements OnInit {
     });
   }
 
+  throwOkDialog() {
+    const dialogRef = this.dialog.open(DialogOkRegistration, {
+      width: '250px'
+    });
+    this.router.navigate(['iniciar_sesion']);
+  }
+
+
   register() {
+    this.registerOk = true;
     const userRegister = this.signUpForm.value;
     this.userModule.name = userRegister.name;
     this.userModule.surname = userRegister.surname;
     this.userModule.username = userRegister.username;
-    this.userModule.password = userRegister.password;
+    this.userModule.password = userRegister.password1;
     this.userModule.email = userRegister.email;
+    this.userModule.userType = 'patient';
 
     var password1 = this.signUpForm.controls.password1.value;
     var password2 = this.signUpForm.controls.password2.value;
@@ -83,9 +95,15 @@ export class CrearCuentaComponent implements OnInit {
 
     if(password1 != password2) {
       this.throwErrorMessagePasswords();
+      this.registerOk = false;
     }
+    
     if(!this.registerOk) {
       this.throwFailRegisterDialog();
+    }else{
+      this.service.addUser(this.userModule).subscribe(resp => {
+        this.throwOkDialog();
+      });
     }
   }
 }
@@ -109,6 +127,20 @@ export class DialogOverviewExampleDialog {
   templateUrl: 'dialog-fail-registration.html',
 })
 export class DialogErrorRegistration {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialog-ok-registration',
+  templateUrl: 'dialog-ok-registration.html',
+})
+export class DialogOkRegistration {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
