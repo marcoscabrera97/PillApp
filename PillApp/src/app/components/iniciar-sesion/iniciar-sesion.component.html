@@ -2,7 +2,7 @@
     PillApp
 </div>
 <div class="sign-in"> 
-    <form [formGroup]="signInForm">
+    <form [formGroup]="signInForm" class="sign-in-form">
         <mat-form-field>
             <input matInput placeholder="Nombre de usuario" formControlName="userName">
         </mat-form-field>
@@ -14,10 +14,12 @@
     </form>
 </div> 
 <div class="center-button">
-    <button mat-raised-button class="sign-in-button" (click)="register()">{{ 'sign.in.button' | translate}}</button>
+    <button mat-raised-button class="sign-in-button" (click)="signIn()">{{ 'sign.in.button' | translate}}</button>
 </div>
 <div class="center-sign-up">
     <span class="not-count-text">{{ 'sign.up.text' | translate}}</span>
     <a class="link-sign-in" routerLink="/crear_cuenta">{{ 'sign.up.link' | translate}}</a>
 </div>
+
+{{users}}
 

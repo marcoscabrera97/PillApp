@@ -15,7 +15,9 @@
             "email": "Correo electrónico",
             "password_error": "Las contraseñas no coinciden",
             "register_error": "Algún parámetro contiene carácteres no permitidos",
-            "register_error_body": "Nombre y apellido: Solamente puede contener letras. Nombre de usuario: Solamente puede contener letras y números"
+            "register_error_body": "Nombre y apellido: Solamente puede contener letras. Nombre de usuario: Solamente puede contener letras y números",
+            "ok": "Registro completado correctamente",
+            "ok_body": "El registro se ha completado correctamente, puede iniciar sesión."
         }
     }
 }
