@@ -5,9 +5,11 @@ import { CitasComponent } from './components/citas/citas.component';
 import { FarmaciasComponent } from './components/farmacias/farmacias.component';
 import { InformeComponent } from './components/informe/informe.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
+import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.component';
 
 const routes: Routes = [
     { path: 'iniciar_sesion', component: IniciarSesionComponent },
+    { path: 'crear_cuenta', component: CrearCuentaComponent },
     { path: 'home', component: HomeComponent},
     { path: 'listaMedicamentos', component: ListaMedicamentosComponent},
     { path: 'citas', component: CitasComponent},

@@ -1,3 +1,4 @@
+@import "../../../variables.scss";
 .title {
     font-family: 'Housemate';
     color: #0788FF;
@@ -17,6 +18,12 @@
     font-family: 'Arial Unicode MS';
     font-size: 16px;
 }
+.sign-in-form {
+    @media screen and (min-width: $mobileSize) {
+        width: 252px;
+        margin: 0 auto;
+    }
+}
 
 .sign-in-button {
     background-color: #0788FF;
@@ -26,11 +33,11 @@
     padding-left: 46px;
     padding-right: 46px;
     width: 244px;
-    padding: 0 58px;
     margin-top: 30px;
 }
 .center-button {
-    padding: 0 57px;
+    width: 244px;
+    margin: 0 auto;
 }
 .not-count-text {
     font-family: 'Arial Unicode MS';
@@ -40,8 +47,18 @@
     margin-top: 33px;
     span {
         padding: 0 109px;
+        @media screen and (min-width: $mobileSize) {
+            padding: 0px;
+        }
     }
     a{
         padding: 0 132px;
+        @media screen and (min-width: $mobileSize) {
+            padding: 0 21px;
+        }
+    }
+    @media screen and (min-width: $mobileSize) {
+        width: 141px;
+        margin: 0 auto;
     }
 }
