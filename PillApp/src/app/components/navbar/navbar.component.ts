@@ -1,5 +1,6 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,16 +10,14 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   public href: string = "";
-  constructor(private router: Router) { }
+  constructor(private router: Router, private service: ServiceFirebaseService) { }
 
   ngOnInit() {
-    this.href = this.router.url;
-    console.log(window.location.href);
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    this.href = this.router.url;
-    console.log(window.location.href);
+  logout() {
+    this.service.deleteUser();
+    this.router.navigateByUrl('/login');
   }
 
 }

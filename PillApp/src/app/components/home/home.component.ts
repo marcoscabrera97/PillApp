@@ -9,7 +9,8 @@ export class HomeComponent implements OnInit {
 
   constructor() {
     var navbar = document.getElementById('navbar');
-    navbar.style.display = "block";
+    navbar.classList.remove('display-none');
+    navbar.classList.add('display-block');
   }
 
   ngOnInit() {

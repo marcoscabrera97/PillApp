@@ -6,15 +6,23 @@ import { FarmaciasComponent } from './components/farmacias/farmacias.component';
 import { InformeComponent } from './components/informe/informe.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 import { CrearCuentaComponent } from './components/crear-cuenta/crear-cuenta.component';
+import { GuardAuthPatientGuard } from './guards/guard-auth-patient.guard';
+import { GuardAuthDoctorGuard } from './guards/guard-auth-doctor.guard';
+import { GuardAuthGuard } from './guards/guard-auth.guard';
+import { HomeDoctorComponent } from './components/home-doctor/home-doctor.component';
+import { LogoutComponent } from './components/logout/logout.component';
+
 
 const routes: Routes = [
-    { path: 'iniciar_sesion', component: IniciarSesionComponent },
-    { path: 'crear_cuenta', component: CrearCuentaComponent },
-    { path: 'home', component: HomeComponent},
-    { path: 'listaMedicamentos', component: ListaMedicamentosComponent},
-    { path: 'citas', component: CitasComponent},
-    { path: 'farmacias', component: FarmaciasComponent},
-    { path: 'informe', component: InformeComponent},
+    { path: 'login', component: IniciarSesionComponent },
+    { path: 'register', component: CrearCuentaComponent },
+    { path: 'home', component: HomeComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
+    { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthGuard] },
+    { path: 'citas', component: CitasComponent, canActivate: [GuardAuthGuard] },
+    { path: 'farmacias', component: FarmaciasComponent, canActivate: [GuardAuthGuard] },
+    { path: 'informe', component: InformeComponent, canActivate: [GuardAuthGuard] },
+    { path: 'logout', component: LogoutComponent },
     { path: '**', component: IniciarSesionComponent }
 ];
 

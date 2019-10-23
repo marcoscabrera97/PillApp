@@ -30,6 +30,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ServiceFirebaseService } from './services/service-firebase.service';
 import { environment } from 'src/environments/environment.prod';
+import { HomeDoctorComponent } from './components/home-doctor/home-doctor.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 
@@ -50,7 +52,9 @@ import { environment } from 'src/environments/environment.prod';
     DialogOverviewExampleDialog,
     DialogErrorRegistration,
     DialogOkRegistration,
-    DialogFailSignIn
+    DialogFailSignIn,
+    HomeDoctorComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,9 @@ import { environment } from 'src/environments/environment.prod';
     AngularFirestoreModule,
     AngularFireStorageModule
   ],
-  providers: [ServiceFirebaseService],
+  providers: [
+    ServiceFirebaseService,
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogOverviewExampleDialog,
