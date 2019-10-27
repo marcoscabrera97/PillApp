@@ -1,0 +1,62 @@
+.dia-mes {
+    padding: 12px 33px;
+}
+
+.title-home {
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 23px;
+}
+
+.pill-banner {
+    margin-bottom: 0px;
+    button {
+        width: 100%;
+        font-family: 'Arial';
+        font-size: 29px;
+        .arrow-img {
+            float: left;
+            text-align: left;
+        }
+        .text-pill {
+            margin: 0 auto;
+            width: 90px;
+        }
+    }
+}
+
+.card {
+    display: block;
+}
+
+.card-body {
+    padding: 12px 25px;
+}
+
+.img-reminder {
+    width: 27px;
+    float: left;
+    margin-right: 25px;
+}
+.medicine {
+    font-weight: bold;
+}
+
+.separation-banner {
+    height: 20px;
+}
+
+.mat-fab{
+    background-color: #0788FF;
+}
+
+.add-btn{
+    position: fixed;
+    right: 21px;
+    bottom: 16px;
+}
+
+.add-img{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

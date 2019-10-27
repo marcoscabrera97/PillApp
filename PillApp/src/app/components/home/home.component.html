@@ -1,1 +1,38 @@
-<p>home works!</p>
+<div class="table-responsive-xl">
+    <table class="table">
+      <thead>
+          <th *ngFor="let dia of [0,1,2,3,4,5,6]; let i = index;">{{diasSemana[i]}}</th>
+      </thead>
+      <tbody>
+          <tr>
+              <td *ngFor="let dia of [0,1,2,3,4,5,6]; let i = index;" class="dia-mes">{{i+1}}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container">
+      <h4 class="title-home">Medicamentos a tomar</h4>
+      <div class="accordion" *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]; let i=index;">
+            <p class="pill-banner">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
+                    <div class="arrow-img">
+                            <img src="../../../assets/images/row-bottom.png">
+                    </div>
+                    <div class="text-pill">8:00h</div>
+                </button>
+            </p>
+            <div class="collapse" id="collapse">
+                <div class="card card-body">
+                        <img src="../../../assets/images/Pastillas_iconos/capsula_rojo_blanco.png" class="img-reminder">
+                        <div class="medicine">Ibuprofeno</div>
+                        <div>Tomar 1</div>
+                </div>
+            </div>
+            <div class="separation-banner">&nbsp;</div>
+      </div>
+  </div>
+
+  <div>
+    <button mat-fab class="add-btn"><img src="../../../assets/images/add.png" class="add-img"></button>
+  </div>

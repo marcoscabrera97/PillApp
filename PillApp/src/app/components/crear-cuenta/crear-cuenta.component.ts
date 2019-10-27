@@ -80,7 +80,7 @@ export class CrearCuentaComponent implements OnInit {
 
 
   register() {
-    this.registerOk = true;
+    this.registerOk = false;
     const userRegister = this.signUpForm.value;
     this.userModule.name = userRegister.name;
     this.userModule.surname = userRegister.surname;
@@ -91,7 +91,6 @@ export class CrearCuentaComponent implements OnInit {
 
     var password1 = this.signUpForm.controls.password1.value;
     var password2 = this.signUpForm.controls.password2.value;
-    
 
     if(password1 != password2) {
       this.throwErrorMessagePasswords();
