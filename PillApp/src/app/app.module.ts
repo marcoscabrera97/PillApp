@@ -15,7 +15,7 @@ import { InformeComponent } from './components/informe/informe.component';
 import { IniciarSesionComponent, DialogFailSignIn } from './components/iniciar-sesion/iniciar-sesion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatSelectModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -32,6 +32,7 @@ import { ServiceFirebaseService } from './services/service-firebase.service';
 import { environment } from 'src/environments/environment.prod';
 import { HomeDoctorComponent } from './components/home-doctor/home-doctor.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { AddMedicinaComponent } from './components/add-medicina/add-medicina.component';
 
 
 
@@ -53,7 +54,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     DialogOkRegistration,
     DialogFailSignIn,
     HomeDoctorComponent,
-    LogoutComponent
+    LogoutComponent,
+    AddMedicinaComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatButtonModule,
     HttpClientModule,
     TranslateModule.forRoot({
