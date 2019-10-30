@@ -13,6 +13,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 
+.title-page {
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 23px;
+}
+
 @font-face {
     font-family: 'Housemate';
     src: url(assets/fonts/Housemate.ttf) format("opentype");

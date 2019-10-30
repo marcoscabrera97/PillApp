@@ -12,17 +12,17 @@
   </div>
 
   <div class="container">
-      <h4 class="title-home">Medicamentos a tomar</h4>
-      <div class="accordion" *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]; let i=index;">
+      <h4 class="title-page">Medicamentos a tomar</h4>
+      <div class="accordion" *ngFor="let i of [0,1,2]; let i=index;">
             <p class="pill-banner">
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-primary" data-toggle="collapse" (click)="openCollapse(i)" role="button" aria-expanded="false" aria-controls="collapseExample">
                     <div class="arrow-img">
                             <img src="../../../assets/images/row-bottom.png">
                     </div>
                     <div class="text-pill">8:00h</div>
                 </button>
             </p>
-            <div class="collapse" id="collapse">
+            <div [ngClass]="{collapse: !collapse[i]}">
                 <div class="card card-body">
                         <img src="../../../assets/images/Pastillas_iconos/capsula_rojo_blanco.png" class="img-reminder">
                         <div class="medicine">Ibuprofeno</div>
@@ -34,5 +34,5 @@
   </div>
 
   <div>
-    <button mat-fab class="add-btn"><img src="../../../assets/images/add.png" class="add-img"></button>
+    <a mat-fab class="add-btn" [routerLink]="['/addMedicine']"><img src="../../../assets/images/add.png" class="add-img"></a>
   </div>
