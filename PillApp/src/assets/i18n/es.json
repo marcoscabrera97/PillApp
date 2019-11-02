@@ -19,5 +19,38 @@
             "ok": "Registro completado correctamente",
             "ok_body": "El registro se ha completado correctamente, puede iniciar sesión."
         }
-    }
+    },
+    "add-medicine": {
+        "title": "Añadir medicamento",
+        "name": "Nombre del medicamento",
+        "quantity": "Cantidad",
+        "quantity_dose": "Cantidad de la dosis",
+        "recordatory": "Recordatorios",
+        "one_per_day": "Una vez por día",
+        "two_per_day": "Dos veces por día",
+        "three_per_day": "Tres veces por día",
+        "four_per_day": "Cuatro veces por día",
+        "calendar" : "Calendario",
+        "start_date": "Selecciona la fecha de inicio",
+        "duration": "Duración",
+        "indefinity": "Indefinido",
+        "numberDays": "Número de días",
+        "select-days": "Seleccione el número de días",
+        "daysPerWeek": "Días de la semana",
+        "everyDay": "Cada día",
+        "specificDays": "Días específicos",
+        "save": "Guardar",
+        "number_days": "Seleccione el número de días",
+        "specific_days": "Seleccione los días de la semana",
+        "pills": "pastillas",
+        "take": "Cantidad a tomar",
+        "numberRecorders": "Selecciona el número de recordatorios"
+    },
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo"
 }

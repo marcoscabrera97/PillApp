@@ -7,6 +7,11 @@
 
 .navbar-toggler {
     border-style: none !important;   
+    height: 49px;
+}
+
+.navbar-toggler:focus{
+    outline: none;
 }
 
 .img-navbar {
@@ -19,6 +24,8 @@
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 0px;
+    padding-top: 2px;
+    height: 50px;
     li {
         a{
             color: #000;
@@ -29,11 +36,13 @@
 }
 
 .navbar-brand {
-    margin-left: 15px;
-    padding-bottom: 9px;
+    position: absolute;
+    left: 60px;
+    top: 6px;
     color: #fff !important;
 }
 
 .navbar-collapse {
     background-color: #fff;
+    z-index: 1;
 }

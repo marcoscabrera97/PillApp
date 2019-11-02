@@ -14,15 +14,15 @@ import { FarmaciasComponent } from './components/farmacias/farmacias.component';
 import { InformeComponent } from './components/informe/informe.component';
 import { IniciarSesionComponent, DialogFailSignIn } from './components/iniciar-sesion/iniciar-sesion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatFormFieldControl } from '@angular/material/form-field';
+import { MatInputModule, MatSelectModule, MatNativeDateModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CrearCuentaComponent, DialogOverviewExampleDialog, DialogErrorRegistration, DialogOkRegistration } from './components/crear-cuenta/crear-cuenta.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -33,6 +33,12 @@ import { environment } from 'src/environments/environment.prod';
 import { HomeDoctorComponent } from './components/home-doctor/home-doctor.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AddMedicinaComponent } from './components/add-medicina/add-medicina.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 
 
 
@@ -83,10 +89,17 @@ import { AddMedicinaComponent } from './components/add-medicina/add-medicina.com
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    AmazingTimePickerModule,
+    MatSidenavModule
   ],
   providers: [
     ServiceFirebaseService,
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [

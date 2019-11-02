@@ -1,0 +1,80 @@
+<div class="container">
+    <h4 class="title-page title-margin">{{ 'add-medicine.title' | translate}}</h4>
+    <form [formGroup]="addMedicineForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>{{ 'add-medicine.name' | translate}}</mat-label>
+            <input matInput formControlName="nameMedicine">
+        </mat-form-field>
+        <mat-form-field class="quantityMedicament">
+            <mat-label>{{ 'add-medicine.quantity' | translate}}</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <div class="subTitle">Cantidad de la dosis</div>
+        <mat-form-field class="quantityDose">
+            <input matInput formControlName="quantityDose">
+          </mat-form-field>
+        <mat-form-field class="selectUnity">
+            <mat-select (selectionChange)="selectDose()" formControlName="unityDose">
+              <mat-option value="ml">ml</mat-option>
+              <mat-option value="pills">{{ 'add-medicine.pills' | translate }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+          <h4 class="title-page title-margin">{{ 'add-medicine.recordatory' | translate }}</h4>
+          <mat-form-field>
+                <mat-label>{{ 'add-medicine.numberRecorders' | translate}}</mat-label>
+                <mat-select #selectDayOption (selectionChange)="selectDayDoses(selectDayOption.value)">
+                  <mat-option  value="1dose">{{ 'add-medicine.one_per_day' | translate }}</mat-option>
+                  <mat-option value="2dose">{{ 'add-medicine.two_per_day' | translate }}</mat-option>
+                  <mat-option value="3dose">{{ 'add-medicine.three_per_day' | translate }}</mat-option>
+                  <mat-option value="4dose">{{ 'add-medicine.four_per_day' | translate }}</mat-option>
+                </mat-select>
+          </mat-form-field>
+          <div *ngFor="let take of selectTime">
+                <input class="timeInput" value="{{time}}" (click)="open()" readonly="readonly"/>
+                <mat-form-field class="quantityInput">
+                    <mat-label>{{ 'add-medicine.take' | translate }}</mat-label>
+                    <input matInput type="number">
+                </mat-form-field>
+          </div>
+          <h4 class="title-page title-margin">{{ 'add-medicine.calendar' | translate }}</h4>
+          <mat-form-field>
+                <mat-label>{{ 'add-medicine.start_date' | translate}}</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <section class="">
+            <label class="title-duration">{{ 'add-medicine.duration' | translate }}</label>
+                <mat-radio-group>
+                    <mat-radio-button class="radio-button" value="after" (change)="showNumberDaysInput(false)">{{ 'add-medicine.indefinity' | translate }}</mat-radio-button>
+                    <mat-radio-button class="radio-button" value="before" (change)="showNumberDaysInput(true)">{{ 'add-medicine.numberDays' | translate }}</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <div *ngIf="numberDays">
+                <mat-form-field class="example-margin">
+                    <mat-label>{{ 'add-medicine.number_days' | translate}}</mat-label>
+                    <input matInput type="number">
+                </mat-form-field>
+            </div>
+            <section class="">
+                <label class="title-duration">{{ 'add-medicine.daysPerWeek' | translate }}</label>
+                <mat-radio-group>
+                    <mat-radio-button class="radio-button" value="after" (change)="showSpecificDays(false)">{{ 'add-medicine.everyDay' | translate }}</mat-radio-button>
+                    <mat-radio-button class="radio-button" value="before" (change)="showSpecificDays(true)">{{ 'add-medicine.specificDays' | translate }}</mat-radio-button>
+                </mat-radio-group>            
+            </section>
+            
+                <section class="example-section daysWeek" *ngIf="specificDays">
+                    <mat-checkbox>{{ 'monday' | translate }}</mat-checkbox>
+                    <mat-checkbox>{{ 'tuesday' | translate }}</mat-checkbox>
+                    <mat-checkbox>{{ 'wednesday' | translate }}</mat-checkbox>
+                    <mat-checkbox>{{ 'thursday' | translate }}</mat-checkbox>
+                    <mat-checkbox>{{ 'friday' | translate }}</mat-checkbox>
+                    <mat-checkbox>{{ 'saturday' | translate }}</mat-checkbox>
+                    <mat-checkbox>{{ 'sunday' | translate }}</mat-checkbox>                
+                </section>
+    </form>
+    <div class="center-button">
+        <button mat-raised-button class="content-button" (click)="saveMedicine()">{{ 'add-medicine.save' | translate}}</button>
+    </div>
+</div>

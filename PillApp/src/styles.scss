@@ -18,6 +18,48 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-size: 23px;
 }
 
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #0788FF;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #0788FF;
+}
+
+.center-button {
+    width: 244px;
+    margin: 0 auto;
+}
+
+.content-button {
+    background-color: #0788FF;
+    color: #fff;
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 23px;
+    padding-left: 46px;
+    padding-right: 46px;
+    width: 244px;
+    margin-top: 30px;
+}
+
+.mat-checkbox-checked {
+    .mat-checkbox-background {
+        background-color: #0788FF !important;
+    }
+}
+
+.quantityDose{
+    .mat-form-field-wrapper{
+        width: 40px;
+    }
+}
+
+.selectUnity{
+    .mat-form-field-wrapper{
+        width: 70%;
+    }
+}
+
 @font-face {
     font-family: 'Housemate';
     src: url(assets/fonts/Housemate.ttf) format("opentype");
@@ -26,4 +68,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @font-face {
     font-family: 'Arial Rounded MT Bold';
     src: url(assets/fonts/arial_rounded_mt_bold.ttf) format("opentype");
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(assets/fonts/Roboto-Regular.ttf) format("opentype");
 }
