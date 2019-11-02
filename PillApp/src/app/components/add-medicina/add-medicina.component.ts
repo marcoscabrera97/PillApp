@@ -9,6 +9,7 @@ import * as _moment from 'moment';
 import {default as _rollupMoment} from 'moment';
 import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
 import { Medicina } from './medicina.module';
+import { Recordatorio } from './recordatorio.module';
 
 const moment = _rollupMoment || _moment;
 
@@ -39,16 +40,20 @@ export class AddMedicinaComponent implements OnInit {
 
   public numberDays: boolean;
   public specificDays: boolean;
-  public time;
+  public time: string [];
   public selectTime;
   public medicine: Medicina;
   public addMedicineForm: FormGroup;
+  public recordatory: Recordatorio;
 
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder) {
     this.numberDays = false;
     this.specificDays = false;
-    this.time = "8:00";
+    this.time = ["08:00", "08:00", "08:00", "08:00"];
     this.medicine = new Medicina();
+    this.recordatory = new Recordatorio();
+    this.recordatory.hour = ["08:00", "08:00", "08:00", "08:00"];
+
     this.buildForm();
   }
 
@@ -63,7 +68,12 @@ export class AddMedicinaComponent implements OnInit {
     this.addMedicineForm = this.formBuilder.group({
       nameMedicine: ['', Validators.required],
       quantityDose: ['', Validators.required],
-      unityDose: ['', Validators.required]
+      unityDose: ['', Validators.required],
+      selectTimeHour0: ['', Validators.required],
+      selectTimeHour1: ['', Validators.required],
+      selectTimeHour2: ['', Validators.required],
+      selectTimeHour3: ['', Validators.required]
+
     });
   }
 
@@ -97,10 +107,13 @@ export class AddMedicinaComponent implements OnInit {
     }
   }
 
-  open() {
+  open(id) {
     const amazingTimePicker = this.atp.open();
     amazingTimePicker.afterClose().subscribe(time => {
-      this.time = time;
+      console.log('dentro after close');
+      this.time[id] = time;
+      this.recordatory.hour.splice(id, 1, time);
+      this.cambioHora();
     });
   }
 
@@ -109,10 +122,36 @@ export class AddMedicinaComponent implements OnInit {
     this.medicine.name = addMedicineForm.nameMedicine;
     this.medicine.quantityDose = addMedicineForm.quantityDose;
     this.medicine.unityDose = addMedicineForm.unityDose;
+    
     console.log('dentro saveMedicine');
-    console.log(this.medicine.quantityDose);
-    console.log(this.medicine.unityDose);
+    console.log(this.recordatory.hour);
   }
 
+  cambioHora(){
+    /*if(this.selectTime.length == 1){
+      this.addMedicineForm = this.formBuilder.group({
+        selectTimeHour0: ['', Validators.required]
+      });
+    }else if(this.selectTime.length == 2){
+      this.addMedicineForm = this.formBuilder.group({
+        selectTimeHour0: ['', Validators.required],
+        selectTimeHour1: ['', Validators.required]
+      });
+    }else if(this.selectTime.length == 3){
+      this.addMedicineForm = this.formBuilder.group({
+        selectTimeHour0: ['', Validators.required],
+        selectTimeHour1: ['', Validators.required],
+        selectTimeHour2: ['', Validators.required]
+      });
+    }else if(this.selectTime.length == 4){
+      this.addMedicineForm = this.formBuilder.group({
+        selectTimeHour0: ['', Validators.required],
+        selectTimeHour1: ['', Validators.required],
+        selectTimeHour2: ['', Validators.required],
+        selectTimeHour3: ['', Validators.required]
+      });
+    }*/
+    
+  }
   
 }

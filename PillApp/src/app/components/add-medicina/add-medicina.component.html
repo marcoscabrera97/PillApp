@@ -30,7 +30,7 @@
                 </mat-select>
           </mat-form-field>
           <div *ngFor="let take of selectTime">
-                <input class="timeInput" value="{{time}}" (click)="open()" readonly="readonly"/>
+                <input class="timeInput" value="{{time[take]}}" (click)="open(take)" readonly="readonly"/>
                 <mat-form-field class="quantityInput">
                     <mat-label>{{ 'add-medicine.take' | translate }}</mat-label>
                     <input matInput type="number">
