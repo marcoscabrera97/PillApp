@@ -78,6 +78,18 @@ export class CrearCuentaComponent implements OnInit {
     this.router.navigate(['iniciar_sesion']);
   }
 
+  throwEqualUserNameDialog() {
+    const dialogRef = this.dialog.open(DialogUserExistent, {
+      width: '250px'
+    });
+  }
+
+  throwEqualMailDialog() {
+    const dialogRef = this.dialog.open(DialogMailExistent, {
+      width: '250px'
+    });
+  }
+
 
   register() {
     this.registerOk = false;
@@ -92,6 +104,20 @@ export class CrearCuentaComponent implements OnInit {
     var password1 = this.signUpForm.controls.password1.value;
     var password2 = this.signUpForm.controls.password2.value;
 
+    this.service.getUser().subscribe(users => {
+      var userExists;
+      Object.keys(users).forEach( idToken => {
+        if(!userExists) {
+          if(this.userModule.username == users[idToken].username) {
+            userExists = true;
+            this.throwEqualUserNameDialog();
+          }else if(this.userModule.email == users[idToken].email) {
+            userExists = true;
+            this.throwEqualMailDialog();
+          }
+        }
+    })
+  });
     if(password1 != password2) {
       this.throwErrorMessagePasswords();
       this.registerOk = false;
@@ -140,6 +166,34 @@ export class DialogErrorRegistration {
   templateUrl: 'dialog-ok-registration.html',
 })
 export class DialogOkRegistration {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialog-user-existent',
+  templateUrl: 'dialog-user-existent.html',
+})
+export class DialogUserExistent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialog-mail-existent',
+  templateUrl: 'dialog-mail-existent.html',
+})
+export class DialogMailExistent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
