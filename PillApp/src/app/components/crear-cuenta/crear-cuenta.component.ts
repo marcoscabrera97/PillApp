@@ -15,11 +15,15 @@ export class CrearCuentaComponent implements OnInit {
 
   public signUpForm: FormGroup;
   public userModule: Usuario;
-  public registerOk: boolean;
+  private regiterNotOk: boolean;
+  private emptyParameter: boolean;
+
   
   constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private service: ServiceFirebaseService, private router: Router) { 
     this.buildForm();
     this.userModule = new Usuario();
+    this.regiterNotOk = false;
+    this.emptyParameter = false;
   }
 
   ngOnInit() {
@@ -38,25 +42,14 @@ export class CrearCuentaComponent implements OnInit {
     });
   }
 
-  checkName(event) {
-    if(event.charCode < 65 || event.charCode > 90 ) {
-      this.registerOk = false;
-    } 
-    if(event.charCode < 97 || event.charCode > 122) {
-      this.registerOk = false;
-    } 
+  checkName(name) {
+    var hasNumber = /\d/;
+    return hasNumber.test(name);
   }
 
-  checkUsername(event) {
-    if(event.charCode < 65 || event.charCode > 90) {
-      this.registerOk = false;
-    } 
-    if(event.charCode < 97 || event.charCode > 122) {
-      this.registerOk = false;
-    } 
-    if(event.charCode < 48 || event.charCode > 57) {
-      this.registerOk = false;
-    }
+  checkUsername(username) {
+    var hasNumber = /\d/;
+    return !hasNumber.test(username);
   }
 
   throwErrorMessagePasswords() {
@@ -78,9 +71,29 @@ export class CrearCuentaComponent implements OnInit {
     this.router.navigate(['iniciar_sesion']);
   }
 
+  throwEqualUserNameDialog() {
+    const dialogRef = this.dialog.open(DialogUserExistent, {
+      width: '250px'
+    });
+  }
+
+  throwEqualMailDialog() {
+    const dialogRef = this.dialog.open(DialogMailExistent, {
+      width: '250px'
+    });
+  }
+
+  throwEmptyParameter(){
+    const dialogRef = this.dialog.open(DialogEmptyParameter, {
+      width: '250px'
+    });
+  }
+
 
   register() {
-    this.registerOk = false;
+    var notEqualPasswords = false;
+    var registerFail = false;
+
     const userRegister = this.signUpForm.value;
     this.userModule.name = userRegister.name;
     this.userModule.surname = userRegister.surname;
@@ -88,21 +101,55 @@ export class CrearCuentaComponent implements OnInit {
     this.userModule.password = userRegister.password1;
     this.userModule.email = userRegister.email;
     this.userModule.userType = 'patient';
+    registerFail = this.checkName(this.userModule.name);
+    if(!registerFail){
+      registerFail = this.checkName(this.userModule.surname);
+    }
+    if(!registerFail){
+      registerFail = this.checkUsername(this.userModule.username);
+    }
 
     var password1 = this.signUpForm.controls.password1.value;
     var password2 = this.signUpForm.controls.password2.value;
 
+    this.service.getUser().subscribe(users => {
+      var userExists;
+      Object.keys(users).forEach( idToken => {
+        if(!userExists) {
+          if(this.userModule.username == users[idToken].username) {
+            userExists = true;
+            this.regiterNotOk = true;
+            this.throwEqualUserNameDialog();
+          }else if(this.userModule.email == users[idToken].email) {
+            userExists = true;
+            this.regiterNotOk = true;
+            this.throwEqualMailDialog();
+          }
+        }
+    }, this.regiterNotOk)
+  });
     if(password1 != password2) {
-      this.throwErrorMessagePasswords();
-      this.registerOk = false;
+      notEqualPasswords = true;
     }
-    
-    if(!this.registerOk) {
+    console.log(this.regiterNotOk);
+    if(registerFail) {
       this.throwFailRegisterDialog();
-    }else{
-      this.service.addUser(this.userModule).subscribe(resp => {
-        this.throwOkDialog();
+    }else if(notEqualPasswords) {
+      this.throwErrorMessagePasswords();
+    }else if(!this.regiterNotOk){
+      Object.keys(this.userModule).forEach( value => {
+        if(this.userModule[value] == 'undefined' && !this.emptyParameter){
+          this.emptyParameter = true;
+        }
       });
+      if(this.emptyParameter){
+        this.throwEmptyParameter();
+      }else{
+        this.service.addUser(this.userModule).subscribe(resp => {
+          console.log(resp);
+          this.throwOkDialog();
+        });
+      }
     }
   }
 }
@@ -140,6 +187,48 @@ export class DialogErrorRegistration {
   templateUrl: 'dialog-ok-registration.html',
 })
 export class DialogOkRegistration {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialog-user-existent',
+  templateUrl: 'dialog-user-existent.html',
+})
+export class DialogUserExistent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialog-mail-existent',
+  templateUrl: 'dialog-mail-existent.html',
+})
+export class DialogMailExistent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialog-empty-parameter',
+  templateUrl: 'dialog-empty-parameter.html',
+})
+export class DialogEmptyParameter {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
