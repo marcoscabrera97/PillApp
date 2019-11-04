@@ -2,7 +2,8 @@
     "sign": {
         "in":{
             "password_remember": "¿Olvidó la contraseña?",
-            "button": "Iniciar sesión"
+            "button": "Iniciar sesión",
+            "error": "El usuario o la contraseña introducidos no son correctos"
         },
         "up":{
             "text": "¿No tienes cuenta?",
@@ -15,12 +16,13 @@
             "email": "Correo electrónico",
             "password_error": "Las contraseñas no coinciden",
             "register_error": "Algún parámetro contiene carácteres no permitidos",
-            "register_error_body": "Nombre y apellido: Solamente puede contener letras. Nombre de usuario: Solamente puede contener letras y números",
+            "register_error_body": "Nombre y apellido: Solamente puede contener letras. Nombre de usuario: Debe contener letras y números",
             "ok": "Registro completado correctamente",
             "ok_body": "El registro se ha completado correctamente, puede iniciar sesión.",
             "error": "ERROR",
             "equal_user_error": "El usuario introducido ya existe",
-            "equal_mail_error": "El correo introducido ya existe"
+            "equal_mail_error": "El correo introducido ya existe",
+            "empty_parameter": "Algún parámetro del formulario no ha sido rellenado"
         }
     },
     "add-medicine": {

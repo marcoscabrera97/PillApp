@@ -21,7 +21,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CrearCuentaComponent, DialogOverviewExampleDialog, DialogErrorRegistration, DialogOkRegistration, DialogUserExistent, DialogMailExistent } from './components/crear-cuenta/crear-cuenta.component';
+import { CrearCuentaComponent, DialogOverviewExampleDialog, DialogErrorRegistration, DialogOkRegistration, DialogUserExistent, DialogMailExistent, DialogEmptyParameter } from './components/crear-cuenta/crear-cuenta.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { AngularFireModule } from '@angular/fire';
@@ -63,7 +63,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     LogoutComponent,
     AddMedicinaComponent,
     DialogUserExistent,
-    DialogMailExistent
+    DialogMailExistent,
+    DialogEmptyParameter
   ],
   imports: [
     BrowserModule,
@@ -110,7 +111,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     DialogOkRegistration,
     DialogFailSignIn,
     DialogUserExistent,
-    DialogMailExistent
+    DialogMailExistent,
+    DialogEmptyParameter
   ]
 })
 export class AppModule { }

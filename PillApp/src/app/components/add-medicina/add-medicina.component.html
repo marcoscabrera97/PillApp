@@ -7,7 +7,7 @@
         </mat-form-field>
         <mat-form-field class="quantityMedicament">
             <mat-label>{{ 'add-medicine.quantity' | translate}}</mat-label>
-            <input matInput>
+            <input matInput formControlName="quantity">
         </mat-form-field>
         <div class="subTitle">Cantidad de la dosis</div>
         <mat-form-field class="quantityDose">
@@ -39,7 +39,7 @@
           <h4 class="title-page title-margin">{{ 'add-medicine.calendar' | translate }}</h4>
           <mat-form-field>
                 <mat-label>{{ 'add-medicine.start_date' | translate}}</mat-label>
-                <input matInput [matDatepicker]="picker">
+                <input matInput [matDatepicker]="picker" formControlName="dateStart">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -53,7 +53,7 @@
             <div *ngIf="numberDays">
                 <mat-form-field class="example-margin">
                     <mat-label>{{ 'add-medicine.number_days' | translate}}</mat-label>
-                    <input matInput type="number">
+                    <input matInput type="number" formControlName="numberDaysInput">
                 </mat-form-field>
             </div>
             <section class="">
@@ -65,13 +65,13 @@
             </section>
             
                 <section class="example-section daysWeek" *ngIf="specificDays">
-                    <mat-checkbox>{{ 'monday' | translate }}</mat-checkbox>
-                    <mat-checkbox>{{ 'tuesday' | translate }}</mat-checkbox>
-                    <mat-checkbox>{{ 'wednesday' | translate }}</mat-checkbox>
-                    <mat-checkbox>{{ 'thursday' | translate }}</mat-checkbox>
-                    <mat-checkbox>{{ 'friday' | translate }}</mat-checkbox>
-                    <mat-checkbox>{{ 'saturday' | translate }}</mat-checkbox>
-                    <mat-checkbox>{{ 'sunday' | translate }}</mat-checkbox>                
+                    <mat-checkbox formControlName="monday">{{ 'monday' | translate }}</mat-checkbox>
+                    <mat-checkbox formControlName="thursday">{{ 'tuesday' | translate }}</mat-checkbox>
+                    <mat-checkbox formControlName="wednesday">{{ 'wednesday' | translate }}</mat-checkbox>
+                    <mat-checkbox formControlName="tuesday">{{ 'thursday' | translate }}</mat-checkbox>
+                    <mat-checkbox formControlName="friday">{{ 'friday' | translate }}</mat-checkbox>
+                    <mat-checkbox formControlName="saturday">{{ 'saturday' | translate }}</mat-checkbox>
+                    <mat-checkbox formControlName="sunday">{{ 'sunday' | translate }}</mat-checkbox>                
                 </section>
     </form>
     <div class="center-button">
