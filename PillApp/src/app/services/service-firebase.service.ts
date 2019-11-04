@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { element } from 'protractor';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { Medicina } from '../components/add-medicina/medicina.module';
+import { Recordatorio } from '../components/add-medicina/recordatorio.module';
 
 @Injectable({
   providedIn: 'root'
@@ -47,12 +49,33 @@ export class ServiceFirebaseService {
     return this.userToken;
   }
   
+  
   getUser() {
     return this.http.get(this.url+'/USUARIO.json');
   }
 
   deleteUser() {
     localStorage.clear();
+  }
+
+  addMedicine(medicine: Medicina){
+    return this.http.post(this.url+'/MEDICAMENTO.json', medicine).pipe(
+      map(resp => {
+        //this.saveToken(resp['name']);
+        console.log(resp);
+        return resp;
+      })
+    );
+  }
+
+  addRecordatory(recordatory: Recordatorio){
+    return this.http.post(this.url+'/RECORDATORIO.json', recordatory).pipe(
+      map(resp => {
+        console.log(resp);
+        //this.saveToken(resp['name']);
+        return resp;
+      })
+    );
   }
 
 }

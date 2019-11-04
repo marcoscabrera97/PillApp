@@ -60,6 +60,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 
+button:focus{
+    outline: none;
+}
+
 @font-face {
     font-family: 'Housemate';
     src: url(assets/fonts/Housemate.ttf) format("opentype");
