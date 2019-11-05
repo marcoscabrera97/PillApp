@@ -3,7 +3,8 @@
         "in":{
             "password_remember": "¿Olvidó la contraseña?",
             "button": "Iniciar sesión",
-            "error": "El usuario o la contraseña introducidos no son correctos"
+            "error": "El usuario o la contraseña introducidos no son correctos",
+            "error_title": "Error en el incio de sesión"
         },
         "up":{
             "text": "¿No tienes cuenta?",

@@ -19,13 +19,11 @@ export class IniciarSesionComponent implements OnInit {
   public user: Usuario;
   public users: Usuario[];
   public arrayUsers;
-  public findObjectUser: Boolean;
   public isPatient: Boolean;
   
   constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService, public route: Router, private db: AngularFirestore, public dialog: MatDialog, public router: Router) { }
   usersObservable: Observable<any[]>;
   ngOnInit() {
-    this.findObjectUser = false;
     this.isPatient = false;
     var navbar = document.getElementById('navbar');
     navbar.classList.add('display-none');
@@ -51,22 +49,22 @@ export class IniciarSesionComponent implements OnInit {
     const username = user.userName;
     const password = user.password;
     this.service.getUser().subscribe(users => {
+      var findObjectUser = false;
        Object.keys(users).forEach( idToken => {
         if(users[idToken].username == username) {
           var userFind = users[idToken];
-          this.findObjectUser = true;
           if(userFind.userType == "patient" && userFind.password == password) {
+            findObjectUser = true;
             this.service.saveToken(idToken, userFind.userType);
             this.route.navigate(['/home']);
           }else if(userFind.userType == "doctor" && userFind.password == password){
+            findObjectUser = true;
             this.service.saveToken(idToken, userFind.userType);
            this.route.navigate(['/homeDoctor']);
-          }else{
-            this.throwFailSignIn();
           }
         }
       });
-      if(!this.findObjectUser) {
+      if(!findObjectUser) {
         this.throwFailSignIn();
       }
     });

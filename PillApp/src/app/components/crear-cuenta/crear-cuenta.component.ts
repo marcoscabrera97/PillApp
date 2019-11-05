@@ -89,6 +89,16 @@ export class CrearCuentaComponent implements OnInit {
     });
   }
 
+  checkUserExist(users, idToken){
+    if(this.userModule.username == users[idToken].username) {
+      this.throwEqualUserNameDialog();
+      return true;
+    }else if(this.userModule.email == users[idToken].email) {
+      this.throwEqualMailDialog();
+      return true;
+    }
+    return false;
+  }
 
   register() {
     var notEqualPasswords = false;
@@ -112,42 +122,37 @@ export class CrearCuentaComponent implements OnInit {
     var password1 = this.signUpForm.controls.password1.value;
     var password2 = this.signUpForm.controls.password2.value;
 
-    this.service.getUser().subscribe(users => {
-      var userExists;
-      Object.keys(users).forEach( idToken => {
-        if(!userExists) {
-          if(this.userModule.username == users[idToken].username) {
-            userExists = true;
-            this.regiterNotOk = true;
-            this.throwEqualUserNameDialog();
-          }else if(this.userModule.email == users[idToken].email) {
-            userExists = true;
-            this.regiterNotOk = true;
-            this.throwEqualMailDialog();
-          }
-        }
-    }, this.regiterNotOk)
-  });
     if(password1 != password2) {
       notEqualPasswords = true;
     }
-    console.log(this.regiterNotOk);
     if(registerFail) {
       this.throwFailRegisterDialog();
     }else if(notEqualPasswords) {
       this.throwErrorMessagePasswords();
     }else if(!this.regiterNotOk){
       Object.keys(this.userModule).forEach( value => {
-        if(this.userModule[value] == 'undefined' && !this.emptyParameter){
+        if((this.userModule[value] == undefined || this.userModule[value] == '') && !this.emptyParameter){
           this.emptyParameter = true;
         }
       });
       if(this.emptyParameter){
         this.throwEmptyParameter();
+        this.emptyParameter = false;
       }else{
-        this.service.addUser(this.userModule).subscribe(resp => {
-          console.log(resp);
-          this.throwOkDialog();
+        this.service.getUser().subscribe(users => {
+          var userExists;
+          if(users != null){
+            Object.keys(users).forEach( idToken => {
+              if(!userExists) {
+                userExists = this.checkUserExist(users, idToken);
+              }
+            });
+          }
+          if(!userExists){
+            this.service.addUser(this.userModule).subscribe(resp => {
+              this.throwOkDialog();
+            });
+          }
         });
       }
     }
