@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { MessagingService } from './services/messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,16 @@ export class AppComponent {
   title = 'PillApp';
 
   public activeLang = 'es';
-
-  constructor(private translate: TranslateService) {
+  message;
+  constructor(private translate: TranslateService, private messagingService: MessagingService) {
     this.translate.setDefaultLang(this.activeLang);
     this.translate.use('es');
+  }
 
+  ngOnInit(){
+    const userId = 'user001';
+    this.messagingService.getPermission();
+    this.messagingService.receiveMessage();
+    this.message = this.messagingService.currentMessage;
   }
 }

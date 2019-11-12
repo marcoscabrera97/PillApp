@@ -23,7 +23,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CrearCuentaComponent, DialogOverviewExampleDialog, DialogErrorRegistration, DialogOkRegistration, DialogUserExistent, DialogMailExistent, DialogEmptyParameter } from './components/crear-cuenta/crear-cuenta.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe } from '@angular/common';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -38,6 +38,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material';
 import { AmazingTimePickerModule } from 'amazing-time-picker';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { MessagingService } from './services/messaging.service';
 
 
 
@@ -89,6 +92,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatDialogModule,
     FormsModule,
     CommonModule,
+    AngularFireDatabaseModule,
+    AngularFireMessagingModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
@@ -102,7 +107,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
   ],
   providers: [
     ServiceFirebaseService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MessagingService,
+    AsyncPipe
   ],
   bootstrap: [AppComponent],
   entryComponents: [

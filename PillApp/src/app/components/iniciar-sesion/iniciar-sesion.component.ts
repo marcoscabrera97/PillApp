@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.component';
 import { MatDialogRef, MatDialog } from '@angular/material';
+import { SendPushNotifactionService } from 'src/app/services/send-push-notifaction.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -20,8 +21,8 @@ export class IniciarSesionComponent implements OnInit {
   public users: Usuario[];
   public arrayUsers;
   public isPatient: Boolean;
-  
-  constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService, public route: Router, private db: AngularFirestore, public dialog: MatDialog, public router: Router) { }
+  public token: string;
+  constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService, public route: Router, private db: AngularFirestore, public dialog: MatDialog, public router: Router, private sendPush: SendPushNotifactionService) { }
   usersObservable: Observable<any[]>;
   ngOnInit() {
     this.isPatient = false;
@@ -29,6 +30,9 @@ export class IniciarSesionComponent implements OnInit {
     navbar.classList.add('display-none');
     navbar.classList.remove('display-block');
     this.buildForm();
+    setInterval(() => {
+      this.callSendPush(); 
+    }, 5000);
   }
 
   private buildForm() {
@@ -69,6 +73,10 @@ export class IniciarSesionComponent implements OnInit {
       }
     });
     
+  }
+
+  callSendPush(){
+    this.sendPush.sendPostRequest();
   }
 }
 
