@@ -1,13 +1,7 @@
 export class Recordatorio {
-    hour: string[];
+    hour: string;
     startDate: string;
     numberDays: number;
-    monday: boolean;
-    thursday: boolean;
-    wednesday: boolean;
-    tuesday: boolean;
-    friday: boolean;
-    saturday: boolean;
-    sunday: boolean;
+    daysWeek: number[];
     idMedicine;
 }
