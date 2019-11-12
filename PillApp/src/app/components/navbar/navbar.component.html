@@ -1,31 +1,37 @@
 <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-blue">
   
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" >
       <span class="navbar-toggler-icon img-navbar"></span>
     </button>
     <div class="navbar-brand">PillApp</div>
+    <div *ngIf="isHome">
+        <mat-form-field class="example-full-width" style="visibility: hidden;">
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" (ngModelChange)="changeDateSelected($event)">
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <img src="../../../assets/images/calendar_icon.png" class="calendar-icon" (click)="picker.open()">
+    </div>
 
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['home']">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" [routerLink]="['home']">{{ 'navbar.home' | translate}} <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['listaMedicamentos']">Lista de medicamentos</a>
+        <a class="nav-link" [routerLink]="['listaMedicamentos']">{{ 'navbar.medicine_list' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['citas']">Citas</a>
+        <a class="nav-link" [routerLink]="['citas']">{{ 'navbar.meetings' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['farmacias']">Farmacias</a>
+        <a class="nav-link" [routerLink]="['farmacias']">{{ 'navbar.pharmacy' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['informe']">Informe</a>
+        <a class="nav-link" [routerLink]="['informe']">{{ 'navbar.report' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="logout()">Logout</a>
+        <a class="nav-link" (click)="logout()">{{ 'navbar.logout' | translate}}</a>
       </li>
     </ul>
   </div>
 </nav>
-

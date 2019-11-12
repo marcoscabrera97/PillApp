@@ -1,37 +1,26 @@
-<div class="table-responsive-xl">
-    <table class="table">
-      <thead>
-          <th *ngFor="let dia of [0,1,2,3,4,5,6]; let i = index;">{{diasSemana[i]}}</th>
-      </thead>
-      <tbody>
-          <tr>
-              <td *ngFor="let dia of [0,1,2,3,4,5,6]; let i = index;" class="dia-mes">{{i+1}}</td>
-          </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="container">
-      <h4 class="title-page">Medicamentos a tomar</h4>
-      <div class="accordion" *ngFor="let i of [0,1,2]; let i=index;">
-            <p class="pill-banner">
-                <button class="btn btn-primary" data-toggle="collapse" (click)="openCollapse(i)" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <div class="arrow-img">
-                            <img src="../../../assets/images/row-bottom.png">
-                    </div>
-                    <div class="text-pill">8:00h</div>
-                </button>
-            </p>
-            <div [ngClass]="{collapse: !collapse[i]}">
-                <div class="card card-body">
-                        <img src="../../../assets/images/Pastillas_iconos/capsula_rojo_blanco.png" class="img-reminder">
-                        <div class="medicine">Ibuprofeno</div>
-                        <div>Tomar 1</div>
+<div class="container">
+    <h4 class="title-page">Medicamentos a tomar</h4>
+    <h5 class="date">{{actualDate}}</h5>
+    <div class="accordion" *ngFor="let recordatory of showRecordatorios; let i=index;">
+        <p class="pill-banner">
+            <button class="btn btn-primary" data-toggle="collapse" (click)="openCollapse(i)" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <div class="arrow-img">
+                        <img src="../../../assets/images/row-bottom.png">
                 </div>
+                <div class="text-pill">{{recordatory.hour}}</div>
+            </button>
+        </p>
+        <div [ngClass]="{collapse: !collapse[i]}">
+            <div class="card card-body">
+                    <img src="../../../assets/images/Pastillas_iconos/capsula_rojo_blanco.png" class="img-reminder">
+                    <div class="medicine">{{medicinesArray[recordatory.idMedicine].name}}</div>
+                    <div *ngIf="medicine.unityDose == 'ml'; else unityPills">{{ 'home.takeMl' | translate: {'quantityDose': medicine.quantityDose} }}</div>
+                    <ng-template #unityPills>{{ 'home.takePills' | translate: {'quantityDose': medicine.quantityDose} }}</ng-template>
             </div>
-            <div class="separation-banner">&nbsp;</div>
-      </div>
-  </div>
+        </div>
+        <div class="separation-banner">&nbsp;</div>
+    </div>
+</div>
 
   <div>
     <a mat-fab class="add-btn" [routerLink]="['/addMedicine']"><img src="../../../assets/images/add.png" class="add-img"></a>

@@ -1,4 +1,12 @@
 {
+    "navbar":{
+        "home": "Inicio",
+        "medicine_list": "Lista de medicamentos",
+        "meetings": "Citas",
+        "pharmacy": "Farmacias",
+        "report": "Report",
+        "logout": "Logout"
+    },
     "sign": {
         "in":{
             "password_remember": "¿Olvidó la contraseña?",
@@ -58,5 +66,10 @@
     "thursday": "Jueves",
     "friday": "Viernes",
     "saturday": "Sábado",
-    "sunday": "Domingo"
+    "sunday": "Domingo",
+    "home":{
+        "takeMl": "Tomar {{quantityDose}} ml",
+        "takePills": "Tomar {{quantityDose}} pastilla/s"
+    }
+
 }

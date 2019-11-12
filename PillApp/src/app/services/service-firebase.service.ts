@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, SimpleChanges } from '@angular/core';
 import { Usuario } from '../components/crear-cuenta/usuario.module';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { element } from 'protractor';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Medicina } from '../components/add-medicina/medicina.module';
 import { Recordatorio } from '../components/add-medicina/recordatorio.module';
@@ -18,10 +18,15 @@ export class ServiceFirebaseService {
   items: Observable<any[]>;
   userToken: string;
   typeUser: string;
+  actualDate;
 
-  private usersCollection: AngularFirestoreCollection<Usuario>;
+  private changeDate = new Subject<Date>();
+  public changeDate$ = this.changeDate.asObservable();
 
-  constructor(private http: HttpClient, private afs: AngularFirestore) { }
+  constructor(private http: HttpClient, private afs: AngularFirestore) { 
+    this.actualDate = new Date();
+    console.log(this.actualDate);
+  }
 
   addUser(user: Usuario) {
     return this.http.post(this.url+'/USUARIO.json', user).pipe(
@@ -78,4 +83,16 @@ export class ServiceFirebaseService {
     );
   }
 
+  getMedicines(){
+    return this.http.get(this.url+'/MEDICAMENTO.json');
+  }
+
+  getRecordatories(){
+    return this.http.get(this.url+'/RECORDATORIO.json');
+  }
+
+  setActualDate(actualDate) {
+    this.actualDate = actualDate;
+    this.changeDate.next();
+  }
 }
