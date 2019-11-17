@@ -30,9 +30,6 @@ export class IniciarSesionComponent implements OnInit {
     navbar.classList.add('display-none');
     navbar.classList.remove('display-block');
     this.buildForm();
-    setInterval(() => {
-      this.callSendPush(); 
-    }, 5000);
   }
 
   private buildForm() {
@@ -73,11 +70,7 @@ export class IniciarSesionComponent implements OnInit {
       }
     });
     
-  }
-
-  callSendPush(){
-    this.sendPush.sendPostRequest();
-  }
+  } 
 }
 
 @Component({
