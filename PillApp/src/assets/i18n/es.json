@@ -70,6 +70,9 @@
     "home":{
         "takeMl": "Tomar {{quantityDose}} ml",
         "takePills": "Tomar {{quantityDose}} pastilla/s"
+    },
+    "edit-medicine": {
+        "title": "Editar recordatorio"
     }
 
 }

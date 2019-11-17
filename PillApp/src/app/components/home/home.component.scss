@@ -26,6 +26,15 @@
 
 .card-body {
     padding: 12px 25px;
+    .actions-button{
+        position: absolute;
+        top: 25px;
+        right: 17px;
+        i{
+            padding: 0 5px;
+            font-size: 22px;
+        }
+    }
 }
 
 .img-reminder {

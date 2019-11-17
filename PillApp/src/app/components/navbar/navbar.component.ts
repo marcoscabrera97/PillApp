@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
   public href: string = "";
   isHome: boolean;
   closeMenuVar: boolean;
+  date;
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {

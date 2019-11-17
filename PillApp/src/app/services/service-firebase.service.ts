@@ -95,4 +95,28 @@ export class ServiceFirebaseService {
     this.actualDate = actualDate;
     this.changeDate.next();
   }
+
+  getRecordatory(idRecordatory){
+    return this.http.get(this.url+'/RECORDATORIO/'+ idRecordatory+'.json');
+  }
+
+  getMedicine(idMedicine){
+    return this.http.get(this.url+'/MEDICAMENTO/'+ idMedicine+'.json');
+  }
+
+  updateRecordatory(recordatory, idRecordatory){
+    return this.http.put(this.url+'/RECORDATORIO/'+idRecordatory+'.json', recordatory);
+  }
+
+  updateMedicine(medicine, idMedicine){
+    return this.http.put(this.url+'/MEDICAMENTO/'+idMedicine+'.json', medicine);
+  }
+
+  deleteRecordatory(idRecordatory){
+    return this.http.delete(this.url+'/RECORDATORIO/'+idRecordatory+'.json');
+  }
+
+  deleteMedicine(idMedicine){
+    return this.http.delete(this.url+'/MEDICAMENTO/'+idMedicine+'.json');
+  }
 }

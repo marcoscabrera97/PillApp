@@ -49,6 +49,7 @@ export class AddMedicinaComponent implements OnInit {
   public recordatoryAux: Recordatorio;
   private hoursRecordatory: string[];
   public recordatory: Recordatorio;
+  medicamentDose;
 
   public idMedicine: number;
 
@@ -66,8 +67,8 @@ export class AddMedicinaComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectDose(){
-    
+  selectDose(dose){
+    this.medicamentDose = dose;
   }
 
   buildForm() {
@@ -139,34 +140,59 @@ export class AddMedicinaComponent implements OnInit {
     this.medicine.quantity = addMedicineForm.quantity;
     this.medicine.quantityDose = addMedicineForm.quantityDose;
     this.medicine.unityDose = addMedicineForm.unityDose;
-    console.log(addMedicineForm.dateStart['_d'].toUTCString());
     this.recordatoryAux.startDate = addMedicineForm.dateStart['_d'].toUTCString(); /*date.date+"/"+(date.month+1)+"/"+date.year;*/
     if(addMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays != -1){
       this.recordatoryAux.numberDays = addMedicineForm.numberDaysInput;
     }else if(addMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays == -1){
       this.recordatoryAux.numberDays = addMedicineForm.numberDaysInput;
     }
-    this.recordatoryAux.daysWeek = [-1];
-    if(addMedicineForm.monday != ''){
+    this.recordatoryAux.daysWeek = new Array();
+    if(addMedicineForm.sunday == true){
       this.recordatoryAux.daysWeek.push(1);
+    }else{
+      this.recordatoryAux.daysWeek.push(0);
     }
-    if(addMedicineForm.thursday != ''){
-      this.recordatoryAux.daysWeek.push(2);
+
+    if(addMedicineForm.monday == true){
+      this.recordatoryAux.daysWeek.push(1);
+    }else{
+      this.recordatoryAux.daysWeek.push(0);
     }
-    if(addMedicineForm.wednesday != ''){
-      this.recordatoryAux.daysWeek.push(3);
+
+    if(addMedicineForm.thursday == true){
+      this.recordatoryAux.daysWeek.push(1);
+    }else{
+      this.recordatoryAux.daysWeek.push(0);
     }
-    if(addMedicineForm.tuesday != ''){
-      this.recordatoryAux.daysWeek.push(4);
+
+    if(addMedicineForm.wednesday == true){
+      this.recordatoryAux.daysWeek.push(1);
+    }else{
+      this.recordatoryAux.daysWeek.push(0);
     }
-    if(addMedicineForm.friday != ''){
-      this.recordatoryAux.daysWeek.push(5);
+
+    if(addMedicineForm.tuesday == true){
+      this.recordatoryAux.daysWeek.push(1);
+    }else{
+      this.recordatoryAux.daysWeek.push(0);
     }
-    if(addMedicineForm.saturday != ''){
-      this.recordatoryAux.daysWeek.push(6);
+
+    if(addMedicineForm.friday == true){
+      this.recordatoryAux.daysWeek.push(1);
+    }else{
+      this.recordatoryAux.daysWeek.push(0);
     }
-    if(addMedicineForm.sunday != ''){
-      this.recordatoryAux.daysWeek.push(6);
+
+    if(addMedicineForm.saturday == true){
+      this.recordatoryAux.daysWeek.push(1);
+    }else{
+      this.recordatoryAux.daysWeek.push(0);
+    }
+
+    const daysWeekAux = this.recordatoryAux.daysWeek.filter(dayWeek => dayWeek == 0);
+    if(daysWeekAux.length == 7){
+      this.recordatoryAux.daysWeek = [];
+      this.recordatoryAux.daysWeek.push(-1);
     }
 
     this.medicine.idUser = this.service.userToken;
@@ -184,7 +210,8 @@ export class AddMedicinaComponent implements OnInit {
         }
         count++;
       }
+      this.router.navigate(['home']);
     });
-    this.router.navigate(['home']);
+    
   }
 }

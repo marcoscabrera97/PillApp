@@ -12,10 +12,16 @@
         </p>
         <div [ngClass]="{collapse: !collapse[i]}">
             <div class="card card-body">
-                    <img src="../../../assets/images/Pastillas_iconos/capsula_rojo_blanco.png" class="img-reminder">
-                    <div class="medicine">{{medicinesArray[recordatory.idMedicine].name}}</div>
-                    <div *ngIf="medicine.unityDose == 'ml'; else unityPills">{{ 'home.takeMl' | translate: {'quantityDose': medicine.quantityDose} }}</div>
-                    <ng-template #unityPills>{{ 'home.takePills' | translate: {'quantityDose': medicine.quantityDose} }}</ng-template>
+                    <div class="content-card">
+                        <img src="../../../assets/images/Pastillas_iconos/capsula_rojo_blanco.png" class="img-reminder">
+                        <div class="medicine">{{medicinesArray[recordatory.idMedicine].name}}</div>
+                        <div *ngIf="medicine.unityDose == 'ml'; else unityPills">{{ 'home.takeMl' | translate: {'quantityDose': medicine.quantityDose} }}</div>
+                        <ng-template #unityPills>{{ 'home.takePills' | translate: {'quantityDose': medicine.quantityDose} }}</ng-template>
+                    </div>
+                    <div class="actions-button">
+                        <i class="fas fa-edit" [routerLink]="['/editMedicine', recordatory.id]"></i>
+                        <i class="fas fa-trash" (click)="deleteRecordatory(recordatory.id, recordatory.idMedicine)"></i>
+                    </div>
             </div>
         </div>
         <div class="separation-banner">&nbsp;</div>

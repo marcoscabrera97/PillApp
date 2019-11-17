@@ -12,6 +12,7 @@ import { GuardAuthGuard } from './guards/guard-auth.guard';
 import { HomeDoctorComponent } from './components/home-doctor/home-doctor.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AddMedicinaComponent } from './components/add-medicina/add-medicina.component';
+import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'register', component: CrearCuentaComponent },
     { path: 'home', component: HomeComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'addMedicine', component: AddMedicinaComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthGuard] },
     { path: 'citas', component: CitasComponent, canActivate: [GuardAuthGuard] },

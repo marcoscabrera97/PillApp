@@ -48,6 +48,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 
+.quantityMedicament {
+    .mat-form-field-wrapper{
+        width: 40px;
+    }
+}
+
+
 .quantityDose{
     .mat-form-field-wrapper{
         width: 40px;

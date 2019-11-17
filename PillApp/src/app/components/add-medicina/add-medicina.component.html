@@ -5,20 +5,25 @@
             <mat-label>{{ 'add-medicine.name' | translate}}</mat-label>
             <input matInput formControlName="nameMedicine">
         </mat-form-field>
-        <mat-form-field class="quantityMedicament">
-            <mat-label>{{ 'add-medicine.quantity' | translate}}</mat-label>
-            <input matInput formControlName="quantity">
-        </mat-form-field>
+        <div class="subTitle">{{ 'add-medicine.quantity' | translate }}</div>
+        <div class="flex">
+            <mat-form-field class="quantityMedicament">
+                <input matInput formControlName="quantity">
+            </mat-form-field>
+            <mat-form-field class="selectUnity">
+                <mat-select #unityDose (selectionChange)="selectDose(unityDose.value)" formControlName="unityDose">
+                    <mat-option value="ml">ml</mat-option>
+                    <mat-option value="pastillas">{{ 'add-medicine.pills' | translate }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
         <div class="subTitle">Cantidad de la dosis</div>
-        <mat-form-field class="quantityDose">
-            <input matInput formControlName="quantityDose">
-          </mat-form-field>
-        <mat-form-field class="selectUnity">
-            <mat-select (selectionChange)="selectDose()" formControlName="unityDose">
-              <mat-option value="ml">ml</mat-option>
-              <mat-option value="pills">{{ 'add-medicine.pills' | translate }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div class="flex">
+            <mat-form-field class="quantityDose">
+                <input matInput formControlName="quantityDose">
+            </mat-form-field>
+            <span class="unityDose">{{ medicamentDose }}</span>
+        </div>
           <h4 class="title-page title-margin">{{ 'add-medicine.recordatory' | translate }}</h4>
           <mat-form-field>
                 <mat-label>{{ 'add-medicine.numberRecorders' | translate}}</mat-label>

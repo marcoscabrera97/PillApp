@@ -1,0 +1,73 @@
+<div class="container">
+        <h4 class="title-page title-margin">{{ 'edit-medicine.title' | translate}}</h4>
+        <form [formGroup]="editMedicineForm">
+            <mat-form-field class="example-full-width">
+                <mat-label>{{ 'add-medicine.name' | translate}}</mat-label>
+                <input matInput formControlName="nameMedicine">
+            </mat-form-field>
+            <div class="subTitle">{{ 'add-medicine.quantity' | translate }}</div>
+            <div class="flex">
+                <mat-form-field class="quantityMedicament">
+                    <input matInput formControlName="quantity">
+                </mat-form-field>
+                <mat-form-field class="selectUnity">
+                    <mat-select #unityDose (selectionChange)="selectDose(unityDose.value)" formControlName="unityDose">
+                        <mat-option value="ml">ml</mat-option>
+                        <mat-option value="pastillas">{{ 'add-medicine.pills' | translate }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="subTitle">Cantidad de la dosis</div>
+            <div class="flex">
+                <mat-form-field class="quantityDose">
+                    <input matInput formControlName="quantityDose">
+                </mat-form-field>
+                <span class="unityDose">{{ medicamentDose }}</span>
+            </div>
+              <h4 class="title-page title-margin">{{ 'add-medicine.recordatory' | translate }}</h4>
+              <input class="timeInput" value="{{ recordatoryHour }}" (click)="open(1)" readonly="readonly"/>
+              
+              
+              
+              <h4 class="title-page title-margin">{{ 'add-medicine.calendar' | translate }}</h4>
+              <mat-form-field>
+                    <mat-label>{{ 'add-medicine.start_date' | translate}}</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dateStart">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <section class="">
+                <label class="title-duration">{{ 'add-medicine.duration' | translate }}</label>
+                    <mat-radio-group>
+                        <mat-radio-button class="radio-button" value="after" [checked]="radioIndefinite" (change)="showNumberDaysInput(false)">{{ 'add-medicine.indefinity' | translate }}</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="before" [checked]="radioNumberDays" (change)="showNumberDaysInput(true)">{{ 'add-medicine.numberDays' | translate }}</mat-radio-button>
+                    </mat-radio-group>
+                </section>
+                <div *ngIf="numberDays">
+                    <mat-form-field class="example-margin">
+                        <mat-label>{{ 'add-medicine.number_days' | translate}}</mat-label>
+                        <input matInput type="number" formControlName="numberDaysInput">
+                    </mat-form-field>
+                </div>
+                <section class="">
+                    <label class="title-duration">{{ 'add-medicine.daysPerWeek' | translate }}</label>
+                    <mat-radio-group>
+                        <mat-radio-button class="radio-button" value="after" [checked]="radioEveryDay" (change)="showSpecificDays(false)">{{ 'add-medicine.everyDay' | translate }}</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="before" [checked]="radioSpecificDays" (change)="showSpecificDays(true)">{{ 'add-medicine.specificDays' | translate }}</mat-radio-button>
+                    </mat-radio-group>            
+                </section>
+                
+                    <section class="example-section daysWeek" *ngIf="specificDays">
+                        <mat-checkbox formControlName="monday">{{ 'monday' | translate }}</mat-checkbox>
+                        <mat-checkbox formControlName="thursday">{{ 'tuesday' | translate }}</mat-checkbox>
+                        <mat-checkbox formControlName="wednesday">{{ 'wednesday' | translate }}</mat-checkbox>
+                        <mat-checkbox formControlName="tuesday">{{ 'thursday' | translate }}</mat-checkbox>
+                        <mat-checkbox formControlName="friday">{{ 'friday' | translate }}</mat-checkbox>
+                        <mat-checkbox formControlName="saturday">{{ 'saturday' | translate }}</mat-checkbox>
+                        <mat-checkbox formControlName="sunday">{{ 'sunday' | translate }}</mat-checkbox>                
+                    </section>
+        </form>
+        <div class="center-button">
+            <button mat-raised-button class="content-button" (click)="updateRecordatory()">{{ 'add-medicine.save' | translate}}</button>
+        </div>
+    </div>

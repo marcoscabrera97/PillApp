@@ -6,7 +6,7 @@
     <div class="navbar-brand">PillApp</div>
     <div *ngIf="isHome">
         <mat-form-field class="example-full-width" style="visibility: hidden;">
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date" (ngModelChange)="changeDateSelected($event)">
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="date" (ngModelChange)="changeDateSelected($event)">
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           <img src="../../../assets/images/calendar_icon.png" class="calendar-icon" (click)="picker.open()">

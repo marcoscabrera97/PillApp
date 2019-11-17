@@ -41,6 +41,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { MessagingService } from './services/messaging.service';
+import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 
 
 
@@ -67,7 +68,8 @@ import { MessagingService } from './services/messaging.service';
     AddMedicinaComponent,
     DialogUserExistent,
     DialogMailExistent,
-    DialogEmptyParameter
+    DialogEmptyParameter,
+    EditMedicineComponent
   ],
   imports: [
     BrowserModule,
