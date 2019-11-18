@@ -73,6 +73,20 @@
     },
     "edit-medicine": {
         "title": "Editar recordatorio"
+    },
+    "deleteRecordatory":{
+        "title": "¿Eliminar recordatorio?",
+        "body": "¿Deseas eliminar este recordatorio?"
+    },
+    "deleteRecordatoryConfirm":{
+        "title": "Recordatorio eliminado"
+    },
+    "medicineList":{
+        "title": "Lista de medicamentos",
+        "header":{
+            "name": "Nombre",
+            "quantity": "Cantidad"
+        }
     }
 
 }

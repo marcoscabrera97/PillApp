@@ -1,10 +1,12 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Inject } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Recordatorio } from '../add-medicina/recordatorio.module';
 import { Medicina } from '../add-medicina/medicina.module';
 import { Subscription } from 'rxjs';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { SendPushNotifactionService } from 'src/app/services/send-push-notifaction.service';
+import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.component';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +27,7 @@ export class HomeComponent implements OnInit {
   private recordatoriesUser: Recordatorio[];
 
 
-  constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService) {
+  constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog) {
     var navbar = document.getElementById('navbar');
     navbar.classList.remove('display-none');
     navbar.classList.add('display-block');
@@ -109,11 +111,66 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  
+
   deleteRecordatory(idRecordatory, idMedicine){
-    this.service.deleteRecordatory(idRecordatory).subscribe(resp => {
-      this.service.deleteMedicine(idMedicine).subscribe(resp => {
-        console.log('mensaje eliminación correcto');
-      });
+    const dialogRef = this.dialog.open(DeleteRecordatory, {
+      data: { 
+        idRecordatory: idRecordatory,
+        idMedicine: idMedicine 
+      },
+      width: '250px'
     });
+  }
+}
+
+@Component({
+  selector: 'confirm-delete-recordatory',
+  templateUrl: 'confirm-delete-recordatory.html',
+})
+export class DeleteRecordatory {
+
+  idMedicine;
+  idRecordatory;
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>, public service: ServiceFirebaseService, @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog) {
+      this.idRecordatory = data['idRecordatory'];
+      this.idMedicine = data['idMedicine'];
+    }
+
+    deleteRecordatory(){
+      this.service.deleteRecordatory(this.idRecordatory).subscribe(resp => {
+        this.service.deleteMedicine(this.idMedicine).subscribe(resp => {
+          this.throwFailSignIn();
+        });
+      });
+  }
+  throwFailSignIn() {
+    this.dialogRef.close();
+    const dialogRef = this.dialog.open(DeleteRecordatoryOk, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      window.location.reload();
+    });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'deleteRecordatoryOk',
+  templateUrl: 'delete-recordatory-ok.html',
+})
+export class DeleteRecordatoryOk {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

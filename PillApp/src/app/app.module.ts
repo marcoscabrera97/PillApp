@@ -7,7 +7,7 @@ import { APP_ROUTING } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent, DeleteRecordatory, DeleteRecordatoryOk } from './components/home/home.component';
 import { ListaMedicamentosComponent } from './components/lista-medicamentos/lista-medicamentos.component';
 import { CitasComponent } from './components/citas/citas.component';
 import { FarmaciasComponent } from './components/farmacias/farmacias.component';
@@ -69,7 +69,9 @@ import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.
     DialogUserExistent,
     DialogMailExistent,
     DialogEmptyParameter,
-    EditMedicineComponent
+    EditMedicineComponent,
+    DeleteRecordatory,
+    DeleteRecordatoryOk
   ],
   imports: [
     BrowserModule,
@@ -121,7 +123,9 @@ import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.
     DialogFailSignIn,
     DialogUserExistent,
     DialogMailExistent,
-    DialogEmptyParameter
+    DialogEmptyParameter,
+    DeleteRecordatory,
+    DeleteRecordatoryOk
   ]
 })
 export class AppModule { }
