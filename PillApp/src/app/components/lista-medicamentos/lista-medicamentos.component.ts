@@ -8,7 +8,7 @@ import { ServiceFirebaseService } from 'src/app/services/service-firebase.servic
 })
 export class ListaMedicamentosComponent implements OnInit {
 
-  private medicines;
+  public medicines;
   constructor(private service: ServiceFirebaseService) { 
     this.medicines = new Array();
     this.getMedicines();
