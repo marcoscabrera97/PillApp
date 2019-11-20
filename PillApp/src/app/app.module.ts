@@ -42,6 +42,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { MessagingService } from './services/messaging.service';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
+import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.component';
 
 
 
@@ -71,7 +72,8 @@ import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.
     DialogEmptyParameter,
     EditMedicineComponent,
     DeleteRecordatory,
-    DeleteRecordatoryOk
+    DeleteRecordatoryOk,
+    DetallesCitaComponent
   ],
   imports: [
     BrowserModule,
