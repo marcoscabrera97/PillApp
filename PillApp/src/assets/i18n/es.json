@@ -87,6 +87,24 @@
             "name": "Nombre",
             "quantity": "Cantidad"
         }
+    },
+    "nextDate":{
+        "title": "Próximas citas"
+    },
+    "dates":{
+        "seeMore": "Ver más..."
+    },
+    "dateDetails":{
+        "title": "Detalles cita",
+        "nameDoctor": "Nombre del doctor",
+        "specialityDoctor": "Especialidad",
+        "plant": "Planta",
+        "door": "Puerta",
+        "ubication": "Ubicación",
+        "street": "Calle",
+        "location": "Localidad",
+        "province": "Provincia",
+        "postalCode": "Código postal"
     }
 
 }

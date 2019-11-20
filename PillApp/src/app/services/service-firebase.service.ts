@@ -119,4 +119,20 @@ export class ServiceFirebaseService {
   deleteMedicine(idMedicine){
     return this.http.delete(this.url+'/MEDICAMENTO/'+idMedicine+'.json');
   }
+
+  getDatesPatient(){
+    return this.http.get(this.url+'/CITA_PACIENTE.json');
+  }
+
+  getHospitals(){
+    return this.http.get(this.url+'/HOSPITAL.json');
+  }
+
+  getDate(idDate){
+    return this.http.get(this.url+'/CITA_PACIENTE/'+idDate+'.json');
+  }
+
+  getHospital(idHospital){
+    return this.http.get(this.url+'/HOSPITAL/'+idHospital+'.json');
+  }
 }

@@ -1,1 +1,15 @@
-<p>citas works!</p>
+<div class="container">
+    <div class="title">
+        {{ 'nextDate.title' | translate }}
+    </div>
+    <div class="date" *ngFor="let date of datesPatient">
+        <div class="infoDate">
+            <p class="dateDate">{{ date.fecha }}</p>
+            <p class="name">{{ date.nombre_doctor }}</p>
+            <p class="investigationWild">({{ date.especialidad }})</p>
+            <p class="hospital">{{ date.nombre_hospital }}</p>
+            <a [routerLink]="['/verMas', idDate]">{{ 'dates.seeMore' | translate }}</a>
+        </div>
+        <div class="hourDate">{{ date.hour }}</div>
+    </div>
+</div>

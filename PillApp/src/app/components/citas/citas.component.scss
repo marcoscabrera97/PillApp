@@ -1,0 +1,40 @@
+.container{
+    margin-top: 25px;
+}
+
+.title {
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 23px;
+    margin-bottom: 20px;
+}
+
+p{
+    margin: 0;
+}
+
+.date{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 13px;
+}
+
+.infoDate{
+    a{
+        color: #8a8484;
+    }
+}
+
+.dateDate{
+   font-family: 'Arial Rounded MT Bold'; 
+   font-size: 20px;
+   color: #0788FF;
+   margin-bottom: 9px;
+}
+
+.hourDate{
+    margin-top: 34px;
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 20px;
+}

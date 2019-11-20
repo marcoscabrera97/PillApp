@@ -13,6 +13,7 @@ import { HomeDoctorComponent } from './components/home-doctor/home-doctor.compon
 import { LogoutComponent } from './components/logout/logout.component';
 import { AddMedicinaComponent } from './components/add-medicina/add-medicina.component';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
+import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthGuard] },
+    { path: 'verMas/:idDate', component: DetallesCitaComponent, canActivate: [GuardAuthGuard] },
     { path: 'citas', component: CitasComponent, canActivate: [GuardAuthGuard] },
     { path: 'farmacias', component: FarmaciasComponent, canActivate: [GuardAuthGuard] },
     { path: 'informe', component: InformeComponent, canActivate: [GuardAuthGuard] },
