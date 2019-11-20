@@ -42,7 +42,7 @@ export class EditMedicineComponent implements OnInit {
   public recordatoryId;
   public time: string [];
   private hoursRecordatory: string[];
-  private recordatoryHour;
+  public recordatoryHour;
   public numberDays: boolean;
   public specificDays: boolean;
   public recordatoryAux: Recordatorio;
@@ -123,13 +123,13 @@ export class EditMedicineComponent implements OnInit {
           selectTimeHour0: [recordatory['hour'], Validators.required],
           dateStart: [this.startDate, Validators.required],
           numberDaysInput: [recordatory['numberDays'], Validators.required],
-          monday: [recordatory['daysWeek'][0], Validators.required],
-          thursday: [recordatory['daysWeek'][1], Validators.required],
-          wednesday: [recordatory['daysWeek'][2], Validators.required],
-          tuesday: [recordatory['daysWeek'][3], Validators.required],
-          friday: [recordatory['daysWeek'][4], Validators.required],
-          saturday: [recordatory['daysWeek'][5], Validators.required],
-          sunday: [recordatory['daysWeek'][6], Validators.required]
+          monday: [recordatory['daysWeek'][1], Validators.required],
+          thursday: [recordatory['daysWeek'][2], Validators.required],
+          wednesday: [recordatory['daysWeek'][3], Validators.required],
+          tuesday: [recordatory['daysWeek'][4], Validators.required],
+          friday: [recordatory['daysWeek'][5], Validators.required],
+          saturday: [recordatory['daysWeek'][6], Validators.required],
+          sunday: [recordatory['daysWeek'][0], Validators.required]
         });
       });
     }
@@ -161,7 +161,6 @@ export class EditMedicineComponent implements OnInit {
     if(!inputSelectDays) {
       this.numberDays = false;
       this.recordatoryAux.numberDays = -1;
-      //OJOOOOOO
       const editMedicineForm = this.editMedicineForm.value;
       editMedicineForm.numberDaysInput = '';
     }else{
@@ -179,23 +178,24 @@ export class EditMedicineComponent implements OnInit {
 
   updateRecordatory() {
     const editMedicineForm = this.editMedicineForm.value;
-    console.log(editMedicineForm);
     this.medicine.name = editMedicineForm.nameMedicine;
     this.medicine.quantity = editMedicineForm.quantity;
     this.medicine.quantityDose = editMedicineForm.quantityDose;
     this.medicine.unityDose = editMedicineForm.unityDose;
     if(editMedicineForm.dateStart['_d'] != undefined) {
-      console.log('dentro if');
       this.recordatoryAux.startDate = editMedicineForm.dateStart['_d'].toUTCString();
-      console.log(this.recordatoryAux.startDate);
     }else{
-      console.log('dentro else');
       this.recordatoryAux.startDate = editMedicineForm['dateStart'];
-      console.log(this.recordatoryAux.startDate);
     }
     if(editMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays != -1){
       this.recordatoryAux.numberDays = editMedicineForm.numberDaysInput;
     }else if(editMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays == -1){
+      this.recordatoryAux.numberDays = editMedicineForm.numberDaysInput;
+    }
+
+    if(editMedicineForm.numberDaysInput == ""){
+      this.recordatoryAux.numberDays = -1;
+    }else{
       this.recordatoryAux.numberDays = editMedicineForm.numberDaysInput;
     }
     
@@ -259,8 +259,6 @@ export class EditMedicineComponent implements OnInit {
         });
       });
       this.router.navigate(['home']);
-    
-    
   }
 
 }
