@@ -105,15 +105,17 @@ export class EditMedicineComponent implements OnInit {
           this.radioNumberDays = true;
           this.numberDays = true;
         }
-
+        let valueSunday;
         if(recordatory['daysWeek'].indexOf(-1) != -1){
           this.radioEveryDay = true;
           this.radioSpecificDays = false;
           this.specificDays = false;
+          valueSunday = 0;
         }else{
           this.radioEveryDay = false;
           this.radioSpecificDays = true;
           this.specificDays = true;
+          valueSunday = recordatory['daysWeek'][0];
         }
         this.editMedicineForm = this.formBuilder.group({
           nameMedicine: [medicine['name'], Validators.required],
@@ -129,7 +131,7 @@ export class EditMedicineComponent implements OnInit {
           tuesday: [recordatory['daysWeek'][4], Validators.required],
           friday: [recordatory['daysWeek'][5], Validators.required],
           saturday: [recordatory['daysWeek'][6], Validators.required],
-          sunday: [recordatory['daysWeek'][0], Validators.required]
+          sunday: [valueSunday, Validators.required]
         });
       });
     }
