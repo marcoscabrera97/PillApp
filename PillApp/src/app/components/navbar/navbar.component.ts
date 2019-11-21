@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 
@@ -7,13 +7,16 @@ import { ServiceFirebaseService } from 'src/app/services/service-firebase.servic
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
 
+export class NavbarComponent implements OnInit {  
   public href: string = "";
   isHome: boolean;
   closeMenuVar: boolean;
   date;
+  show: boolean;
+
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
+    this.show = false;
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         if(val.url == '/home'){
@@ -37,6 +40,14 @@ export class NavbarComponent implements OnInit {
 
   changeDateSelected(date){
     this.service.setActualDate(date);
+  }
+
+  classShow(){
+    if(this.show){
+      this.show = false;
+    }else{
+      this.show = true;
+    }
   }
 
 
