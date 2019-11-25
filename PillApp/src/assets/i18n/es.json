@@ -9,6 +9,8 @@
     },
     "sign": {
         "in":{
+            "username": "Nombre de usuario",
+            "password": "Contraseña",
             "password_remember": "¿Olvidó la contraseña?",
             "button": "Iniciar sesión",
             "error": "El usuario o la contraseña introducidos no son correctos",
@@ -68,6 +70,7 @@
     "saturday": "Sábado",
     "sunday": "Domingo",
     "home":{
+        "title": "Medicamentos a tomar",
         "takeMl": "Tomar {{quantityDose}} ml",
         "takePills": "Tomar {{quantityDose}} pastilla/s"
     },
