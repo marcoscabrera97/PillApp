@@ -1,0 +1,1 @@
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=41.5012100,2.1557000&radius=1500&type=pharmacy&keyword=farmacia&key=AIzaSyBtI_hiSMu6pcJcsvryBFa7jfS5dLR_bD4

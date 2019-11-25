@@ -135,4 +135,8 @@ export class ServiceFirebaseService {
   getHospital(idHospital){
     return this.http.get(this.url+'/HOSPITAL/'+idHospital+'.json');
   }
+
+  getPharmacies(lat, lng){
+    return this.http.get("/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=1000&type=pharmacy&keyword=farmacia&key=AIzaSyBtI_hiSMu6pcJcsvryBFa7jfS5dLR_bD4");
+  }
 }

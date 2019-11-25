@@ -43,6 +43,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { MessagingService } from './services/messaging.service';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.component';
+import { AgmCoreModule } from '@agm/core'
 
 
 
@@ -73,7 +74,7 @@ import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.
     EditMedicineComponent,
     DeleteRecordatory,
     DeleteRecordatoryOk,
-    DetallesCitaComponent
+    DetallesCitaComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,7 +110,10 @@ import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.
     MatCheckboxModule,
     MatRadioModule,
     AmazingTimePickerModule,
-    MatSidenavModule
+    MatSidenavModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBtI_hiSMu6pcJcsvryBFa7jfS5dLR_bD4'
+    })
   ],
   providers: [
     ServiceFirebaseService,

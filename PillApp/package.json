@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.1.0",
     "@angular/animations": "~8.2.4",
     "@angular/cdk": "~8.2.3",
     "@angular/common": "~8.2.4",
@@ -27,6 +28,7 @@
     "@angular/service-worker": "~8.2.4",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "@types/googlemaps": "^3.38.0",
     "amazing-time-picker": "^1.8.0",
     "angular-encryption-service": "^0.1.0",
     "angularfire2": "^5.2.1",
