@@ -1,6 +1,7 @@
 <div class="container">
-    <h4 class="title-page">Medicamentos a tomar</h4>
+    <h4 class="title-page">{{ 'home.title' | translate }}</h4>
     <h5 class="date">{{actualDate}}</h5>
+         
     <div class="accordion" *ngFor="let recordatory of showRecordatorios; let i=index;">
         <p class="pill-banner">
             <button class="btn btn-primary" data-toggle="collapse" (click)="openCollapse(i)" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -13,10 +14,16 @@
         <div [ngClass]="{collapse: !collapse[i]}">
             <div class="card card-body">
                     <div class="content-card">
-                        <img src="../../../assets/images/Pastillas_iconos/capsula_rojo_blanco.png" class="img-reminder">
-                        <div class="medicine">{{medicinesArray[recordatory.idMedicine].name}}</div>
-                        <div *ngIf="medicine.unityDose == 'ml'; else unityPills">{{ 'home.takeMl' | translate: {'quantityDose': medicine.quantityDose} }}</div>
-                        <ng-template #unityPills>{{ 'home.takePills' | translate: {'quantityDose': medicine.quantityDose} }}</ng-template>
+                        <div class="checkbox" *ngIf="recordatory.take">
+                            <mat-checkbox class="checkbox-input" (change)="takeMedicine(recordatory.idHistoric, recordatory.recordatoryHist, $event.checked)" [(ngModel)]="recordatory.takeMedicine"></mat-checkbox>
+                        </div>
+                        <div class="name-dosy">
+                            {{take[recordatory.idHistoric]}}
+                            <div class="medicine" *ngIf="take[recordatory.idHistoric] != undefined" [ngClass]="{'green': take[recordatory.idHistoric], 'red': !take[recordatory.idHistoric]}">{{medicinesArray[recordatory.idMedicine].name}}</div>
+                            <div class="medicine" *ngIf="take[recordatory.idHistoric] == undefined">{{medicinesArray[recordatory.idMedicine].name}}</div>
+                            <div *ngIf="medicine.unityDose == 'ml'; else unityPills">{{ 'home.takeMl' | translate: {'quantityDose': medicine.quantityDose} }}</div>
+                            <ng-template #unityPills>{{ 'home.takePills' | translate: {'quantityDose': medicine.quantityDose} }}</ng-template>
+                        </div>
                     </div>
                     <div class="actions-button">
                         <i class="fas fa-edit" [routerLink]="['/editMedicine', recordatory.id]"></i>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Inject } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Inject, PipeTransform, Pipe } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Recordatorio } from '../add-medicina/recordatorio.module';
 import { Medicina } from '../add-medicina/medicina.module';
@@ -7,6 +7,8 @@ import { MessagingService } from 'src/app/services/messaging.service';
 import { SendPushNotifactionService } from 'src/app/services/send-push-notifaction.service';
 import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.component';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import undefined from 'firebase/empty-import';
+import { RecordatorioHistorico } from './recordatorio-historico.module';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +19,7 @@ export class HomeComponent implements OnInit {
 
   public diasSemana;
   public diasMes;
-  public showRecordatorios: Recordatorio[];
+  public showRecordatorios = new Array();
   public medicine: Medicina;
   collapse: boolean[];
   public actualDate;
@@ -25,16 +27,19 @@ export class HomeComponent implements OnInit {
   public medicinesArray;
   public date;
   private recordatoriesUser: Recordatorio[];
-
+  takeRecordatorio: boolean[];
+  take: boolean[];
 
   constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog) {
+    this.take = new Array();
+    this.takeRecordatorio = [];
     var navbar = document.getElementById('navbar');
     navbar.classList.remove('display-none');
     navbar.classList.add('display-block');
     this.diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
     this.diasMes = 31;
     this.collapse = new Array(false, false, false);
-    this.showRecordatorios = new Array();
+    this.showRecordatorios = []
     this.recordatoriesUser = new Array();
     this.showRecordatories();
     this.actualDate = this.service.actualDate.toLocaleDateString();
@@ -43,6 +48,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.actualDateRef = this.service.changeDate$.subscribe((resp)  =>{
       this.actualDate = this.service.actualDate.toLocaleDateString();
+      this.showRecordatorios = [];
       this.showRecordatories();
     });
     
@@ -89,7 +95,6 @@ export class HomeComponent implements OnInit {
   }
 
   showRecordatories(){
-    this.showRecordatorios = [];
     this.service.getMedicines().subscribe(medicines => {
       var medicineIds = [];
       this.medicinesArray = medicines;
@@ -110,7 +115,17 @@ export class HomeComponent implements OnInit {
               let date = this.service.actualDate;
               let dayOfTheWeek = date.getDay();
               if((recordatorio.daysWeek[dayOfTheWeek] == 1 || recordatorio.daysWeek[0] == -1 )&& new Date(recordatorio.startDate) <= date){
-                this.showRecordatorios.push(recordatorio);
+                let dateRecordatorio = date;
+                dateRecordatorio.setHours(recordatorio.hour.substring(0,2));
+                dateRecordatorio.setMinutes(recordatorio.hour.substring(3,5));
+                let dateValueRecordatorio = new Date(dateRecordatorio);
+                if(dateValueRecordatorio <= new Date()){
+                    this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio);
+                    this.takeRecordatorio[recordatorio.id] = false;
+                    recordatorio['take'] = true;
+                }else{
+                  this.showRecordatorios.push(recordatorio);
+                }
               }
             }
           })
@@ -119,7 +134,82 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  
+  takeMedicine(idRecordatory, recordatory: any,event?: any){
+    if(idRecordatory == null){
+      window.location.reload()
+    }else{
+      recordatory['take']= event;
+      this.take[idRecordatory] = event;
+      this.service.updateRecordatoryHistoric(idRecordatory, recordatory).subscribe();
+    }
+  }
+
+  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio){
+    this.service.getRecordatoriesHistoric().subscribe(recordatories => {  
+      if(recordatories == null){
+        let historicRecordatory = new RecordatorioHistorico();
+        historicRecordatory.fecha = dateValueRecordatorio;
+        historicRecordatory.idRecordatory = idRecordatory;
+        historicRecordatory.take = false;
+        recordatorio['recordatoryHist'] = historicRecordatory;
+        this.showRecordatorios.push(recordatorio);
+        this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
+          this.showRecordatorios.push(recordatorio);
+        });
+      }else{
+        let findHistory = false;
+        let count = 0;
+        Object.keys(recordatories).forEach(recordatory => {
+          dateValueRecordatorio.setSeconds(0);
+          let dateRecordatorySelect = new Date(recordatories[recordatory].fecha);
+          dateRecordatorySelect.setSeconds(0);
+        if(recordatories[recordatory].idRecordatory == idRecordatory && dateRecordatorySelect.toString() == dateValueRecordatorio.toString()){
+          findHistory = true;
+          recordatorio['idHistoric'] = recordatory;
+          recordatorio['recordatoryHist'] = recordatories[recordatory];
+          if(recordatories[recordatory].take){
+            let recordatorioAux = recordatories[recordatory];
+            recordatorioAux.take = true;
+            this.takeRecordatorio[idRecordatory] = true;
+            recordatorio['takeMedicine'] = true;
+            this.take[recordatory] = true;
+            recordatorio['recordatoryHist'] = recordatorioAux;
+            this.service.updateRecordatoryHistoric(recordatory, recordatorioAux).subscribe();
+          }else{
+            this.take[recordatory] = false;
+            recordatorio['takeMedicine'] = false;
+          }
+          this.showRecordatorios.push(recordatorio);
+        }else if(recordatories[recordatory].idRecordatory == idRecordatory && this.service.actualDate == dateValueRecordatorio.toString()){
+          findHistory = true;
+          let historicRecordatory = new RecordatorioHistorico();
+          historicRecordatory.fecha = dateValueRecordatorio;
+          historicRecordatory.idRecordatory = idRecordatory;
+          HTMLFormControlsCollection
+          historicRecordatory.take = false;
+          recordatorio['recordatoryHist'] = historicRecordatory;
+          this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
+            this.showRecordatorios.push(recordatorio);
+          });
+          }
+          
+          let length = Object.keys(recordatories).length;
+          count = count + 1;
+          if(count == length && !findHistory){
+            let historicRecordatory = new RecordatorioHistorico();
+            historicRecordatory.fecha = dateValueRecordatorio;
+            historicRecordatory.idRecordatory = idRecordatory;
+            HTMLFormControlsCollection
+            historicRecordatory.take = false;
+            recordatorio['recordatoryHist'] = historicRecordatory;
+            this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
+              this.showRecordatorios.push(recordatorio);
+            });
+          }
+        })
+      }
+    });
+  }
 
   deleteRecordatory(idRecordatory, idMedicine){
     const dialogRef = this.dialog.open(DeleteRecordatory, {
@@ -181,4 +271,24 @@ export class DeleteRecordatoryOk {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+@Pipe({ name: 'keys',  pure: false })
+export class KeysPipe implements PipeTransform {
+    transform(value: any, args?: any[]): any[] {
+      
+      if(value) {
+        // create instance vars to store keys and final output
+        let keyArr: any[] = Object.keys(value),
+            dataArr = [];
+
+        // loop through the object,
+        // pushing values to the return array
+        keyArr.forEach((key: any) => {
+            dataArr.push(value[key]);
+        });
+        // return the resulting array
+        return dataArr;
+      }
+    }
 }

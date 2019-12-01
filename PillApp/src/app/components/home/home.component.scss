@@ -2,6 +2,29 @@
     margin-top: 25px;
 }
 
+.content-card{
+    display: flex;
+    .checkbox{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .checkbox-input{
+            width: 18px;
+            height: 18px;
+        }
+    }
+    .name-dosy{
+        margin-left: 25px;
+    }
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
 
 .pill-banner {
     margin-bottom: 0px;

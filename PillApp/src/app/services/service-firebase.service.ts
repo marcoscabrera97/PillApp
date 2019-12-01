@@ -139,4 +139,21 @@ export class ServiceFirebaseService {
   getPharmacies(lat, lng){
     return this.http.get("/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=1000&type=pharmacy&keyword=farmacia&key=AIzaSyBtI_hiSMu6pcJcsvryBFa7jfS5dLR_bD4");
   }
+
+  addRecordatoryHistoric(recordatory){
+    return this.http.post(this.url+'/RECORDATORIO_HISTORICO.json', recordatory).pipe(
+      map(resp => {
+        console.log(resp);
+        return resp;
+      })
+    );
+  }
+
+  getRecordatoriesHistoric(){
+    return this.http.get(this.url+'/RECORDATORIO_HISTORICO.json');
+  }
+
+  updateRecordatoryHistoric(idHistoricRecordatory, recordatoryHistoric){
+    return this.http.put(this.url+'RECORDATORIO_HISTORICO/'+idHistoricRecordatory+'.json', recordatoryHistoric);
+  }
 }
