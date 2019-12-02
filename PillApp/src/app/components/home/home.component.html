@@ -18,7 +18,6 @@
                             <mat-checkbox class="checkbox-input" (change)="takeMedicine(recordatory.idHistoric, recordatory.recordatoryHist, $event.checked)" [(ngModel)]="recordatory.takeMedicine"></mat-checkbox>
                         </div>
                         <div class="name-dosy">
-                            {{take[recordatory.idHistoric]}}
                             <div class="medicine" *ngIf="take[recordatory.idHistoric] != undefined" [ngClass]="{'green': take[recordatory.idHistoric], 'red': !take[recordatory.idHistoric]}">{{medicinesArray[recordatory.idMedicine].name}}</div>
                             <div class="medicine" *ngIf="take[recordatory.idHistoric] == undefined">{{medicinesArray[recordatory.idMedicine].name}}</div>
                             <div *ngIf="medicine.unityDose == 'ml'; else unityPills">{{ 'home.takeMl' | translate: {'quantityDose': medicine.quantityDose} }}</div>

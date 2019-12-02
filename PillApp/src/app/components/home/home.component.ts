@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit {
                 dateRecordatorio.setMinutes(recordatorio.hour.substring(3,5));
                 let dateValueRecordatorio = new Date(dateRecordatorio);
                 if(dateValueRecordatorio <= new Date()){
-                    this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio);
+                    this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name']);
                     this.takeRecordatorio[recordatorio.id] = false;
                     recordatorio['take'] = true;
                 }else{
@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
 
   takeMedicine(idRecordatory, recordatory: any,event?: any){
     if(idRecordatory == null){
-      window.location.reload()
+      window.location.reload();
     }else{
       recordatory['take']= event;
       this.take[idRecordatory] = event;
@@ -144,13 +144,14 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio){
+  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine){
     this.service.getRecordatoriesHistoric().subscribe(recordatories => {  
       if(recordatories == null){
         let historicRecordatory = new RecordatorioHistorico();
         historicRecordatory.fecha = dateValueRecordatorio;
         historicRecordatory.idRecordatory = idRecordatory;
-        historicRecordatory.take = false;
+        historicRecordatory.take = true;
+        historicRecordatory.name = nameMedicine;
         recordatorio['recordatoryHist'] = historicRecordatory;
         this.showRecordatorios.push(recordatorio);
         this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
@@ -186,7 +187,8 @@ export class HomeComponent implements OnInit {
           historicRecordatory.fecha = dateValueRecordatorio;
           historicRecordatory.idRecordatory = idRecordatory;
           HTMLFormControlsCollection
-          historicRecordatory.take = false;
+          historicRecordatory.take = true;
+          historicRecordatory.name = nameMedicine;
           recordatorio['recordatoryHist'] = historicRecordatory;
           this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
             this.showRecordatorios.push(recordatorio);
@@ -200,7 +202,8 @@ export class HomeComponent implements OnInit {
             historicRecordatory.fecha = dateValueRecordatorio;
             historicRecordatory.idRecordatory = idRecordatory;
             HTMLFormControlsCollection
-            historicRecordatory.take = false;
+            historicRecordatory.take = true;
+            historicRecordatory.name = nameMedicine;
             recordatorio['recordatoryHist'] = historicRecordatory;
             this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
               this.showRecordatorios.push(recordatorio);
@@ -271,24 +274,4 @@ export class DeleteRecordatoryOk {
   onNoClick(): void {
     this.dialogRef.close();
   }
-}
-
-@Pipe({ name: 'keys',  pure: false })
-export class KeysPipe implements PipeTransform {
-    transform(value: any, args?: any[]): any[] {
-      
-      if(value) {
-        // create instance vars to store keys and final output
-        let keyArr: any[] = Object.keys(value),
-            dataArr = [];
-
-        // loop through the object,
-        // pushing values to the return array
-        keyArr.forEach((key: any) => {
-            dataArr.push(value[key]);
-        });
-        // return the resulting array
-        return dataArr;
-      }
-    }
 }

@@ -1,1 +1,23 @@
-<p>informe works!</p>
+<div class="header-progress">
+        {{ 'report.semanalProgress' | translate }}
+        <div class="progress">
+                <div class="progress-bar" role="progressbar" [style.width]="percentatge + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percentatge/100 | percent: '2.1-2'}}</div>
+              </div>
+</div>
+<div class="container">
+    <div class="title-page">
+        {{'report.pacientInform' | translate }}
+    </div> 
+    <div class="content">
+        <div *ngFor="let day of days">
+            <div *ngFor="let recordatory of day; let i = index">
+                <div *ngIf="i == 0" class="date">{{recordatory.date}}</div>
+                <div class="recordatory">
+                    <div *ngIf="recordatory.take" class="takeReportYes"><i class="fas fa-check-circle"></i></div>
+                    <div *ngIf="!recordatory.take" class="takeReportNot"><i class="fas fa-times-circle"></i></div>
+                    <div class="medicineName">{{recordatory.name}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
