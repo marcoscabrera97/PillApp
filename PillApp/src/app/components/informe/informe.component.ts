@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
-import { NgProgress } from 'ngx-progressbar';
-
-
-
 
 @Component({
   selector: 'app-informe',
@@ -17,7 +13,7 @@ export class InformeComponent implements OnInit {
   public recordatories;
   public percentatge;
 
-  constructor(private service: ServiceFirebaseService, public ngProgress: NgProgress) { 
+  constructor(private service: ServiceFirebaseService) { 
     this.recordatories = new Array();
     this.days = new Array();
     this.percentatge = 0;

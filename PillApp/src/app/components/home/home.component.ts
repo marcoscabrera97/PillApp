@@ -153,7 +153,6 @@ export class HomeComponent implements OnInit {
         historicRecordatory.take = true;
         historicRecordatory.name = nameMedicine;
         recordatorio['recordatoryHist'] = historicRecordatory;
-        this.showRecordatorios.push(recordatorio);
         this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
           this.showRecordatorios.push(recordatorio);
         });
