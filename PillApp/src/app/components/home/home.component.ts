@@ -72,8 +72,8 @@ export class HomeComponent implements OnInit {
           let currentMedicine = currentMedicines[currentRecordatory.idMedicine];
           if(currentMedicine.quantityDose*2 <= currentMedicine.quantity){
             if(currentMedicine.quantity > 0){
-              currentMedicine.quantity = currentMedicine.quantity - 1;
-              this.service.updateMedicine(currentMedicine, currentRecordatory.idMedicine);
+              currentMedicine.quantity = currentMedicine.quantity - 1;             
+              this.service.updateMedicine(currentMedicine, currentRecordatory.idMedicine).subscribe();
             }
           }else{
             this.sendPush.sendBuyMedicine();
