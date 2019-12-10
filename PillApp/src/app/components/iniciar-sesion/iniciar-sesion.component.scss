@@ -10,7 +10,9 @@
 }
 
 .sign-in {
-    margin-left: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .link-sign-in {
@@ -18,14 +20,17 @@
     font-family: 'Arial Unicode MS';
     font-size: 16px;
 }
-.sign-in-form {
-    @media screen and (min-width: $mobileSize) {
-        width: 252px;
-        margin: 0 auto;
-    }
-}
+
 .center-button{
     margin-top: 20px;
+}
+
+.labels-sign-in{
+    width: 63%;
+    max-width: 252px;
+    .mat-form-field{
+        width: 100%;
+    }
 }
 
 
@@ -36,20 +41,18 @@
 }
 .center-sign-up {
     margin-top: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     span {
-        padding: 0 109px;
         @media screen and (min-width: $mobileSize) {
             padding: 0px;
         }
     }
     a{
-        padding: 0 132px;
         @media screen and (min-width: $mobileSize) {
             padding: 0 21px;
         }
-    }
-    @media screen and (min-width: $mobileSize) {
-        width: 141px;
-        margin: 0 auto;
     }
 }

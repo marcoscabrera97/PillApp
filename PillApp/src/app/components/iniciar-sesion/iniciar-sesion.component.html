@@ -2,24 +2,30 @@
     PillApp
 </div>
 <div class="sign-in"> 
-    <form [formGroup]="signInForm" class="sign-in-form">
-        <mat-form-field>
-            <mat-label>{{ 'sign.in.username' | translate}}</mat-label>
-            <input matInput formControlName="userName">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>{{ 'sign.in.password' | translate}}</mat-label>
-            <input matInput formControlName="password" type="password">
-        </mat-form-field>
-        <br>
-        <a class="link-sign-in" href="#">{{ 'sign.in.password_remember' | translate}}</a>
-    </form>
+    <div class="labels-sign-in">
+        <form [formGroup]="signInForm" class="sign-in-form">
+            <mat-form-field>
+                <mat-label>{{ 'sign.in.username' | translate}}</mat-label>
+                <input matInput formControlName="userName">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ 'sign.in.password' | translate}}</mat-label>
+                <input matInput formControlName="password" type="password">
+            </mat-form-field>
+            <br>
+            <a class="link-sign-in" href="#">{{ 'sign.in.password_remember' | translate}}</a>
+        </form>
+    </div>
 </div> 
 <div class="center-button">
     <button mat-raised-button class="content-button" (click)="signIn()">{{ 'sign.in.button' | translate}}</button>
 </div>
 <div class="center-sign-up">
-    <span class="not-count-text">{{ 'sign.up.text' | translate}}</span>
-    <a class="link-sign-in" routerLink="/register">{{ 'sign.up.link' | translate}}</a>
+    <div class="no-count">
+        <span class="not-count-text">{{ 'sign.up.text' | translate}}</span>
+    </div>
+    <div class="link-create-account">
+        <a class="link-sign-in" routerLink="/register">{{ 'sign.up.link' | translate}}</a>
+    </div>
 </div>
 
