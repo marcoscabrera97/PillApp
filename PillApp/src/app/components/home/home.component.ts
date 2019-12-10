@@ -29,8 +29,10 @@ export class HomeComponent implements OnInit {
   private recordatoriesUser: Recordatorio[];
   takeRecordatorio: boolean[];
   take: boolean[];
+  recordatoryIdHistoric;
 
   constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog) {
+    this.recordatoryIdHistoric = new Array();
     this.take = new Array();
     this.takeRecordatorio = [];
     var navbar = document.getElementById('navbar');
@@ -163,40 +165,26 @@ export class HomeComponent implements OnInit {
           dateValueRecordatorio.setSeconds(0);
           let dateRecordatorySelect = new Date(recordatories[recordatory].fecha);
           dateRecordatorySelect.setSeconds(0);
-        if(recordatories[recordatory].idRecordatory == idRecordatory && dateRecordatorySelect.toString() == dateValueRecordatorio.toString()){
-          findHistory = true;
-          recordatorio['idHistoric'] = recordatory;
-          recordatorio['recordatoryHist'] = recordatories[recordatory];
-          if(recordatories[recordatory].take){
-            let recordatorioAux = recordatories[recordatory];
-            recordatorioAux.take = true;
-            this.takeRecordatorio[idRecordatory] = true;
-            recordatorio['takeMedicine'] = true;
-            this.take[recordatory] = true;
-            recordatorio['recordatoryHist'] = recordatorioAux;
-            this.service.updateRecordatoryHistoric(recordatory, recordatorioAux).subscribe();
-          }else{
-            this.take[recordatory] = false;
-            recordatorio['takeMedicine'] = false;
-          }
-          this.showRecordatorios.push(recordatorio);
-        }else if(recordatories[recordatory].idRecordatory == idRecordatory && this.service.actualDate == dateValueRecordatorio.toString()){
-          findHistory = true;
-          let historicRecordatory = new RecordatorioHistorico();
-          historicRecordatory.fecha = dateValueRecordatorio;
-          historicRecordatory.idRecordatory = idRecordatory;
-          HTMLFormControlsCollection
-          historicRecordatory.take = true;
-          historicRecordatory.name = nameMedicine;
-          recordatorio['recordatoryHist'] = historicRecordatory;
-          this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
+          if(recordatories[recordatory].idRecordatory == idRecordatory && dateRecordatorySelect.toString() == dateValueRecordatorio.toString() && this.recordatoryIdHistoric.indexOf(idRecordatory.toString()) == -1){
+            findHistory = true;
+            recordatorio['idHistoric'] = recordatory;
+            recordatorio['recordatoryHist'] = recordatories[recordatory];
+            if(recordatories[recordatory].take){
+              let recordatorioAux = recordatories[recordatory];
+              recordatorioAux.take = true;
+              this.takeRecordatorio[idRecordatory] = true;
+              recordatorio['takeMedicine'] = true;
+              this.take[recordatory] = true;
+              recordatorio['recordatoryHist'] = recordatorioAux;
+              this.service.updateRecordatoryHistoric(recordatory, recordatorioAux).subscribe();
+            }else{
+              this.take[recordatory] = false;
+              recordatorio['takeMedicine'] = false;
+            }
+            this.recordatoryIdHistoric.push(idRecordatory);
             this.showRecordatorios.push(recordatorio);
-          });
-          }
-          
-          let length = Object.keys(recordatories).length;
-          count = count + 1;
-          if(count == length && !findHistory){
+          }else if(recordatories[recordatory].idRecordatory == idRecordatory && this.service.actualDate == dateValueRecordatorio.toString() && this.recordatoryIdHistoric.indexOf(idRecordatory.toString()) == -1){
+            findHistory = true;
             let historicRecordatory = new RecordatorioHistorico();
             historicRecordatory.fecha = dateValueRecordatorio;
             historicRecordatory.idRecordatory = idRecordatory;
@@ -204,14 +192,34 @@ export class HomeComponent implements OnInit {
             historicRecordatory.take = true;
             historicRecordatory.name = nameMedicine;
             recordatorio['recordatoryHist'] = historicRecordatory;
+            this.recordatoryIdHistoric.push(idRecordatory);
             this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
               this.showRecordatorios.push(recordatorio);
             });
-          }
+            }
+            
+            let length = Object.keys(recordatories).length;
+            count = count + 1;
+            if(count == length && !findHistory){
+              let historicRecordatory = new RecordatorioHistorico();
+              historicRecordatory.fecha = dateValueRecordatorio;
+              historicRecordatory.idRecordatory = idRecordatory;
+              HTMLFormControlsCollection
+              historicRecordatory.take = true;
+              historicRecordatory.name = nameMedicine;
+              recordatorio['recordatoryHist'] = historicRecordatory;
+              this.recordatoryIdHistoric.push(idRecordatory);
+              this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
+                this.showRecordatorios.push(recordatorio);
+              });
+              
+            }
         })
       }
     });
+   
   }
+
 
   deleteRecordatory(idRecordatory, idMedicine){
     const dialogRef = this.dialog.open(DeleteRecordatory, {
@@ -242,6 +250,13 @@ export class DeleteRecordatory {
       this.service.deleteRecordatory(this.idRecordatory).subscribe(resp => {
         this.service.deleteMedicine(this.idMedicine).subscribe(resp => {
           this.throwFailSignIn();
+        });
+      });
+      this.service.getRecordatoriesHistoric().subscribe(recordatoryHist => {
+        Object.keys(recordatoryHist).forEach(idRecordatorio => {
+          if(this.idRecordatory == recordatoryHist[idRecordatorio].idRecordatory){
+            this.service.deleteRecordatoryHistoric(idRecordatorio).subscribe();
+          }
         });
       });
   }

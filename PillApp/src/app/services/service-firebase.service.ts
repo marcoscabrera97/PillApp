@@ -156,4 +156,8 @@ export class ServiceFirebaseService {
   updateRecordatoryHistoric(idHistoricRecordatory, recordatoryHistoric){
     return this.http.put(this.url+'RECORDATORIO_HISTORICO/'+idHistoricRecordatory+'.json', recordatoryHistoric);
   }
+
+  deleteRecordatoryHistoric(idHistoricRecordatory){
+    return this.http.delete(this.url+'/RECORDATORIO_HISTORICO/'+idHistoricRecordatory+'.json');
+  }
 }
