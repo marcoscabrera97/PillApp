@@ -2,33 +2,37 @@
     <div class="title">
         {{ 'sign.up.title' | translate }}
     </div>
-    <form [formGroup]="signUpForm" class="sign-up-form">
-        <mat-form-field>
-            <mat-label>{{ 'sign.up.name' | translate }}</mat-label>
-            <input matInput formControlName="name">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>{{ 'sign.up.surname' | translate }}</mat-label>
-            <input matInput formControlName="surname">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>{{ 'sign.up.username' | translate }}</mat-label>
-            <input matInput formControlName="username">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>{{ 'sign.up.password' | translate }}</mat-label>
-            <input matInput formControlName="password1" type="password">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>{{ 'sign.up.password' | translate }}</mat-label>
-            <input matInput formControlName="password2" type="password">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>{{ 'sign.up.email' | translate }}</mat-label>
-            <input matInput formControlName="email">
-        </mat-form-field>
-    </form>
-    <div class="center-button">
-        <button mat-raised-button class="sign-up-button" (click)="register()">{{ 'sign.up.link' | translate}}</button>
+    <div class="sign-up-form-content">
+        <form [formGroup]="signUpForm" class="sign-up-form">
+            <mat-form-field>
+                <mat-label>{{ 'sign.up.name' | translate }}</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ 'sign.up.surname' | translate }}</mat-label>
+                <input matInput formControlName="surname">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ 'sign.up.username' | translate }}</mat-label>
+                <input matInput formControlName="username">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ 'sign.up.password' | translate }}</mat-label>
+                <input matInput formControlName="password1" type="password">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ 'sign.up.password' | translate }}</mat-label>
+                <input matInput formControlName="password2" type="password">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{ 'sign.up.email' | translate }}</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="center-button-div">
+        <div class="center-button">
+            <button mat-raised-button class="sign-up-button" (click)="register()">{{ 'sign.up.link' | translate}}</button>
+        </div>
     </div>
 </div>

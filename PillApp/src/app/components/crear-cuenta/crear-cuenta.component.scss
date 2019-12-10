@@ -5,8 +5,10 @@
     margin-bottom: 20px;
 }
 .sign-up-form {
-    padding-left: 16px;
-    width: 197px;
+    max-width: 252px;
+    .mat-form-field{
+        width: 100%;
+    }
 }
 .sign-up-button {
     background-color: #0788FF;
@@ -19,8 +21,18 @@
     padding: 0 58px;
     margin-top: 30px;
 }
-.center-button {
-    width: 244px;
-    margin: 0 auto;
-    margin-bottom: 20px;
+.sign-up-form-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.center-button-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .center-button {
+        margin-bottom: 20px;
+        width: auto;
+        margin: unset;
+    }
 }
