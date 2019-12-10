@@ -19,9 +19,10 @@ export class ListaMedicamentosComponent implements OnInit {
   getMedicines(){
     this.service.getMedicines().subscribe(medicines => {
       Object.keys(medicines).forEach(medicine => {
-        this.medicines.push(medicines[medicine]);
+        if(medicines[medicine].idUser == this.service.userToken){
+          this.medicines.push(medicines[medicine]);
+        }
       });
-      console.log(this.medicines);
     })
   }
 
