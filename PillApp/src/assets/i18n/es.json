@@ -60,7 +60,11 @@
         "specific_days": "Seleccione los días de la semana",
         "pills": "pastillas",
         "take": "Cantidad a tomar",
-        "numberRecorders": "Selecciona el número de recordatorios"
+        "numberRecorders": "Selecciona el número de recordatorios",
+        "errorMessage":{
+            "title": "Error en añadir un recordatorio",
+            "description": "Falta introducir algunos de los parámetros obligatorios"
+        }
     },
     "monday": "Lunes",
     "tuesday": "Martes",

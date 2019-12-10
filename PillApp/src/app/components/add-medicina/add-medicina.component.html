@@ -17,7 +17,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="subTitle">Cantidad de la dosis</div>
+        <div class="subTitle">{{ 'add-medicine.quantity_dose' | translate }}</div>
         <div class="flex">
             <mat-form-field class="quantityDose">
                 <input matInput formControlName="quantityDose">
@@ -28,7 +28,7 @@
           <mat-form-field>
                 <mat-label>{{ 'add-medicine.numberRecorders' | translate}}</mat-label>
                 <mat-select #selectDayOption (selectionChange)="selectDayDoses(selectDayOption.value)">
-                  <mat-option  value="1dose">{{ 'add-medicine.one_per_day' | translate }}</mat-option>
+                  <mat-option value="1dose">{{ 'add-medicine.one_per_day' | translate }}</mat-option>
                   <mat-option value="2dose">{{ 'add-medicine.two_per_day' | translate }}</mat-option>
                   <mat-option value="3dose">{{ 'add-medicine.three_per_day' | translate }}</mat-option>
                   <mat-option value="4dose">{{ 'add-medicine.four_per_day' | translate }}</mat-option>
