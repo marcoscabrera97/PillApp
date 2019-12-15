@@ -32,7 +32,7 @@ import { ServiceFirebaseService } from './services/service-firebase.service';
 import { environment } from 'src/environments/environment.prod';
 import { HomeDoctorComponent } from './components/home-doctor/home-doctor.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { AddMedicinaComponent } from './components/add-medicina/add-medicina.component';
+import { AddMedicinaComponent, ErrorAddMedicine } from './components/add-medicina/add-medicina.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material';
@@ -75,6 +75,7 @@ import { AgmCoreModule } from '@agm/core'
     DeleteRecordatory,
     DeleteRecordatoryOk,
     DetallesCitaComponent,
+    ErrorAddMedicine
   ],
   imports: [
     BrowserModule,
@@ -131,7 +132,8 @@ import { AgmCoreModule } from '@agm/core'
     DialogMailExistent,
     DialogEmptyParameter,
     DeleteRecordatory,
-    DeleteRecordatoryOk
+    DeleteRecordatoryOk,
+    ErrorAddMedicine
   ]
 })
 export class AppModule { }

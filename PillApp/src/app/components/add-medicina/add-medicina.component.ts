@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import { ɵHttpInterceptingHandler } from '@angular/common/http';
-import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material';
+import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE, MatDialogRef, MatDialog } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -12,6 +12,8 @@ import { Medicina } from './medicina.module';
 import { Recordatorio } from './recordatorio.module';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Router } from '@angular/router';
+import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.component';
+import { FooterRowOutlet } from '@angular/cdk/table';
 
 const moment = _rollupMoment || _moment;
 
@@ -53,7 +55,7 @@ export class AddMedicinaComponent implements OnInit {
 
   public idMedicine: number;
 
-  constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router) {
+  constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router, public dialog: MatDialog) {
     this.numberDays = false;
     this.specificDays = false;
     this.time = [":", ":", ":", ":"];
@@ -136,82 +138,165 @@ export class AddMedicinaComponent implements OnInit {
 
   saveMedicine(){
     const addMedicineForm = this.addMedicineForm.value;
-    this.medicine.name = addMedicineForm.nameMedicine;
-    this.medicine.quantity = addMedicineForm.quantity;
-    this.medicine.quantityDose = addMedicineForm.quantityDose;
-    this.medicine.unityDose = addMedicineForm.unityDose;
-    this.recordatoryAux.startDate = addMedicineForm.dateStart['_d'].toUTCString(); /*date.date+"/"+(date.month+1)+"/"+date.year;*/
-    if(addMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays != -1){
-      this.recordatoryAux.numberDays = addMedicineForm.numberDaysInput;
-    }else if(addMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays == -1){
-      this.recordatoryAux.numberDays = addMedicineForm.numberDaysInput;
-    }
-    this.recordatoryAux.daysWeek = new Array();
-    if(addMedicineForm.sunday == true){
-      this.recordatoryAux.daysWeek.push(1);
-    }else{
-      this.recordatoryAux.daysWeek.push(0);
-    }
-
-    if(addMedicineForm.monday == true){
-      this.recordatoryAux.daysWeek.push(1);
-    }else{
-      this.recordatoryAux.daysWeek.push(0);
-    }
-
-    if(addMedicineForm.thursday == true){
-      this.recordatoryAux.daysWeek.push(1);
-    }else{
-      this.recordatoryAux.daysWeek.push(0);
-    }
-
-    if(addMedicineForm.wednesday == true){
-      this.recordatoryAux.daysWeek.push(1);
-    }else{
-      this.recordatoryAux.daysWeek.push(0);
-    }
-
-    if(addMedicineForm.tuesday == true){
-      this.recordatoryAux.daysWeek.push(1);
-    }else{
-      this.recordatoryAux.daysWeek.push(0);
-    }
-
-    if(addMedicineForm.friday == true){
-      this.recordatoryAux.daysWeek.push(1);
-    }else{
-      this.recordatoryAux.daysWeek.push(0);
-    }
-
-    if(addMedicineForm.saturday == true){
-      this.recordatoryAux.daysWeek.push(1);
-    }else{
-      this.recordatoryAux.daysWeek.push(0);
-    }
-
-    const daysWeekAux = this.recordatoryAux.daysWeek.filter(dayWeek => dayWeek == 0);
-    if(daysWeekAux.length == 7){
-      this.recordatoryAux.daysWeek = [];
-      this.recordatoryAux.daysWeek.push(-1);
-    }
-
-    this.medicine.idUser = this.service.userToken;
-    this.service.addMedicine(this.medicine).subscribe(resp => {
-      this.idMedicine = resp['name'];
-      this.recordatoryAux.idMedicine = this.idMedicine;
-      var count = 0;
-      for(let hour of this.hoursRecordatory ){
-        if(hour != "-1" && count < this.selectTime.length){
-          this.recordatory = new Recordatorio();
-          this.recordatory = this.recordatoryAux;
-          this.recordatory.hour = hour;
-          this.service.addRecordatory(this.recordatory).subscribe(resp => {
-          })
-        }
-        count++;
+    var addMedicineOk = this.checkFormValues(addMedicineForm);
+    if(addMedicineOk){
+      this.medicine.name = addMedicineForm.nameMedicine;
+      this.medicine.quantity = addMedicineForm.quantity;
+      this.medicine.quantityDose = addMedicineForm.quantityDose;
+      this.medicine.unityDose = addMedicineForm.unityDose;
+      this.recordatoryAux.startDate = addMedicineForm.dateStart['_d'].toUTCString(); /*date.date+"/"+(date.month+1)+"/"+date.year;*/
+      if(addMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays != -1){
+        this.recordatoryAux.numberDays = addMedicineForm.numberDaysInput;
+      }else if(addMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays == -1){
+        this.recordatoryAux.numberDays = addMedicineForm.numberDaysInput;
       }
-      this.router.navigate(['home']);
-    });
+      this.recordatoryAux.daysWeek = new Array();
+      if(addMedicineForm.sunday == true){
+        this.recordatoryAux.daysWeek.push(1);
+      }else{
+        this.recordatoryAux.daysWeek.push(0);
+      }
+
+      if(addMedicineForm.monday == true){
+        this.recordatoryAux.daysWeek.push(1);
+      }else{
+        this.recordatoryAux.daysWeek.push(0);
+      }
+
+      if(addMedicineForm.thursday == true){
+        this.recordatoryAux.daysWeek.push(1);
+      }else{
+        this.recordatoryAux.daysWeek.push(0);
+      }
+
+      if(addMedicineForm.wednesday == true){
+        this.recordatoryAux.daysWeek.push(1);
+      }else{
+        this.recordatoryAux.daysWeek.push(0);
+      }
+
+      if(addMedicineForm.tuesday == true){
+        this.recordatoryAux.daysWeek.push(1);
+      }else{
+        this.recordatoryAux.daysWeek.push(0);
+      }
+
+      if(addMedicineForm.friday == true){
+        this.recordatoryAux.daysWeek.push(1);
+      }else{
+        this.recordatoryAux.daysWeek.push(0);
+      }
+
+      if(addMedicineForm.saturday == true){
+        this.recordatoryAux.daysWeek.push(1);
+      }else{
+        this.recordatoryAux.daysWeek.push(0);
+      }
+
+      const daysWeekAux = this.recordatoryAux.daysWeek.filter(dayWeek => dayWeek == 0);
+      if(daysWeekAux.length == 7){
+        this.recordatoryAux.daysWeek = [];
+        this.recordatoryAux.daysWeek.push(-1);
+      }
+
+      this.medicine.idUser = this.service.userToken;
+      this.service.addMedicine(this.medicine).subscribe(resp => {
+        this.idMedicine = resp['name'];
+        this.recordatoryAux.idMedicine = this.idMedicine;
+        var count = 0;
+        for(let hour of this.hoursRecordatory ){
+          if(hour != "-1" && count < this.selectTime.length){
+            this.recordatory = new Recordatorio();
+            this.recordatory = this.recordatoryAux;
+            this.recordatory.hour = hour;
+            this.service.addRecordatory(this.recordatory).subscribe(resp => {
+            })
+          }
+          count++;
+        }
+        this.router.navigate(['home']);
+      });
+    }
     
+  }
+
+  checkFormValues(addMedicineForm){
+    var formOk = true;
+    var specificDay = null;
+    Object.keys(addMedicineForm).forEach(element => {
+      if(formOk != false){
+        if((element == 'monday' || element == 'tuesday' || element == 'wednesday' || element == 'thursday' || element == 'friday' || element == 'saturday' || element == 'sunday') && this.specificDays){
+          if(specificDay == null || !specificDay){
+            if(addMedicineForm[element] != ''){
+              specificDay = true;
+            }else{
+              specificDay = false;
+            }
+          }
+        }
+
+        if(element == 'nameMedicine' && addMedicineForm[element] == ''){
+          formOk = false;
+        }
+        if(element == 'numberDaysInput' && addMedicineForm[element] == '' && this.numberDays){
+          formOk = false;
+        }
+        if(element == 'quantity' && addMedicineForm[element] == ''){
+          formOk = false;
+        }
+        if(element == 'quantityDose' && addMedicineForm[element] == ''){
+          formOk = false;
+        }
+        if(element == 'unitiyDose' && addMedicineForm[element] == ''){
+          formOk = false;
+        }
+        if(element == 'dateStart' && addMedicineForm[element] == ''){
+          formOk = false;
+        }
+      }
+    });
+ 
+    let countHoursRecordatory = 0;
+    let countTime = 0;
+    for(var i = 0; i < this.hoursRecordatory.length; i++){
+      if(this.hoursRecordatory[i] != "-1"){
+        countHoursRecordatory = countHoursRecordatory + 1;
+      }
+      if(this.time[i] != ":"){
+        countTime = countTime + 1;
+      }
+    }
+
+    if(countHoursRecordatory != countTime){
+      formOk = false;
+    }
+    
+    if(specificDay == null){
+      specificDay = true;
+    }
+
+    if(formOk == false || !specificDay){
+      formOk = false;
+      const dialogRef = this.dialog.open(ErrorAddMedicine, {
+        width: '250px'
+      });
+    }
+    
+   
+    return formOk;
+  }
+}
+
+@Component({
+  selector: 'error-addMedicine',
+  templateUrl: 'error-addMedicine.html',
+})
+export class ErrorAddMedicine {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

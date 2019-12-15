@@ -15,7 +15,7 @@
             <div class="card card-body">
                     <div class="content-card">
                         <div class="checkbox" *ngIf="recordatory.take">
-                            <mat-checkbox class="checkbox-input" (change)="takeMedicine(recordatory.idHistoric, recordatory.recordatoryHist, $event.checked)" [(ngModel)]="recordatory.takeMedicine"></mat-checkbox>
+                            <mat-checkbox class="checkbox-input" (change)="takeMedicine(recordatory.idHistoric, recordatory.recordatoryHist, $event.checked)" [(ngModel)]="recordatory.recordatoryHist.take"></mat-checkbox>
                         </div>
                         <div class="name-dosy">
                             <div class="medicine" *ngIf="take[recordatory.idHistoric] != undefined" [ngClass]="{'green': take[recordatory.idHistoric], 'red': !take[recordatory.idHistoric]}">{{medicinesArray[recordatory.idMedicine].name}}</div>

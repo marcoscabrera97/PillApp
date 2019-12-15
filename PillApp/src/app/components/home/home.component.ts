@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
   recordatoryIdHistoric;
 
   constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog) {
+    
     this.recordatoryIdHistoric = new Array();
     this.take = new Array();
     this.takeRecordatorio = [];
@@ -123,7 +124,6 @@ export class HomeComponent implements OnInit {
                 let dateValueRecordatorio = new Date(dateRecordatorio);
                 if(dateValueRecordatorio <= new Date()){
                     this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name']);
-                    this.takeRecordatorio[recordatorio.id] = false;
                     recordatorio['take'] = true;
                 }else{
                   this.showRecordatorios.push(recordatorio);
@@ -137,13 +137,9 @@ export class HomeComponent implements OnInit {
   }
 
   takeMedicine(idRecordatory, recordatory: any,event?: any){
-    if(idRecordatory == null){
-      window.location.reload();
-    }else{
-      recordatory['take']= event;
-      this.take[idRecordatory] = event;
-      this.service.updateRecordatoryHistoric(idRecordatory, recordatory).subscribe();
-    }
+    recordatory['take']= event;
+    this.take[idRecordatory] = event;
+    this.service.updateRecordatoryHistoric(idRecordatory, recordatory).subscribe();
   }
 
   getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine){
@@ -152,11 +148,16 @@ export class HomeComponent implements OnInit {
         let historicRecordatory = new RecordatorioHistorico();
         historicRecordatory.fecha = dateValueRecordatorio;
         historicRecordatory.idRecordatory = idRecordatory;
-        historicRecordatory.take = true;
+        historicRecordatory.take = false;
         historicRecordatory.name = nameMedicine;
         recordatorio['recordatoryHist'] = historicRecordatory;
-        this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
+        recordatorio['take'] = true;
+        this.service.addRecordatoryHistoric(historicRecordatory).subscribe(idRecordatoryHistoric => {
+          recordatorio['idHistoric'] = idRecordatoryHistoric['name'];
           this.showRecordatorios.push(recordatorio);
+          this.recordatoryIdHistoric.push(idRecordatory);
+          this.take[idRecordatoryHistoric['name']] = false;
+
         });
       }else{
         let findHistory = false;
@@ -165,55 +166,51 @@ export class HomeComponent implements OnInit {
           dateValueRecordatorio.setSeconds(0);
           let dateRecordatorySelect = new Date(recordatories[recordatory].fecha);
           dateRecordatorySelect.setSeconds(0);
-          if(recordatories[recordatory].idRecordatory == idRecordatory && dateRecordatorySelect.toString() == dateValueRecordatorio.toString() && this.recordatoryIdHistoric.indexOf(idRecordatory.toString()) == -1){
+          this.service.actualDate.setSeconds(0);
+          
+          if(recordatories[recordatory].idRecordatory == idRecordatory && dateRecordatorySelect.toString() == dateValueRecordatorio.toString()){
             findHistory = true;
             recordatorio['idHistoric'] = recordatory;
             recordatorio['recordatoryHist'] = recordatories[recordatory];
             if(recordatories[recordatory].take){
               let recordatorioAux = recordatories[recordatory];
               recordatorioAux.take = true;
+              recordatorioAux.take = recordatories[recordatory].take;;
               this.takeRecordatorio[idRecordatory] = true;
-              recordatorio['takeMedicine'] = true;
-              this.take[recordatory] = true;
+
+              recordatorio['idHistoric'] = recordatory;
               recordatorio['recordatoryHist'] = recordatorioAux;
+              this.take[recordatory] = true;
               this.service.updateRecordatoryHistoric(recordatory, recordatorioAux).subscribe();
             }else{
               this.take[recordatory] = false;
-              recordatorio['takeMedicine'] = false;
+              let recordatorioAux = recordatories[recordatory];
+              recordatorioAux.take = false;
+              recordatorioAux.take = recordatories[recordatory].take;
+              recordatorio['idHistoric'] = recordatory;
+              recordatorio['recordatoryHist'] = recordatorioAux;
             }
             this.recordatoryIdHistoric.push(idRecordatory);
             this.showRecordatorios.push(recordatorio);
-          }else if(recordatories[recordatory].idRecordatory == idRecordatory && this.service.actualDate == dateValueRecordatorio.toString() && this.recordatoryIdHistoric.indexOf(idRecordatory.toString()) == -1){
-            findHistory = true;
+          }
+          let length = Object.keys(recordatories).length;
+          count = count + 1;
+          if(count == length && !findHistory){
             let historicRecordatory = new RecordatorioHistorico();
             historicRecordatory.fecha = dateValueRecordatorio;
             historicRecordatory.idRecordatory = idRecordatory;
-            HTMLFormControlsCollection
             historicRecordatory.take = true;
             historicRecordatory.name = nameMedicine;
             recordatorio['recordatoryHist'] = historicRecordatory;
+            recordatorio['take'] = true;
             this.recordatoryIdHistoric.push(idRecordatory);
-            this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
+            this.service.addRecordatoryHistoric(historicRecordatory).subscribe(idRecordatoryHistoric => {
+              recordatorio['idHistoric'] = idRecordatoryHistoric['name'];
               this.showRecordatorios.push(recordatorio);
+              this.take[idRecordatoryHistoric['name']] = false;
             });
-            }
             
-            let length = Object.keys(recordatories).length;
-            count = count + 1;
-            if(count == length && !findHistory){
-              let historicRecordatory = new RecordatorioHistorico();
-              historicRecordatory.fecha = dateValueRecordatorio;
-              historicRecordatory.idRecordatory = idRecordatory;
-              HTMLFormControlsCollection
-              historicRecordatory.take = true;
-              historicRecordatory.name = nameMedicine;
-              recordatorio['recordatoryHist'] = historicRecordatory;
-              this.recordatoryIdHistoric.push(idRecordatory);
-              this.service.addRecordatoryHistoric(historicRecordatory).subscribe(resp => {
-                this.showRecordatorios.push(recordatorio);
-              });
-              
-            }
+          }
         })
       }
     });
