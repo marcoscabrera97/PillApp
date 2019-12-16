@@ -199,10 +199,10 @@ export class HomeComponent implements OnInit {
             let historicRecordatory = new RecordatorioHistorico();
             historicRecordatory.fecha = dateValueRecordatorio;
             historicRecordatory.idRecordatory = idRecordatory;
-            historicRecordatory.take = true;
+            historicRecordatory.take = false;
             historicRecordatory.name = nameMedicine;
             recordatorio['recordatoryHist'] = historicRecordatory;
-            recordatorio['take'] = true;
+            recordatorio['take'] = false;
             this.recordatoryIdHistoric.push(idRecordatory);
             this.service.addRecordatoryHistoric(historicRecordatory).subscribe(idRecordatoryHistoric => {
               recordatorio['idHistoric'] = idRecordatoryHistoric['name'];
