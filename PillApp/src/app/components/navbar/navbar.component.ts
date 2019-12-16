@@ -14,12 +14,14 @@ export class NavbarComponent implements OnInit {
   closeMenuVar: boolean;
   date;
   show: boolean;
+  isPatient: boolean;
 
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
     this.show = false;
+    
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
-        if(val.url == '/home'){
+        if(val.url == '/home' || val.url == '/homeDoctor'){
           this.isHome = true;
         }else{
           this.isHome = false;
@@ -30,8 +32,9 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  ngOnInit() {
+  ngOnInit() {      
   }
+
 
   logout() {
     this.service.deleteUser();
@@ -48,6 +51,13 @@ export class NavbarComponent implements OnInit {
     }else{
       this.show = true;
     }
+    if(localStorage.getItem('typeUser') == 'patient'){
+      this.isPatient = true;
+    }else{
+      this.isPatient = false;
+    }
+  console.log(this.isPatient);
+  console.log(localStorage.getItem('typeUser'));
   }
 
 

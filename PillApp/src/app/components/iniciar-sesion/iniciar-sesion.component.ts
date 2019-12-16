@@ -20,12 +20,10 @@ export class IniciarSesionComponent implements OnInit {
   public user: Usuario;
   public users: Usuario[];
   public arrayUsers;
-  public isPatient: Boolean;
   public token: string;
   constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService, public route: Router, private db: AngularFirestore, public dialog: MatDialog, public router: Router, private sendPush: SendPushNotifactionService) { }
   usersObservable: Observable<any[]>;
   ngOnInit() {
-    this.isPatient = false;
     var navbar = document.getElementById('navbar');
     navbar.classList.add('display-none');
     navbar.classList.remove('display-block');

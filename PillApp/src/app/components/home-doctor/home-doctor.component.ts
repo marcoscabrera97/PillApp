@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeDoctorComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    var navbar = document.getElementById('navbar');
+    navbar.classList.remove('display-none');
+    navbar.classList.add('display-block');
+  }
 
   ngOnInit() {
   }

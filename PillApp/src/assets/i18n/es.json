@@ -5,7 +5,10 @@
         "meetings": "Citas",
         "pharmacy": "Farmacias",
         "report": "Report",
-        "logout": "Logout"
+        "logout": "Logout",
+        "dates": "Citas",
+        "add_date": "Añadir cita",
+        "search_report": "Buscar informe"
     },
     "sign": {
         "in":{
