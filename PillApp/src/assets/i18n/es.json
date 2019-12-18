@@ -81,6 +81,9 @@
         "takeMl": "Tomar {{quantityDose}} ml",
         "takePills": "Tomar {{quantityDose}} pastilla/s"
     },
+    "home_doctor": {
+        "title": "Consultas del día"
+    },
     "edit-medicine": {
         "title": "Editar recordatorio"
     },
@@ -119,6 +122,18 @@
     "report":{
         "semanalProgress": "Progreso semanal",
         "pacientInform": "Informe paciente"
+    },
+    "addCita":{
+        "title": "Añadir cita",
+        "namePatient": "Nombre del paciente",
+        "calendar": "Día de la visita",
+        "start_date":"Selecciona la fecha de inicio",
+        "hour": "Selecciona la hora de la cita",
+        "comentario": "Comentarios",
+        "errorMessage":{
+            "title": "Error en la creación de la cita",
+            "description": "Falta alguno de los parámetros introducidos"
+        }
     }
 
 }

@@ -19,22 +19,20 @@
             <a class="nav-link" (click)="classShow()"  [routerLink]="['home']">{{ 'navbar.home' | translate}}<span class="sr-only">(current)</span></a>
         </ng-container>
         <ng-container *ngIf="!isPatient">
-            <a class="nav-link" (click)="classShow()" [routerLink]="['home']">{{ 'navbar.home' | translate}}<span class="sr-only">(current)</span></a>
-        </ng-container>      </li>
+            <a class="nav-link" (click)="classShow()" [routerLink]="['homeDoctor']">{{ 'navbar.home' | translate}}<span class="sr-only">(current)</span></a>
+        </ng-container>      
+      </li>
       <li class="nav-item">
         <ng-container *ngIf="isPatient">
             <a class="nav-link" (click)="classShow()"  [routerLink]="['listaMedicamentos']">{{ 'navbar.medicine_list' | translate}}</a>
         </ng-container>
         <ng-container *ngIf="!isPatient">
-            <a class="nav-link" (click)="classShow()"  [routerLink]="['listaMedicamentos']">{{ 'navbar.dates' | translate}}</a>
+          <a class="nav-link" (click)="classShow()"  [routerLink]="['citasDoctor']">{{ 'navbar.add_date' | translate}}</a>
         </ng-container>
       </li>
       <li class="nav-item">
           <ng-container *ngIf="isPatient">
             <a class="nav-link" (click)="classShow()"  [routerLink]="['citas']">{{ 'navbar.meetings' | translate}}</a>
-          </ng-container>
-          <ng-container *ngIf="!isPatient">
-            <a class="nav-link" (click)="classShow()"  [routerLink]="['citas']">{{ 'navbar.add_date' | translate}}</a>
           </ng-container>
       </li>
       <li class="nav-item">

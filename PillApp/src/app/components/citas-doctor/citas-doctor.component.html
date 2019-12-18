@@ -1,0 +1,27 @@
+<div class="container">
+    <h4 class="title-page title-margin">{{ 'addCita.title' | translate}}</h4>
+    <form [formGroup]="addCitaForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>{{ 'addCita.namePatient' | translate}}</mat-label>
+            <input matInput formControlName="namePatient">
+        </mat-form-field>
+        <h4 class="title-page title-margin">{{ 'addCita.calendar' | translate }}</h4>
+        <mat-form-field>
+            <mat-label>{{ 'addCita.start_date' | translate}}</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateConsulta">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <h4 class="title-page title-margin">{{ 'addCita.hour' | translate }}</h4>
+        <div>
+            <input class="timeInput" value="{{time}}" (click)="open(take)" readonly="readonly"/>
+        </div>
+        <h4 class="title-page title-margin comentario">{{ 'addCita.comentario' | translate }}</h4>
+        <mat-form-field>
+            <textarea matInput formControlName="comentarios"></textarea>
+        </mat-form-field>
+    </form>
+    <div class="center-button">
+        <button mat-raised-button class="content-button" (click)="saveCita()">{{ 'add-medicine.save' | translate}}</button>
+    </div>
+</div>

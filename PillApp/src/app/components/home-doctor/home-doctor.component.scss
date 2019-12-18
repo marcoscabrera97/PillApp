@@ -1,0 +1,125 @@
+.container{
+    margin-top: 25px;
+}
+
+.content-card{
+    display: flex;
+    .checkbox{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .checkbox-input{
+            width: 18px;
+            height: 18px;
+        }
+    }
+    .name-dosy{
+        margin-left: 25px;
+    }
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+
+.pill-banner {
+    margin-bottom: 0px;
+    button {
+        width: 100%;
+        font-family: 'Arial';
+        font-size: 29px;
+        .arrow-img {
+            float: left;
+            text-align: left;
+        }
+        .text-pill {
+            margin: 0 auto;
+            width: 90px;
+        }
+    }
+}
+
+.card {
+    display: block;
+}
+
+.card-body {
+    padding: 12px 25px;
+    .actions-button{
+        position: absolute;
+        top: 25px;
+        right: 17px;
+        i{
+            padding: 0 5px;
+            font-size: 22px;
+        }
+    }
+}
+
+.img-reminder {
+    width: 27px;
+    float: left;
+    margin-right: 25px;
+}
+.medicine {
+    font-weight: bold;
+}
+
+.separation-banner {
+    height: 20px;
+}
+
+.mat-fab{
+    background-color: #0788FF;
+}
+
+.add-btn{
+    position: fixed;
+    right: 21px;
+    bottom: 16px;
+}
+
+.add-img{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.table{
+    thead{
+        th{
+            text-align: center;
+        }
+    }
+}
+
+.date{
+    margin-bottom: 20px;
+}
+
+.consulta{
+    display: flex;
+    
+    .checkbox{
+        flex: 1 0 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .name-patient{
+        flex: 1 0 62%;
+        span{
+            font-size: 18px;
+        }
+    }
+    .hora-consulta{
+        flex: 1 0 27%;
+        span{
+            font-size: 18px;
+        }
+    }
+}

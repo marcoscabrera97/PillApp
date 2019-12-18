@@ -43,7 +43,8 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { MessagingService } from './services/messaging.service';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.component';
-import { AgmCoreModule } from '@agm/core'
+import { AgmCoreModule } from '@agm/core';
+import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/citas-doctor.component'
 
 
 
@@ -75,7 +76,9 @@ import { AgmCoreModule } from '@agm/core'
     DeleteRecordatory,
     DeleteRecordatoryOk,
     DetallesCitaComponent,
-    ErrorAddMedicine
+    ErrorAddMedicine,
+    CitasDoctorComponent,
+    ErrorAddCita
   ],
   imports: [
     BrowserModule,
@@ -133,7 +136,8 @@ import { AgmCoreModule } from '@agm/core'
     DialogEmptyParameter,
     DeleteRecordatory,
     DeleteRecordatoryOk,
-    ErrorAddMedicine
+    ErrorAddMedicine,
+    ErrorAddCita
   ]
 })
 export class AppModule { }

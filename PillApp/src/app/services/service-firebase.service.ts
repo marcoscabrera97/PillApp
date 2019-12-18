@@ -160,4 +160,17 @@ export class ServiceFirebaseService {
   deleteRecordatoryHistoric(idHistoricRecordatory){
     return this.http.delete(this.url+'/RECORDATORIO_HISTORICO/'+idHistoricRecordatory+'.json');
   }
+
+  getConsultas(){
+    return this.http.get(this.url+'/COSULTAS.json');
+  }
+
+  addConsulta(consulta){
+    return this.http.post(this.url+'CONSULTA.json', consulta).pipe(
+      map(resp => {
+        console.log(resp);
+        return resp;
+      })
+    );
+  }
 }

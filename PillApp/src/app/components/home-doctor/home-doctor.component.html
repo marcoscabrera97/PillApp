@@ -1,5 +1,20 @@
 <div class="container">
-    <h4 class="title-page">{{ 'home.title' | translate }}</h4>
+    <h4 class="title-page">{{ 'home_doctor.title' | translate }}</h4>
     <h5 class="date">{{actualDate}}</h5>
-             
+    <div class="consultas" *ngFor="let consuta of consultas;">
+        <div class="content-consultas">
+            <div class="consulta">
+                <!--<div class="checkbox" *ngIf="recordatory.take">-->
+                <div class="checkbox">
+                    <mat-checkbox class="checkbox-input checkbox-input-doctor" (change)="changeConsulta(consulta.id, $event.checked)"></mat-checkbox>
+                </div>
+                <div class="name-patient">
+                    <span>Marcos Cabrera Morillas</span>
+                </div>
+                <div class="hora-consulta">
+                    <span>12:40h</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

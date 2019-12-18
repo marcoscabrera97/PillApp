@@ -14,6 +14,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { AddMedicinaComponent } from './components/add-medicina/add-medicina.component';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.component';
+import { CitasDoctorComponent } from './components/citas-doctor/citas-doctor.component';
 
 
 const routes: Routes = [
@@ -23,11 +24,12 @@ const routes: Routes = [
     { path: 'addMedicine', component: AddMedicinaComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
-    { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthGuard] },
-    { path: 'verMas/:idDate', component: DetallesCitaComponent, canActivate: [GuardAuthGuard] },
-    { path: 'citas', component: CitasComponent, canActivate: [GuardAuthGuard] },
-    { path: 'farmacias', component: FarmaciasComponent, canActivate: [GuardAuthGuard] },
-    { path: 'informe', component: InformeComponent, canActivate: [GuardAuthGuard] },
+    { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'verMas/:idDate', component: DetallesCitaComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'citas', component: CitasComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'citasDoctor', component: CitasDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
+    { path: 'farmacias', component: FarmaciasComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'informe', component: InformeComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'logout', component: LogoutComponent },
     { path: '**', component: IniciarSesionComponent }
 ];
