@@ -5,4 +5,5 @@ export class Usuario {
     password: string;
     email: string;
     userType: string;
+    cip: string;
 }

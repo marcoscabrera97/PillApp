@@ -26,6 +26,7 @@
             "name": "Nombre",
             "surname": "Apellidos",
             "username": "Nombre de usuario",
+            "cip": "CIP",
             "password": "Contraseña",
             "email": "Correo electrónico",
             "password_error": "Las contraseñas no coinciden",
@@ -134,6 +135,13 @@
             "title": "Error en la creación de la cita",
             "description": "Falta alguno de los parámetros introducidos"
         }
+    },
+    "search-informe":{
+        "title": "Introduce la información del paciente",
+        "name": "Nombre del paciente",
+        "surname": "Apellidos del paciente",
+        "cip": "CIP del paciente",
+        "searchInforme": "Busca informe" 
     }
 
 }

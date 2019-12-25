@@ -38,6 +38,7 @@ export class CrearCuentaComponent implements OnInit {
       username: ['', Validators.required],
       password1: ['', Validators.required],
       password2: ['', Validators.required],
+      cip: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]]
     });
   }
@@ -110,6 +111,7 @@ export class CrearCuentaComponent implements OnInit {
     this.userModule.username = userRegister.username;
     this.userModule.password = userRegister.password1;
     this.userModule.email = userRegister.email;
+    this.userModule.cip = userRegister.cip;
     this.userModule.userType = 'patient';
     registerFail = this.checkName(this.userModule.name);
     if(!registerFail){

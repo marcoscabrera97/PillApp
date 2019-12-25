@@ -30,11 +30,17 @@ export class CitasComponent implements OnInit {
     this.datesPatient = new Array();
     this.service.getDatesPatient().subscribe(dates => {
       this.service.getHospitals().subscribe(hospitals =>{
+        console.log(dates);
         Object.keys(dates).forEach(date => {
+          console.log(date);
           if(dates[date] != null){
-            if(dates[date].id_user == this.service.userToken) {
+            console.log(dates[date].cip);
+            this.service.getSpecificUser(this.service.userToken).subscribe(user => {
+              console.log(user);
+              if(dates[date].cip == user['cip']) {
+              console.log('dentro');
               this.idDate = date;
-              
+              console.log(dates[date]);
               const dateDate = new Date(dates[date].fecha);
               const dateAux = new Date(dates[date].fecha);
               dateAux.setDate(dateAux.getDate()- 1);
@@ -57,13 +63,15 @@ export class CitasComponent implements OnInit {
               }
               dates[date].nombre_hospital = hospitals[dates[date].id_hospital].nombre_hosp;
               this.datesPatient.push(dates[date]);
-            }
+              }
+            })
           }
         });
-      })
+            
+      });
     })
-    
   }
+    
 
   sendDateRecordatory(){
     Object.keys(this.datesSendPush).forEach(idDate =>{

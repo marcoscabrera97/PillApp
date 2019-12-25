@@ -59,6 +59,10 @@ export class ServiceFirebaseService {
     return this.http.get(this.url+'/USUARIO.json');
   }
 
+  getSpecificUser(idUser){
+    return this.http.get(this.url + '/USUARIO/' + idUser + '.json');
+  }
+
   deleteUser() {
     localStorage.clear();
   }
@@ -136,10 +140,6 @@ export class ServiceFirebaseService {
     return this.http.get(this.url+'/HOSPITAL/'+idHospital+'.json');
   }
 
-  getPharmacies(lat, lng){
-    return this.http.get("/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=1000&type=pharmacy&keyword=farmacia&key=AIzaSyBtI_hiSMu6pcJcsvryBFa7jfS5dLR_bD4");
-  }
-
   addRecordatoryHistoric(recordatory){
     return this.http.post(this.url+'/RECORDATORIO_HISTORICO.json', recordatory).pipe(
       map(resp => {
@@ -162,15 +162,23 @@ export class ServiceFirebaseService {
   }
 
   getConsultas(){
-    return this.http.get(this.url+'/COSULTAS.json');
+    return this.http.get(this.url+'/CITA_PACIENTE.json');
   }
 
   addConsulta(consulta){
-    return this.http.post(this.url+'CONSULTA.json', consulta).pipe(
+    return this.http.post(this.url+'CITA_PACIENTE.json', consulta).pipe(
       map(resp => {
         console.log(resp);
         return resp;
       })
     );
+  }
+
+  getSpecificConsulta(idConsulta){
+    return this.http.get(this.url + '/CITA_PACIENTE/' + idConsulta + '.json');
+  }
+
+  updateConsulta(idConsulta, consulta){
+    return this.http.put(this.url + '/CITA_PACIENTE/' + idConsulta + '.json', consulta);
   }
 }

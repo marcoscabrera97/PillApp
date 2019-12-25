@@ -6,6 +6,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { Consulta } from '../home-doctor/consulta.module';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Router } from '@angular/router';
+import { Usuario } from '../crear-cuenta/usuario.module';
 
 @Component({
   selector: 'app-citas-doctor',
@@ -17,8 +18,18 @@ export class CitasDoctorComponent implements OnInit {
   public addCitaForm: FormGroup;
   public time: string;
   public addCita: Consulta;
+  public patients: Usuario[];
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, public dialog: MatDialog, public service: ServiceFirebaseService, private router: Router) { 
     this.time = "   :";
+    this.patients = [];
+    this.service.getUser().subscribe(users => {
+      Object.keys(users).forEach(idUser => {
+        if(users[idUser].userType == 'patient'){
+          this.patients.push(users[idUser]);
+        }
+      })
+    });
+    console.log(this.patients);
     this.buildForm();
   }
 
@@ -29,7 +40,8 @@ export class CitasDoctorComponent implements OnInit {
     this.addCitaForm = this.formBuilder.group({
       namePatient: ['', Validators.required],
       dateConsulta: ['', Validators.required],
-      comentarios: ['', Validators.required]
+      comentarios: ['', Validators.required],
+      paciente: ['', Validators.required]
     });
   }
 
@@ -44,26 +56,44 @@ export class CitasDoctorComponent implements OnInit {
     const addCitaForm = this.addCitaForm.value;
     var formOk = this.checkValueForm(addCitaForm);
     if(formOk){
-      this.addCita = new Consulta();
-      this.addCita.nombrePaciente = addCitaForm.namePatient;
-      this.addCita.horaConsulta = addCitaForm.dateConsulta;
-      this.addCita.horaConsulta = this.time;
-      this.addCita.visitaRealizada = false;
-      this.addCita.comentario = addCitaForm.comentarios;
-      this.service.addConsulta(this.addCita).subscribe();
-      this.router.navigate(['homeDoctor']);
+      console.log(addCitaForm);
+      
+      this.service.getSpecificUser(this.service.userToken).subscribe(user => {
+        this.addCita = new Consulta();
+        this.addCita.cip = addCitaForm.paciente;
+        this.addCita.fecha = addCitaForm.dateConsulta.toUTCString();
+        var auxFecha = new Date(this.addCita.fecha);
+        var horaString = this.time.substr(0,2);
+        var hora = +horaString;
+        
+        var minutosString = this.time.substr(3,5);
+        var minutos = +minutosString;
+        auxFecha.setHours(hora);
+        auxFecha.setMinutes(minutos);
+        this.addCita.fecha = auxFecha.toUTCString();
+        this.addCita.id_hospital = user['id_hospital'];
+      
+        this.addCita.nombre_doctor = user['name'];
+        this.addCita.planta = user['planta'];
+        this.addCita.puerta = user['puerta'];
+        this.addCita.especialidad = user['especialidad'];
+        this.addCita.visitaRealizada = false;
+        this.service.addConsulta(this.addCita).subscribe();
+        this.router.navigate(['homeDoctor']);
+      });
     }else{
       const dialogRef = this.dialog.open(ErrorAddCita, {
         width: '250px'
       });
     }
+    this.router.navigate(['homeDoctor']);
   }
 
   checkValueForm(addCitaForm){
     var formOk = true;
     Object.keys(addCitaForm).forEach(element => {
       if(formOk != false){
-        if(element == 'namePatient' || element == 'dateConsulta'){
+        if(element == 'paciente' || element == 'dateConsulta'){
           if(addCitaForm[element] == ''){
             formOk = false;
           }

@@ -1,6 +1,10 @@
 export class Consulta {
-    nombrePaciente: string;
-    horaConsulta: string;
+    especialidad: string;
+    fecha: string;
+    id_hospital: number;
+    cip: string;
+    nombre_doctor: string;
+    planta: number;
+    puerta: number;
     visitaRealizada: boolean;
-    comentario: string;
 }

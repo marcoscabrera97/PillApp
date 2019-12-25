@@ -1,18 +1,18 @@
 <div class="container">
     <h4 class="title-page">{{ 'home_doctor.title' | translate }}</h4>
     <h5 class="date">{{actualDate}}</h5>
-    <div class="consultas" *ngFor="let consuta of consultas;">
+    <div class="consultas" *ngFor="let consulta of consultas; let i = index;">
         <div class="content-consultas">
             <div class="consulta">
                 <!--<div class="checkbox" *ngIf="recordatory.take">-->
                 <div class="checkbox">
-                    <mat-checkbox class="checkbox-input checkbox-input-doctor" (change)="changeConsulta(consulta.id, $event.checked)"></mat-checkbox>
+                    <mat-checkbox class="checkbox-input checkbox-input-doctor" (change)="changeConsulta(consulta.id, $event.checked)" [(ngModel)]="consultaRealizada[consulta.id]"></mat-checkbox>
                 </div>
                 <div class="name-patient">
-                    <span>Marcos Cabrera Morillas</span>
+                    <span [ngClass]="{'green': consultaRealizada[consulta.id], 'red': !consultaRealizada[consulta.id]}">{{ consulta.name }}</span>
                 </div>
                 <div class="hora-consulta">
-                    <span>12:40h</span>
+                    <span>{{ consulta.hour }}</span>
                 </div>
             </div>
         </div>

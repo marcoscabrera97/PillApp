@@ -44,7 +44,10 @@ import { MessagingService } from './services/messaging.service';
 import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.component';
 import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.component';
 import { AgmCoreModule } from '@agm/core';
-import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/citas-doctor.component'
+import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/citas-doctor.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { SearchInformeComponent } from './components/search-informe/search-informe.component';
+
 
 
 
@@ -78,7 +81,8 @@ import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/ci
     DetallesCitaComponent,
     ErrorAddMedicine,
     CitasDoctorComponent,
-    ErrorAddCita
+    ErrorAddCita,
+    SearchInformeComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +121,8 @@ import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/ci
     MatSidenavModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBtI_hiSMu6pcJcsvryBFa7jfS5dLR_bD4'
-    })
+    }),
+    MatAutocompleteModule
   ],
   providers: [
     ServiceFirebaseService,

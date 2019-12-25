@@ -1,9 +1,15 @@
 <div class="container">
     <h4 class="title-page title-margin">{{ 'addCita.title' | translate}}</h4>
     <form [formGroup]="addCitaForm">
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="example-full-width select-patient">
             <mat-label>{{ 'addCita.namePatient' | translate}}</mat-label>
-            <input matInput formControlName="namePatient">
+            <input matInput aria-label="State" [matAutocomplete]="auto" formControlName="paciente">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let patient of patients" [value]="patient.cip">
+                <span>{{patient.name}}</span> |
+                <small>CIP : {{patient.cip}}</small>
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
         <h4 class="title-page title-margin">{{ 'addCita.calendar' | translate }}</h4>
         <mat-form-field>
@@ -14,7 +20,7 @@
         </mat-form-field>
         <h4 class="title-page title-margin">{{ 'addCita.hour' | translate }}</h4>
         <div>
-            <input class="timeInput" value="{{time}}" (click)="open(take)" readonly="readonly"/>
+            <input class="timeInput" value="{{time}}" (click)="open()" readonly="readonly"/>
         </div>
         <h4 class="title-page title-margin comentario">{{ 'addCita.comentario' | translate }}</h4>
         <mat-form-field>

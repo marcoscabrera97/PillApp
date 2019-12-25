@@ -56,8 +56,6 @@ export class NavbarComponent implements OnInit {
     }else{
       this.isPatient = false;
     }
-  console.log(this.isPatient);
-  console.log(localStorage.getItem('typeUser'));
   }
 
 

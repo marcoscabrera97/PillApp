@@ -37,6 +37,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 
+mat-form-field{
+    width: 300px;
+}
+
 .content-button {
     background-color: #0788FF;
     color: #fff;

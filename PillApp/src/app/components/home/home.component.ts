@@ -150,6 +150,7 @@ export class HomeComponent implements OnInit {
         historicRecordatory.idRecordatory = idRecordatory;
         historicRecordatory.take = false;
         historicRecordatory.name = nameMedicine;
+        historicRecordatory.idUser = this.service.userToken;
         recordatorio['recordatoryHist'] = historicRecordatory;
         recordatorio['take'] = true;
         this.service.addRecordatoryHistoric(historicRecordatory).subscribe(idRecordatoryHistoric => {
@@ -175,7 +176,8 @@ export class HomeComponent implements OnInit {
             if(recordatories[recordatory].take){
               let recordatorioAux = recordatories[recordatory];
               recordatorioAux.take = true;
-              recordatorioAux.take = recordatories[recordatory].take;;
+              recordatorioAux.take = recordatories[recordatory].take;
+              recordatorioAux.userToken = this.service.userToken;
               this.takeRecordatorio[idRecordatory] = true;
 
               recordatorio['idHistoric'] = recordatory;
@@ -201,6 +203,7 @@ export class HomeComponent implements OnInit {
             historicRecordatory.idRecordatory = idRecordatory;
             historicRecordatory.take = false;
             historicRecordatory.name = nameMedicine;
+            historicRecordatory.idUser = this.service.userToken;
             recordatorio['recordatoryHist'] = historicRecordatory;
             recordatorio['take'] = false;
             this.recordatoryIdHistoric.push(idRecordatory);
