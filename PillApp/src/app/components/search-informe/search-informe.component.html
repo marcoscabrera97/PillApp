@@ -1,5 +1,5 @@
-<div class="container">
-    <div *ngIf="!showInform">
+<div *ngIf="!showInform">
+    <div class="container">
         <h4 class="title-page title-margin">{{ 'search-informe.title' | translate}}</h4>
         <form [formGroup]="searchInforme">
             <mat-form-field class="example-full-width">
@@ -17,9 +17,29 @@
         </form>
         <button class="content-button" (click)="searchInform()"><span>{{ 'search-informe.searchInforme' | translate}}</span></button>
     </div>
-    <div *ngIf="showInform">
-        <div *ngFor="let recordatory of showRecordatoriesHistoric">
+</div>
+<div *ngIf="showInform">
+    <div class="header-progress">
+        {{ 'report.semanalProgress' | translate }}
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" [style.width]="percent + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percent/100 | percent: '2.1-2'}}</div>
         </div>
-        {{ percent }}
+    </div>
+    <div class="container">
+        <div class="title-page">
+            {{'report.pacientInform' | translate }}
+        </div> 
+        <div class="content">
+            <div *ngFor="let day of days">
+                <div *ngFor="let recordatory of day; let i = index">
+                    <div *ngIf="i == 0" class="date">{{recordatory.fecha}}</div>
+                    <div class="recordatory">
+                        <div *ngIf="recordatory.take" class="takeReportYes"><i class="fas fa-check-circle"></i></div>
+                        <div *ngIf="!recordatory.take" class="takeReportNot"><i class="fas fa-times-circle"></i></div>
+                        <div class="medicineName">{{recordatory.name}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -34,13 +34,6 @@ export class FarmaciasComponent implements OnInit {
         if (position) {
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
-          /*this.service.getPharmacies(this.lat, this.lng).subscribe(pharmacies => {
-            console.log(pharmacies);
-            pharmacies['results'].forEach(pharmacy => {
-              this.pharmacies.push(pharmacy);
-              this.coordenadas.push([pharmacy['geometry'].location.lat, pharmacy['geometry'].location.lng]);
-            })
-          });*/
           const proxyurl = "https://cors-anywhere.herokuapp.com/";
           const url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+this.lat+","+this.lng+"&radius=1000&type=pharmacy&keyword=farmacia&key=AIzaSyBtI_hiSMu6pcJcsvryBFa7jfS5dLR_bD4";
           fetch(proxyurl + url)

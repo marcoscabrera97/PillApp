@@ -8,3 +8,44 @@
     width: auto;
     margin-top: 200px;
 }
+
+.container{
+    margin-top: 25px;
+}
+
+.header-progress{
+    background-color: #F97F00;
+    color: #fff;
+    padding: 21px 16px;
+    font-size: 20px;
+}
+
+.date{
+    font-family: 'Arial Rounded MT Bold'; 
+    font-size: 20px;
+    color: #0788FF;
+    margin-bottom: 9px;
+}
+
+.recordatory {
+    display: flex;
+    margin-bottom: 10px;
+    i{
+        margin-left: 5px;
+        font-size: 24px;
+    }
+}
+
+.medicineNmae{
+    font-size: 20px;
+}
+
+.takeReportYes{
+    color: green;
+    margin-right: 8px;
+}
+
+.takeReportNot{
+    color: Red;
+    margin-right: 8px;
+}
