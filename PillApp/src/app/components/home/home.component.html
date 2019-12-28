@@ -5,8 +5,11 @@
     <div class="accordion" *ngFor="let recordatory of showRecordatorios; let i=index;">
         <p class="pill-banner">
             <button class="btn btn-primary" data-toggle="collapse" (click)="openCollapse(i)" role="button" aria-expanded="false" aria-controls="collapseExample">
-                <div class="arrow-img">
-                        <img src="../../../assets/images/row-bottom.png">
+                <div class="arrow-img" *ngIf="!collapse[i]">
+                    <img src="../../../assets/images/row-bottom.png">
+                </div>
+                <div class="arrow-img" *ngIf="collapse[i]">
+                    <img src="../../../assets/images/row-top.png">
                 </div>
                 <div class="text-pill">{{recordatory.hour}}</div>
             </button>
@@ -34,6 +37,4 @@
     </div>
 </div>
 
-  <div>
-    <a mat-fab class="add-btn" [routerLink]="['/addMedicine']"><img src="../../../assets/images/add.png" class="add-img"></a>
-  </div>
+  

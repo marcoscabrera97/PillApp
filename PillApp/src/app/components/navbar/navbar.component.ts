@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   date;
   show: boolean;
   isPatient: boolean;
+  showAddMedicine: boolean;
 
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
     this.show = false;
@@ -25,6 +26,11 @@ export class NavbarComponent implements OnInit {
           this.isHome = true;
         }else{
           this.isHome = false;
+        }
+        if(val.url == '/home'){
+          this.showAddMedicine = true;
+        }else{
+          this.showAddMedicine = false;
         }
       }
     });
