@@ -58,7 +58,7 @@ export class AddMedicinaComponent implements OnInit {
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router, public dialog: MatDialog) {
     this.numberDays = false;
     this.specificDays = false;
-    this.time = [":", ":", ":", ":"];
+    this.time = ["   :", "   :", "   :", "   :"];
     this.medicine = new Medicina();
     this.recordatoryAux = new Recordatorio();
     this.recordatoryAux.idMedicine = "";
