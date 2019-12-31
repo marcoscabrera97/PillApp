@@ -9,6 +9,8 @@ import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.compon
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import undefined from 'firebase/empty-import';
 import { RecordatorioHistorico } from './recordatorio-historico.module';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -31,7 +33,7 @@ export class HomeComponent implements OnInit {
   take: boolean[];
   recordatoryIdHistoric;
 
-  constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog) {
+  constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog, private activatedRouter: ActivatedRoute, private router: Router) {
     
     this.recordatoryIdHistoric = new Array();
     this.take = new Array();
@@ -44,15 +46,16 @@ export class HomeComponent implements OnInit {
     this.collapse = new Array(false, false, false);
     this.showRecordatorios = []
     this.recordatoriesUser = new Array();
-    this.showRecordatories();
+    
+    this.showRecordatories('constructor');
     this.actualDate = this.service.actualDate.toLocaleDateString();
   }
 
-  ngOnInit() {
+  ngOnInit(){
     this.actualDateRef = this.service.changeDate$.subscribe((resp)  =>{
       this.actualDate = this.service.actualDate.toLocaleDateString();
       this.showRecordatorios = [];
-      this.showRecordatories();
+      this.showRecordatories('ngOnInit');
     });
     
     setInterval(() => {
@@ -75,7 +78,7 @@ export class HomeComponent implements OnInit {
           let currentMedicine = currentMedicines[currentRecordatory.idMedicine];
           if(currentMedicine.quantityDose*2 <= currentMedicine.quantity){
             if(currentMedicine.quantity > 0){
-              currentMedicine.quantity = currentMedicine.quantity - 1;             
+              currentMedicine.quantity = currentMedicine.quantity - 1;
               this.service.updateMedicine(currentMedicine, currentRecordatory.idMedicine).subscribe();
             }
           }else{
@@ -97,7 +100,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  showRecordatories(){
+  showRecordatories(valor){
     this.service.getMedicines().subscribe(medicines => {
       var medicineIds = [];
       this.medicinesArray = medicines;
@@ -117,7 +120,7 @@ export class HomeComponent implements OnInit {
               this.medicine = medicines[idMedicine];
               let date = this.service.actualDate;
               let dayOfTheWeek = date.getDay();
-              if((recordatorio.daysWeek[dayOfTheWeek] == 1 || recordatorio.daysWeek[0] == -1 )&& new Date(recordatorio.startDate) <= date){
+              if((recordatorio.daysWeek[dayOfTheWeek] == 1 || recordatorio.daysWeek[0] == -1 ) && new Date(recordatorio.startDate) <= date){
                 let dateRecordatorio = date;
                 dateRecordatorio.setHours(recordatorio.hour.substring(0,2));
                 dateRecordatorio.setMinutes(recordatorio.hour.substring(3,5));
@@ -125,6 +128,7 @@ export class HomeComponent implements OnInit {
                 if(dateValueRecordatorio <= new Date()){
                     this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name']);
                     recordatorio['take'] = true;
+                    console.log('dentro');
                 }else{
                   this.showRecordatorios.push(recordatorio);
                 }
@@ -133,6 +137,10 @@ export class HomeComponent implements OnInit {
           })
         })
       });
+      if(this.service.fromAddMedicine){   
+        this.service.fromAddMedicine = false;   
+        window.location.reload();
+      } 
     });
   }
 
@@ -198,6 +206,7 @@ export class HomeComponent implements OnInit {
           let length = Object.keys(recordatories).length;
           count = count + 1;
           if(count == length && !findHistory){
+            findHistory = true;
             let historicRecordatory = new RecordatorioHistorico();
             historicRecordatory.fecha = dateValueRecordatorio;
             historicRecordatory.idRecordatory = idRecordatory;
@@ -205,7 +214,7 @@ export class HomeComponent implements OnInit {
             historicRecordatory.name = nameMedicine;
             historicRecordatory.idUser = this.service.userToken;
             recordatorio['recordatoryHist'] = historicRecordatory;
-            recordatorio['take'] = false;
+            recordatorio['take'] = true;
             this.recordatoryIdHistoric.push(idRecordatory);
             this.service.addRecordatoryHistoric(historicRecordatory).subscribe(idRecordatoryHistoric => {
               recordatorio['idHistoric'] = idRecordatoryHistoric['name'];

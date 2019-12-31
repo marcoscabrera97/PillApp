@@ -142,6 +142,13 @@
         "surname": "Apellidos del paciente",
         "cip": "CIP del paciente",
         "searchInforme": "Busca informe" 
+    },
+    "new-medicine":{
+        "title": "Añadir nueva medicina",
+        "nameMedicine": "Nombre del medicamento",
+        "quantityMedicine": "Cantidad del medicamento",
+        "create": "Crear medicina",
+        "quantityDose": "Cantidad de la dosi"
     }
 
 }

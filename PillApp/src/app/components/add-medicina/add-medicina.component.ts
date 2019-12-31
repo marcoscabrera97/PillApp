@@ -52,21 +52,40 @@ export class AddMedicinaComponent implements OnInit {
   private hoursRecordatory: string[];
   public recordatory: Recordatorio;
   medicamentDose;
-
+  public medicines: Medicina[];
+  public idMedicineSelected: string;
   public idMedicine: number;
+  public quantityMedicine: number;
+  public unityDoseMedicine: string;
+  opts:object = {value: "", disabled: true};
+  stateCtrl = new FormControl();
 
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router, public dialog: MatDialog) {
+    this.quantityMedicine = null;
+    this.unityDoseMedicine = "";
     this.numberDays = false;
     this.specificDays = false;
+    this.medicines = new Array();
     this.time = ["   :", "   :", "   :", "   :"];
     this.medicine = new Medicina();
     this.recordatoryAux = new Recordatorio();
     this.recordatoryAux.idMedicine = "";
     this.hoursRecordatory = ["-1", "-1", "-1", "-1"];
+    this.searchMedicinesByUser();
     this.buildForm();
   }
 
   ngOnInit() {
+  }
+
+  searchMedicinesByUser(){
+    this.service.getMedicines().subscribe(medicines =>{
+      Object.keys(medicines).forEach(medicine => {
+        if(medicines[medicine].idUser == this.service.userToken){
+          this.medicines.push(medicines[medicine]);
+        }
+      })
+    })
   }
 
   selectDose(dose){
@@ -136,6 +155,18 @@ export class AddMedicinaComponent implements OnInit {
     });
   }
 
+  medicineSelect(medicineName){
+    console.log(this.medicines);
+    for(var i = 0; i < this.medicines.length; i++){
+      if(this.medicines[i].name == medicineName){
+        this.quantityMedicine = this.medicines[i].quantity;
+        this.unityDoseMedicine = this.medicines[i].unityDose;
+        this.medicamentDose = this.medicines[i].unityDose;
+        this.idMedicineSelected = this.medicines[i].idMedicine;
+      }
+    }
+  }
+
   saveMedicine(){
     const addMedicineForm = this.addMedicineForm.value;
     var addMedicineOk = this.checkFormValues(addMedicineForm);
@@ -200,9 +231,8 @@ export class AddMedicinaComponent implements OnInit {
       }
 
       this.medicine.idUser = this.service.userToken;
-      this.service.addMedicine(this.medicine).subscribe(resp => {
-        this.idMedicine = resp['name'];
-        this.recordatoryAux.idMedicine = this.idMedicine;
+      console.log(this.idMedicineSelected);
+      this.recordatoryAux.idMedicine = this.idMedicineSelected;
         var count = 0;
         for(let hour of this.hoursRecordatory ){
           if(hour != "-1" && count < this.selectTime.length){
@@ -214,8 +244,8 @@ export class AddMedicinaComponent implements OnInit {
           }
           count++;
         }
+        this.service.fromAddMedicine = true;
         this.router.navigate(['home']);
-      });
     }
     
   }
@@ -241,19 +271,15 @@ export class AddMedicinaComponent implements OnInit {
         if(element == 'numberDaysInput' && addMedicineForm[element] == '' && this.numberDays){
           formOk = false;
         }
-        if(element == 'quantity' && addMedicineForm[element] == ''){
-          formOk = false;
-        }
         if(element == 'quantityDose' && addMedicineForm[element] == ''){
-          formOk = false;
-        }
-        if(element == 'unitiyDose' && addMedicineForm[element] == ''){
           formOk = false;
         }
         if(element == 'dateStart' && addMedicineForm[element] == ''){
           formOk = false;
         }
       }
+      console.log(formOk);
+      console.log(element);
     });
  
     let countHoursRecordatory = 0;
@@ -262,11 +288,10 @@ export class AddMedicinaComponent implements OnInit {
       if(this.hoursRecordatory[i] != "-1"){
         countHoursRecordatory = countHoursRecordatory + 1;
       }
-      if(this.time[i] != ":"){
+      if(this.time[i] != "   :"){
         countTime = countTime + 1;
       }
     }
-
     if(countHoursRecordatory != countTime){
       formOk = false;
     }

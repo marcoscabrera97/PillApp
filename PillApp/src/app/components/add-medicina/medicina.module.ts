@@ -4,4 +4,5 @@ export class Medicina {
     quantityDose: number;
     unityDose: string;
     idUser: string;
+    idMedicine: string;
 }

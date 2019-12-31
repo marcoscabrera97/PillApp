@@ -64,5 +64,11 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  closeMenu(){
+    if(this.show){
+      this.show = false;
+    }
+  }
+
 
 }

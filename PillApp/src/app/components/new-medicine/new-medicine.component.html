@@ -1,0 +1,31 @@
+<div class="container">
+    <h4 class="title-page title-margin">{{ 'new-medicine.title' | translate}}</h4>
+    <form [formGroup]="newMedicineForm">
+        <mat-form-field class="example-full-width nameInput">
+            <mat-label>{{ 'new-medicine.nameMedicine' | translate}}</mat-label>
+            <input matInput formControlName="nameMedicine">
+        </mat-form-field>
+        <div class="flex">
+            <mat-form-field class="example-full-width quantityInput">
+                <mat-label>{{ 'new-medicine.quantityMedicine' | translate}}</mat-label>
+                <input matInput formControlName="quantityMedicine" type="number">
+            </mat-form-field>
+            <mat-form-field class="selectUnity doseInput">
+                <mat-select #unityDose (selectionChange)="selectDose(unityDose.value)" formControlName="doseMedicine">
+                    <mat-option value="ml">ml</mat-option>
+                    <mat-option value="pastillas">{{ 'add-medicine.pills' | translate }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="flex">
+            <mat-form-field class="example-full-width quantityInput">
+                <mat-label>{{ 'new-medicine.quantityDose' | translate}}</mat-label>
+                <input matInput formControlName="quantityDose" type="number">
+            </mat-form-field>
+            <span class="unityDose">{{ medicamentDose }}</span>
+        </div>
+    </form>
+    <div class="center-button">
+        <button mat-raised-button class="content-button" (click)="createMedicine()">{{ 'new-medicine.create' | translate}}</button>
+    </div>
+</div>

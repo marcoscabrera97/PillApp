@@ -1,21 +1,27 @@
 <div class="container">
     <h4 class="title-page title-margin">{{ 'add-medicine.title' | translate}}</h4>
     <form [formGroup]="addMedicineForm">
-        <mat-form-field class="example-full-width">
-            <mat-label>{{ 'add-medicine.name' | translate}}</mat-label>
-            <input matInput formControlName="nameMedicine">
-        </mat-form-field>
-        <div class="subTitle">{{ 'add-medicine.quantity' | translate }}</div>
         <div class="flex">
-            <mat-form-field class="quantityMedicament">
-                <input matInput formControlName="quantity">
+            <mat-form-field class="example-full-width select-patient" disabled>
+                <mat-label>{{ 'add-medicine.name' | translate}}</mat-label>
+                <input matInput aria-label="State" [matAutocomplete]="auto" formControlName="nameMedicine" (ngModelChange)="medicineSelect($event)">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let medicine of medicines" [value]="medicine.name">
+                    <span>{{medicine.name}}</span> |
+                    <small>Cantidad : {{medicine.quantity}}</small>
+                    </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
-            <mat-form-field class="selectUnity">
-                <mat-select #unityDose (selectionChange)="selectDose(unityDose.value)" formControlName="unityDose">
-                    <mat-option value="ml">ml</mat-option>
-                    <mat-option value="pastillas">{{ 'add-medicine.pills' | translate }}</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <i class="fas fa-plus plus-icon" [routerLink]="['/newMedicine']"></i>
+        </div>
+        <div class="subTitle">{{ 'add-medicine.quantity' | translate }}</div>
+        <div class="flex quantityForm">
+            <div class="quantityMedicament">
+                {{ quantityMedicine }}
+            </div>
+            <div class="selectUnity">
+                {{ unityDoseMedicine }}
+            </div>
         </div>
         <div class="subTitle">{{ 'add-medicine.quantity_dose' | translate }}</div>
         <div class="flex">

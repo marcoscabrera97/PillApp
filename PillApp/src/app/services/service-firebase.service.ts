@@ -19,13 +19,13 @@ export class ServiceFirebaseService {
   userToken: string;
   typeUser: string;
   actualDate;
+  fromAddMedicine: boolean;
 
   private changeDate = new Subject<Date>();
   public changeDate$ = this.changeDate.asObservable();
 
   constructor(private http: HttpClient, private afs: AngularFirestore) { 
     this.actualDate = new Date();
-    console.log(this.actualDate);
   }
 
   addUser(user: Usuario) {
@@ -113,7 +113,7 @@ export class ServiceFirebaseService {
   }
 
   updateMedicine(medicine, idMedicine){
-    return this.http.put(this.url+'/MEDICAMENTO/'+idMedicine+'.json', medicine);
+    return this.http.put(this.url+'MEDICAMENTO/'+idMedicine+'.json', medicine);
   }
 
   deleteRecordatory(idRecordatory){

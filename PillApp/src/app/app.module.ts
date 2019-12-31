@@ -47,6 +47,7 @@ import { AgmCoreModule } from '@agm/core';
 import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/citas-doctor.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchInformeComponent } from './components/search-informe/search-informe.component';
+import { NewMedicineComponent } from './components/new-medicine/new-medicine.component';
 
 
 
@@ -82,7 +83,8 @@ import { SearchInformeComponent } from './components/search-informe/search-infor
     ErrorAddMedicine,
     CitasDoctorComponent,
     ErrorAddCita,
-    SearchInformeComponent
+    SearchInformeComponent,
+    NewMedicineComponent
   ],
   imports: [
     BrowserModule,

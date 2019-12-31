@@ -22,6 +22,11 @@
     width: 35%;
 }
 
+.quantityForm{
+    height: 40px;
+    padding-top: 4px;
+}
+
 
 .quantityDose{
     width: 10%;
@@ -36,7 +41,11 @@
     .unityDose{
         align-self: flex-end;
         margin-bottom: 18px;
-    }        
+    }  
+    .plus-icon{
+        margin-top: 23px;
+        margin-left: 10px;
+    }      
 }
 
 .selectUnity{

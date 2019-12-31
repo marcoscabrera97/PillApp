@@ -52,7 +52,7 @@ export class EditMedicineComponent implements OnInit {
   radioNumberDays: boolean;
   radioEveryDay: boolean;
   radioSpecificDays: boolean;
-  public idMedicine: number;
+  public idMedicine: string;
   private recordatory: Recordatorio;
   medicamentDose;
   startDate: Date;
@@ -180,6 +180,7 @@ export class EditMedicineComponent implements OnInit {
 
   updateRecordatory() {
     const editMedicineForm = this.editMedicineForm.value;
+    this.medicine.idMedicine = this.idMedicine; 
     this.medicine.name = editMedicineForm.nameMedicine;
     this.medicine.quantity = editMedicineForm.quantity;
     this.medicine.quantityDose = editMedicineForm.quantityDose;

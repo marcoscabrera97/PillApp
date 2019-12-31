@@ -16,6 +16,7 @@ import { EditMedicineComponent } from './components/edit-medicine/edit-medicine.
 import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.component';
 import { CitasDoctorComponent } from './components/citas-doctor/citas-doctor.component';
 import { SearchInformeComponent } from './components/search-informe/search-informe.component';
+import { NewMedicineComponent } from './components/new-medicine/new-medicine.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'register', component: CrearCuentaComponent },
     { path: 'home', component: HomeComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'addMedicine', component: AddMedicinaComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'newMedicine', component: NewMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'buscarInforme', component: SearchInformeComponent, canActivate: [GuardAuthDoctorGuard] },
