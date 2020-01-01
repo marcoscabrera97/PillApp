@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent, DeleteRecordatory, DeleteRecordatoryOk } from './components/home/home.component';
-import { ListaMedicamentosComponent } from './components/lista-medicamentos/lista-medicamentos.component';
+import { ListaMedicamentosComponent, EditQuantityMedicine } from './components/lista-medicamentos/lista-medicamentos.component';
 import { CitasComponent } from './components/citas/citas.component';
 import { FarmaciasComponent } from './components/farmacias/farmacias.component';
 import { InformeComponent } from './components/informe/informe.component';
@@ -47,7 +47,7 @@ import { AgmCoreModule } from '@agm/core';
 import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/citas-doctor.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchInformeComponent } from './components/search-informe/search-informe.component';
-import { NewMedicineComponent } from './components/new-medicine/new-medicine.component';
+import { NewMedicineComponent, MedicineExist, EmptyParameters } from './components/new-medicine/new-medicine.component';
 
 
 
@@ -67,9 +67,12 @@ import { NewMedicineComponent } from './components/new-medicine/new-medicine.com
     CrearCuentaComponent,
     AppComponent,
     DialogOverviewExampleDialog,
+    EmptyParameters,
+    MedicineExist,
     DialogErrorRegistration,
     DialogOkRegistration,
     DialogFailSignIn,
+    EditQuantityMedicine,
     HomeDoctorComponent,
     LogoutComponent,
     AddMedicinaComponent,
@@ -135,6 +138,9 @@ import { NewMedicineComponent } from './components/new-medicine/new-medicine.com
   bootstrap: [AppComponent],
   entryComponents: [
     DialogOverviewExampleDialog,
+    EmptyParameters,
+    MedicineExist,
+    EditQuantityMedicine,
     DialogErrorRegistration,
     DialogOkRegistration,
     DialogFailSignIn,

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angula
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Medicina } from '../add-medicina/medicina.module';
 import { Router } from '@angular/router';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 
 
@@ -18,7 +19,7 @@ export class NewMedicineComponent implements OnInit {
   public medicine: Medicina;
   public medicamentDose;
 
-  constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router) { 
+  constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router, private dialog: MatDialog) { 
     this.buildForm();
   }
 
@@ -32,27 +33,80 @@ export class NewMedicineComponent implements OnInit {
       doseMedicine: ['', Validators.required],
       quantityDose: ['', Validators.required]
     })
-
   }
 
   selectDose(unityDose){
     this.medicamentDose = unityDose;
   }
 
-  createMedicine(){
-    var medicineFormValues = this.newMedicineForm.value;
-    this.medicine = new Medicina();
-    this.medicine.name = medicineFormValues.nameMedicine;
-    this.medicine.quantity = medicineFormValues.quantityMedicine;
-    this.medicine.unityDose = medicineFormValues.doseMedicine;
-    this.medicine.quantityDose = medicineFormValues.quantityDose;
-    this.medicine.idUser = this.service.userToken;
-    this.service.addMedicine(this.medicine).subscribe(idMedicina => {
-      this.medicine['idMedicine'] = idMedicina['name'];
-      this.service.updateMedicine(this.medicine, idMedicina['name']).subscribe(resp => {
-        this.router.navigate(['addMedicine']);
-      });
-    });
+  checkValuesForm(medicineFormValues){
+    var error = false;
+    Object.keys(medicineFormValues).forEach(value => {
+      if(medicineFormValues[value] == ""){
+        error = true;
+      }
+    })
+    return error;
   }
 
+  createMedicine(){
+    var medicineFormValues = this.newMedicineForm.value;
+    var error = this.checkValuesForm(medicineFormValues);
+    if(!error){
+      this.medicine = new Medicina();
+      this.medicine.name = medicineFormValues.nameMedicine;
+      this.medicine.quantity = medicineFormValues.quantityMedicine;
+      this.medicine.unityDose = medicineFormValues.doseMedicine;
+      this.medicine.quantityDose = medicineFormValues.quantityDose;
+      this.medicine.idUser = this.service.userToken;
+      this.service.getMedicines().subscribe(medicines => {
+        var medicineExist = false;
+        Object.keys(medicines).forEach(medicine => {
+          if(medicines[medicine].idUser == this.service.userToken && medicines[medicine].name == this.medicine.name) {
+            medicineExist = true;
+          }
+        })
+        if(!medicineExist) {
+          this.service.addMedicine(this.medicine).subscribe(idMedicina => {
+            this.medicine['idMedicine'] = idMedicina['name'];
+            this.service.updateMedicine(this.medicine, idMedicina['name']).subscribe(resp => {
+              this.router.navigate(['addMedicine']);
+            });
+          });
+        }else{
+          const dialogRef = this.dialog.open(MedicineExist, {});
+        }
+      })
+    }else{
+      const dialogRef = this.dialog.open(EmptyParameters, {});
+    }    
+  }
+}
+
+@Component({
+  selector: 'medicineExist',
+  templateUrl: 'medicineExist.html',
+})
+export class MedicineExist {
+
+  constructor(
+    public dialogRef: MatDialogRef<MedicineExist>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'emptyParameters',
+  templateUrl: 'emptyParameters.html',
+})
+export class EmptyParameters {
+
+  constructor(
+    public dialogRef: MatDialogRef<EmptyParameters>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

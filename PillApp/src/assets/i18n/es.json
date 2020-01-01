@@ -149,6 +149,20 @@
         "quantityMedicine": "Cantidad del medicamento",
         "create": "Crear medicina",
         "quantityDose": "Cantidad de la dosi"
+    },
+    "editQuantity":{
+        "title": "Editar cantidad medicamento",
+        "description": "Por favor, introduzca la nueva cantidad del medicamento seleccionado",
+        "cancel": "Cancelar",
+        "ok": "Aceptar"
+    },
+    "medicineExist":{
+        "title": "No se puede duplicar el nombre de la medicina",
+        "accept": "Aceptar"
+    },
+    "emptyParameters":{
+        "title": "Faltan parámetros por introducir",
+        "accept": "Aceptar"
     }
 
 }

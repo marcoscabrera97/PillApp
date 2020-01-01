@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{ 'editQuantity.title' | translate }}</h1>
+<div mat-dialog-content>
+  <p>{{ 'editQuantity.description' | translate }}</p>
+  <mat-form-field class="editQuantityInput">
+    <input matInput [(ngModel)]="data.quantity" type="number">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{ 'editQuantity.cancel' | translate }}</button>
+  <button mat-button [mat-dialog-close]="data.quantity" cdkFocusInitial>{{ 'editQuantity.ok' | translate }}</button>
+</div>
