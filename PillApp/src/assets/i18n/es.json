@@ -35,10 +35,10 @@
             "ok": "Registro completado correctamente",
             "ok_body": "El registro se ha completado correctamente, puede iniciar sesión.",
             "error": "ERROR",
-            "equal_user_error": "El usuario introducido ya existe",
+            "equal_user_error": "El nombre de usuario introducido ya existe",
             "equal_mail_error": "El correo introducido ya existe",
-            "empty_parameter": "Algún parámetro del formulario no ha sido rellenado"
-        }
+            "cip_equal_error": "El cip introducido ya ha sido registrado",
+            "empty_parameter": "Algún parámetro del formulario no ha sido rellenado"        }
     },
     "add-medicine": {
         "title": "Añadir recordatorio",
@@ -68,7 +68,8 @@
         "errorMessage":{
             "title": "Error en añadir un recordatorio",
             "description": "Falta introducir algunos de los parámetros obligatorios"
-        }
+        },
+        "no_medicines": "No dispones de medicamentos. Por favor, utiliza el botón + para agregar un medicamento nuevo."
     },
     "monday": "Lunes",
     "tuesday": "Martes",
@@ -163,6 +164,9 @@
     "emptyParameters":{
         "title": "Faltan parámetros por introducir",
         "accept": "Aceptar"
+    },
+    "loadRecordatory":{
+        "title": "ESPERE POR FAVOR, SE ESTÁ CARGANDO LOS DIFERENTES RECORDATORIOS"
     }
 
 }

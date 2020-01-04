@@ -84,6 +84,12 @@ export class CrearCuentaComponent implements OnInit {
     });
   }
 
+  throwEqualCipDialog(){
+    const dialogRef = this.dialog.open(DialogCipExistent, {
+      width: '250px'
+    });
+  }
+
   throwEmptyParameter(){
     const dialogRef = this.dialog.open(DialogEmptyParameter, {
       width: '250px'
@@ -91,11 +97,15 @@ export class CrearCuentaComponent implements OnInit {
   }
 
   checkUserExist(users, idToken){
+    console.log(users[idToken].cip);
     if(this.userModule.username == users[idToken].username) {
       this.throwEqualUserNameDialog();
       return true;
     }else if(this.userModule.email == users[idToken].email) {
       this.throwEqualMailDialog();
+      return true;
+    }else if(this.userModule.cip == users[idToken].cip){
+      this.throwEqualCipDialog();
       return true;
     }
     return false;
@@ -217,6 +227,7 @@ export class DialogUserExistent {
   }
 }
 
+
 @Component({
   selector: 'dialog-mail-existent',
   templateUrl: 'dialog-mail-existent.html',
@@ -236,6 +247,20 @@ export class DialogMailExistent {
   templateUrl: 'dialog-empty-parameter.html',
 })
 export class DialogEmptyParameter {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'dialog-cip-existent',
+  templateUrl: 'dialog-cip-existent.html',
+})
+export class DialogCipExistent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}

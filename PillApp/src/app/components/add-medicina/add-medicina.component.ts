@@ -13,7 +13,9 @@ import { Recordatorio } from './recordatorio.module';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Router } from '@angular/router';
 import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.component';
-import { FooterRowOutlet } from '@angular/cdk/table';
+
+
+
 
 const moment = _rollupMoment || _moment;
 
@@ -60,6 +62,7 @@ export class AddMedicinaComponent implements OnInit {
   opts:object = {value: "", disabled: true};
   stateCtrl = new FormControl();
 
+
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router, public dialog: MatDialog) {
     this.quantityMedicine = null;
     this.unityDoseMedicine = "";
@@ -85,6 +88,7 @@ export class AddMedicinaComponent implements OnInit {
           this.medicines.push(medicines[medicine]);
         }
       })
+      this.buildForm();
     })
   }
 
@@ -93,25 +97,51 @@ export class AddMedicinaComponent implements OnInit {
   }
 
   buildForm() {
-    this.addMedicineForm = this.formBuilder.group({
-      nameMedicine: ['', Validators.required],
-      quantity: ['', Validators.required],
-      quantityDose: ['', Validators.required],
-      unityDose: ['', Validators.required],
-      selectTimeHour0: ['', Validators.required],
-      selectTimeHour1: ['', Validators.required],
-      selectTimeHour2: ['', Validators.required],
-      selectTimeHour3: ['', Validators.required],
-      dateStart: ['', Validators.required],
-      numberDaysInput: ['', Validators.required],
-      monday: ['', Validators.required],
-      thursday: ['', Validators.required],
-      wednesday: ['', Validators.required],
-      tuesday: ['', Validators.required],
-      friday: ['', Validators.required],
-      saturday: ['', Validators.required],
-      sunday: ['', Validators.required]
-    });
+    console.log(this.medicines);
+    console.log(typeof(this.medicines));
+
+    if(this.medicines.length == 0){
+      this.addMedicineForm = this.formBuilder.group({
+        nameMedicine: [{value: '', disabled: true}],
+        quantity: ['', Validators.required],
+        quantityDose: ['', Validators.required],
+        unityDose: ['', Validators.required],
+        selectTimeHour0: ['', Validators.required],
+        selectTimeHour1: ['', Validators.required],
+        selectTimeHour2: ['', Validators.required],
+        selectTimeHour3: ['', Validators.required],
+        dateStart: ['', Validators.required],
+        numberDaysInput: ['', Validators.required],
+        monday: ['', Validators.required],
+        thursday: ['', Validators.required],
+        wednesday: ['', Validators.required],
+        tuesday: ['', Validators.required],
+        friday: ['', Validators.required],
+        saturday: ['', Validators.required],
+        sunday: ['', Validators.required]
+      });
+    }else{
+      this.addMedicineForm = this.formBuilder.group({
+        nameMedicine: [{value: '', disabled: false}],
+        quantity: ['', Validators.required],
+        quantityDose: ['', Validators.required],
+        unityDose: ['', Validators.required],
+        selectTimeHour0: ['', Validators.required],
+        selectTimeHour1: ['', Validators.required],
+        selectTimeHour2: ['', Validators.required],
+        selectTimeHour3: ['', Validators.required],
+        dateStart: ['', Validators.required],
+        numberDaysInput: ['', Validators.required],
+        monday: ['', Validators.required],
+        thursday: ['', Validators.required],
+        wednesday: ['', Validators.required],
+        tuesday: ['', Validators.required],
+        friday: ['', Validators.required],
+        saturday: ['', Validators.required],
+        sunday: ['', Validators.required]
+      });
+    }
+    
   }
 
   selectDayDoses(selectOptionValue){

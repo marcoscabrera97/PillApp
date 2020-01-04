@@ -65,7 +65,9 @@ export class SearchInformeComponent implements OnInit {
               this.showRecordatoriesHistoric = [];
               Object.keys(recordatories).forEach(recordatory => {
                 var selectedDate = new Date();
-                selectedDate.setDate(this.startDateInform.getDate() + i);
+                selectedDate.setMonth(this.startDateInform.getMonth());
+                selectedDate.setFullYear(this.startDateInform.getFullYear());
+                selectedDate.setDate(this.startDateInform.getDate() + i);                
                 selectedDate = this.set0Hours(selectedDate);
                 let dateRecordatory = new Date(recordatories[recordatory].fecha);
                 dateRecordatory = this.set0Hours(dateRecordatory);
@@ -90,7 +92,6 @@ export class SearchInformeComponent implements OnInit {
           });
         }
       })
-
     })
   }
 

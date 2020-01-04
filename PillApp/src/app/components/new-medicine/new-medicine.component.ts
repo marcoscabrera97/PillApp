@@ -61,11 +61,13 @@ export class NewMedicineComponent implements OnInit {
       this.medicine.idUser = this.service.userToken;
       this.service.getMedicines().subscribe(medicines => {
         var medicineExist = false;
-        Object.keys(medicines).forEach(medicine => {
-          if(medicines[medicine].idUser == this.service.userToken && medicines[medicine].name == this.medicine.name) {
-            medicineExist = true;
-          }
-        })
+        if(medicines != null){
+          Object.keys(medicines).forEach(medicine => {
+            if(medicines[medicine].idUser == this.service.userToken && medicines[medicine].name == this.medicine.name) {
+              medicineExist = true;
+            }
+          })
+        }
         if(!medicineExist) {
           this.service.addMedicine(this.medicine).subscribe(idMedicina => {
             this.medicine['idMedicine'] = idMedicina['name'];

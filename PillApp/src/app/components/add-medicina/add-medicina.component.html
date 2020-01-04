@@ -2,7 +2,7 @@
     <h4 class="title-page title-margin">{{ 'add-medicine.title' | translate}}</h4>
     <form [formGroup]="addMedicineForm">
         <div class="flex">
-            <mat-form-field class="example-full-width select-patient" disabled>
+            <mat-form-field class="example-full-width select-patient">
                 <mat-label>{{ 'add-medicine.name' | translate}}</mat-label>
                 <input matInput aria-label="State" [matAutocomplete]="auto" formControlName="nameMedicine" (ngModelChange)="medicineSelect($event)">
                 <mat-autocomplete #auto="matAutocomplete">
@@ -14,6 +14,7 @@
             </mat-form-field>
             <i class="fas fa-plus plus-icon" [routerLink]="['/newMedicine']"></i>
         </div>
+        <div *ngIf="medicines.length == 0" class="no-medicines-div">{{ 'add-medicine.no_medicines' | translate }}</div>
         <div class="subTitle">{{ 'add-medicine.quantity' | translate }}</div>
         <div class="flex quantityForm">
             <div class="quantityMedicament">

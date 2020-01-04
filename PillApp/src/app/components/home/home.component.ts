@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Inject, PipeTransform, Pipe } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Inject, PipeTransform, Pipe, Output, EventEmitter } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Recordatorio } from '../add-medicina/recordatorio.module';
 import { Medicina } from '../add-medicina/medicina.module';
@@ -7,10 +7,12 @@ import { MessagingService } from 'src/app/services/messaging.service';
 import { SendPushNotifactionService } from 'src/app/services/send-push-notifaction.service';
 import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.component';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import undefined from 'firebase/empty-import';
 import { RecordatorioHistorico } from './recordatorio-historico.module';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
+interface AfterViewInit {
+  ngAfterViewInit(): void
+}
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
   public diasSemana;
   public diasMes;
   public showRecordatorios = new Array();
@@ -32,6 +33,8 @@ export class HomeComponent implements OnInit {
   takeRecordatorio: boolean[];
   take: boolean[];
   recordatoryIdHistoric;
+  dialogRef;
+  closeModal: boolean;
 
   constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog, private activatedRouter: ActivatedRoute, private router: Router) {
     
@@ -46,6 +49,7 @@ export class HomeComponent implements OnInit {
     this.collapse = new Array(false, false, false);
     this.showRecordatorios = []
     this.recordatoriesUser = new Array();
+    this.closeModal = true;
     
     this.showRecordatories('constructor');
     this.actualDate = this.service.actualDate.toLocaleDateString();
@@ -62,10 +66,18 @@ export class HomeComponent implements OnInit {
       this.getDate();
       this.checkRecordatories();
     }, 60000);
+    
   }
 
   getDate(){
     this.date = new Date();
+  }
+  
+  closeModalReload(){
+    //console.log(this.showRecordatorios);
+    if(this.closeModal){
+      this.dialog.closeAll();
+    }
   }
 
   checkRecordatories(){
@@ -101,6 +113,7 @@ export class HomeComponent implements OnInit {
   }
 
   showRecordatories(valor){
+    //this.dialog.open(LoadRecordatories);
     this.service.getMedicines().subscribe(medicines => {
       var medicineIds = [];
       this.medicinesArray = medicines;
@@ -110,7 +123,11 @@ export class HomeComponent implements OnInit {
         }
       });
       this.service.getRecordatories().subscribe(recordatories => {
+        var recordatoryHistoric = false;
+        var cierraPanel = false;
+        var count = 0;
         Object.keys(recordatories).forEach(recordatory => {
+          count = count + 1;
           Object.keys(medicineIds).forEach(medicineId => {
             var idMedicine = medicineIds[medicineId];
             if(recordatories[recordatory].idMedicine == idMedicine){
@@ -126,12 +143,26 @@ export class HomeComponent implements OnInit {
                 dateRecordatorio.setMinutes(recordatorio.hour.substring(3,5));
                 let dateValueRecordatorio = new Date(dateRecordatorio);
                 if(dateValueRecordatorio <= new Date()){
-                    this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name']);
+                    recordatoryHistoric = true;
+                    console.log(count);
+                    if(count == Object.keys(recordatories).length){
+                      cierraPanel = true;
+                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], true);
+                    }else{
+                      cierraPanel = false;
+                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], false);
+                    }
                     recordatorio['take'] = true;
-                    console.log('dentro');
+
                 }else{
                   this.showRecordatorios.push(recordatorio);
+                  console.log(recordatoryHistoric);
+                  console.log(cierraPanel);
+                  if((count == Object.keys(recordatories).length && !recordatoryHistoric) || (recordatoryHistoric && !cierraPanel && count == Object.keys(recordatories).length)){
+                    this.showRecordatorios.push('fin');
+                  }
                 }
+
               }
             }
           })
@@ -140,8 +171,10 @@ export class HomeComponent implements OnInit {
       if(this.service.fromAddMedicine){   
         this.service.fromAddMedicine = false;   
         window.location.reload();
-      } 
+      }
     });
+
+    console.log(this.showRecordatorios);
   }
 
   takeMedicine(idRecordatory, recordatory: any,event?: any){
@@ -150,7 +183,7 @@ export class HomeComponent implements OnInit {
     this.service.updateRecordatoryHistoric(idRecordatory, recordatory).subscribe();
   }
 
-  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine){
+  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine, lastRecordatoryOfDay){
     this.service.getRecordatoriesHistoric().subscribe(recordatories => {  
       if(recordatories == null){
         let historicRecordatory = new RecordatorioHistorico();
@@ -225,12 +258,15 @@ export class HomeComponent implements OnInit {
           }
         })
       }
+      if(lastRecordatoryOfDay){
+        this.showRecordatorios.push("fin");
+      }
     });
-   
   }
 
 
   deleteRecordatory(idRecordatory, idMedicine){
+    this.closeModal = false;
     const dialogRef = this.dialog.open(DeleteRecordatory, {
       data: { 
         idRecordatory: idRecordatory,
@@ -257,10 +293,8 @@ export class DeleteRecordatory {
 
     deleteRecordatory(){
       this.service.deleteRecordatory(this.idRecordatory).subscribe(resp => {
-        this.service.deleteMedicine(this.idMedicine).subscribe(resp => {
-          this.throwFailSignIn();
-        });
-      });
+        this.throwFailSignIn();
+      
       this.service.getRecordatoriesHistoric().subscribe(recordatoryHist => {
         Object.keys(recordatoryHist).forEach(idRecordatorio => {
           if(this.idRecordatory == recordatoryHist[idRecordatorio].idRecordatory){
@@ -268,6 +302,7 @@ export class DeleteRecordatory {
           }
         });
       });
+    });
   }
   throwFailSignIn() {
     this.dialogRef.close();
@@ -293,6 +328,20 @@ export class DeleteRecordatoryOk {
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'loadRecordatories',
+  templateUrl: 'loadRecordatories.html',
+})
+export class LoadRecordatories {
+
+  constructor(
+    public dialogRef: MatDialogRef<LoadRecordatories>) {}
 
   onNoClick(): void {
     this.dialogRef.close();

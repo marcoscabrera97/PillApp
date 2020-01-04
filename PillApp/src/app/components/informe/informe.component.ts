@@ -29,6 +29,10 @@ export class InformeComponent implements OnInit {
   selectDateInform(){
     var actualDate = new Date();
     var startDayInform = actualDate.getDate() - actualDate.getDay() + 1;
+    var startDayInformDate = new Date(startDayInform);
+    if(startDayInformDate.getDay() > actualDate.getDay()){
+      actualDate.setMonth(actualDate.getMonth() - 1);
+    }
     this.startDateInform = new Date(actualDate.setDate(startDayInform));
   }
 
@@ -43,11 +47,13 @@ export class InformeComponent implements OnInit {
           this.recordatories = [];
           Object.keys(recordatories).forEach(recordatory => {
             let selectedDate = new Date();
+            selectedDate.setMonth(this.startDateInform.getMonth());
+            selectedDate.setFullYear(this.startDateInform.getFullYear());
             selectedDate.setDate(this.startDateInform.getDate() + i);
+            
             selectedDate = this.set0Hours(selectedDate);
             let dateRecordatory = new Date(recordatories[recordatory].fecha);
             dateRecordatory = this.set0Hours(dateRecordatory);
-            
             if(dateRecordatory.toString() == selectedDate.toString() && recordatories[recordatory].idUser == this.service.userToken){
               this.recordatories.push(recordatories[recordatory]);
               count = count + 1;
@@ -62,6 +68,7 @@ export class InformeComponent implements OnInit {
         if(this.recordatories.length != 0){
           this.days.push(this.recordatories);
         }
+
         i++;
       }
       this.certainPercentage();
