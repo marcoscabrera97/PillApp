@@ -7,11 +7,16 @@
         <div>{{ 'medicineList.header.quantity' | translate }}</div>
     </div>
     <div class="medicamentos" *ngFor="let medicine of medicines; let i = index;">
-        <div class="medicine-name">        
+        <div class="medicine-icons">
             <i class="fas fa-edit edit-icon" (click)="openPopUpQuantity(medicine.idMedicine, i)"></i>
-            {{ medicine.name }}
+            <i class="fas fa-trash edit-icon" (click)="deleteRecordatory(medicine.idMedicine, i)"></i>
         </div>
-        <div class="quantity red" *ngIf="(medicine.quantityDose*2 >= medicine.quantity);else notRed">{{ medicine.quantity }} {{medicine.unityDose}}</div>
-        <ng-template class="quantity" #notRed>{{ medicine.quantity }} {{medicine.unityDose}}</ng-template>
+        <div class="medicamentos-content">
+            <div class="medicine-name">        
+                {{ medicine.name }}
+            </div>
+            <div class="quantity red" *ngIf="(medicine.quantityDose*2 >= medicine.quantity);else notRed">{{ medicine.quantity }} {{medicine.unityDose}}</div>
+            <ng-template class="quantity" #notRed><div>{{ medicine.quantity }} {{medicine.unityDose}}</div></ng-template>
+        </div>
     </div>
 </div>

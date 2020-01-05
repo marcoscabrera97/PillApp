@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ 'deleteMedicineWarning.title' | translate }}</h1>
+<div mat-dialog-content>
+  <p>{{ 'deleteMedicineWarning.description' | translate }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{ 'editQuantity.cancel' | translate }}</button>
+  <button mat-button cdkFocusInitial (click)="acceptDeleteMedicine(data.idMedicine, data.index)">{{ 'editQuantity.ok' | translate }}</button>
+</div>

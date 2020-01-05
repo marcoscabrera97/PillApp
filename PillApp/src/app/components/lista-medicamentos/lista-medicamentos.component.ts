@@ -6,6 +6,11 @@ export interface DialogData {
   quantity: number;
 }
 
+export interface DialogData {
+  idMedicine: number;
+  index: number;
+}
+
 @Component({
   selector: 'app-lista-medicamentos',
   templateUrl: './lista-medicamentos.component.html',
@@ -54,6 +59,21 @@ export class ListaMedicamentosComponent implements OnInit {
 
   }
 
+  deleteRecordatory(idMedicine:number, index: number){
+    var result;
+    const dialogRef = this.dialog.open(DeleteMedicineWarning,{
+      width: '250px',
+      data: {idMedicine: idMedicine, index: index}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == 'delete'){
+        this.medicines.splice(index, 1);
+      }
+    });
+  }
+
+  
 }
 
 @Component({
@@ -64,6 +84,41 @@ export class EditQuantityMedicine {
 
   constructor(
     public dialogRef: MatDialogRef<EditQuantityMedicine>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'delete-medicine-warning',
+  templateUrl: 'delete-medicine-warning.html',
+})
+export class DeleteMedicineWarning {
+
+  constructor(
+    public dialogRef: MatDialogRef<DeleteMedicineWarning>, private service: ServiceFirebaseService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  acceptDeleteMedicine(idMedicine:number, index:number){
+    console.log(idMedicine);
+    console.log(index);
+    this.service.getMedicines().subscribe(medicines => {
+      Object.keys(medicines).forEach(medicine => {
+        if(medicines[medicine].idMedicine == idMedicine){
+          this.service.deleteMedicine(idMedicine).subscribe();
+          //this.medicines.splice(index, 1);
+          this.service.getRecordatories().subscribe(recordatories => {
+            Object.keys(recordatories).forEach(recordatory =>{
+              if(recordatories[recordatory].idMedicine == idMedicine){
+                this.service.deleteRecordatory(recordatory).subscribe();
+              }
+            })
+          })
+        }
+      })
+    })
+    this.dialogRef.close('delete');
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -31,7 +31,6 @@ export class NewMedicineComponent implements OnInit {
       nameMedicine: ['', Validators.required],
       quantityMedicine: ['', Validators.required],
       doseMedicine: ['', Validators.required],
-      quantityDose: ['', Validators.required]
     })
   }
 

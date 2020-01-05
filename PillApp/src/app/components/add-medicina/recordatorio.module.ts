@@ -4,4 +4,5 @@ export class Recordatorio {
     numberDays: number;
     daysWeek: number[];
     idMedicine;
+    quantityDose;
 }

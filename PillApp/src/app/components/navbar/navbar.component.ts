@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
     this.show = false;
-    
+    this.service.changeOpenMenuVar(false);
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         if(val.url == '/home' || val.url == '/homeDoctor'){
@@ -53,8 +53,10 @@ export class NavbarComponent implements OnInit {
 
   classShow(){
     if(this.show){
+      this.service.changeOpenMenuVar(false);
       this.show = false;
     }else{
+      this.service.changeOpenMenuVar(true);
       this.show = true;
     }
     if(localStorage.getItem('typeUser') == 'patient'){

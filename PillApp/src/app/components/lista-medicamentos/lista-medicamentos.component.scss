@@ -11,7 +11,7 @@
 .header{
     display: flex;
     justify-content: space-between;
-    max-width: 80%;
+    max-width: 70%;
     margin: 0 auto;
     color: #656161;
 }
@@ -19,9 +19,23 @@
 .medicamentos{
     display: flex;
     justify-content: space-between;
-    max-width: 80%;
-    margin: 0 auto;
     margin-bottom: 15px;
+}
+
+.medicine-name{
+    margin-left: 47px;
+}
+
+.medicine-icons{
+    position: absolute;
+}
+
+.medicamentos-content{
+    display: flex;
+    max-width: 70%;
+    width: 77%;
+    justify-content: space-between;
+    margin: 0 auto;
 }
 
 .red{

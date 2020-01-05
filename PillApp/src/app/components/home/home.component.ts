@@ -88,16 +88,16 @@ export class HomeComponent implements OnInit {
         let dayOfTheWeek = this.date.getDay();
         if(new Date(currentRecordatory.startDate) <= this.date && (currentRecordatory.numberDays == -1 || currentRecordatory.numberDays > 0) && currentRecordatory.hour == currentHour && (currentRecordatory.daysWeek.indexOf(dayOfTheWeek) != -1 || currentRecordatory.daysWeek.indexOf(-1) == 0)){
           let currentMedicine = currentMedicines[currentRecordatory.idMedicine];
-          if(currentMedicine.quantityDose*2 <= currentMedicine.quantity){
+          if(currentRecordatory.quantityDose*2 <= currentMedicine.quantity){
             if(currentMedicine.quantity > 0){
-              currentMedicine.quantity = currentMedicine.quantity - 1;
+              currentMedicine.quantity = currentMedicine.quantity - currentRecordatory.quantityDose;
               this.service.updateMedicine(currentMedicine, currentRecordatory.idMedicine).subscribe();
             }
           }else{
             this.sendPush.sendBuyMedicine();
           }
           this.sendPush.medicineName = currentMedicine.name;
-          this.sendPush.descriptionRecordatory = "Tomar " + currentMedicine.quantityDose+" " + currentMedicine.unityDose;
+          this.sendPush.descriptionRecordatory = "Tomar " + currentRecordatory.quantityDose+" " + currentMedicine.unityDose;
           this.sendPush.sendPostRequest();
         }
       })
@@ -133,6 +133,7 @@ export class HomeComponent implements OnInit {
             if(recordatories[recordatory].idMedicine == idMedicine){
               let recordatorio = recordatories[recordatory];
               recordatorio.id = recordatory;
+              recordatorio.quantityDose = recordatorio.quantityDose;
               this.recordatoriesUser.push(recordatorio);
               this.medicine = medicines[idMedicine];
               let date = this.service.actualDate;
@@ -144,6 +145,7 @@ export class HomeComponent implements OnInit {
                 let dateValueRecordatorio = new Date(dateRecordatorio);
                 if(dateValueRecordatorio <= new Date()){
                     recordatoryHistoric = true;
+                    recordatorio['historic'] = true
                     console.log(count);
                     if(count == Object.keys(recordatories).length){
                       cierraPanel = true;
@@ -155,6 +157,7 @@ export class HomeComponent implements OnInit {
                     recordatorio['take'] = true;
 
                 }else{
+                  recordatorio['historic'] = false;
                   this.showRecordatorios.push(recordatorio);
                   console.log(recordatoryHistoric);
                   console.log(cierraPanel);
@@ -167,6 +170,7 @@ export class HomeComponent implements OnInit {
             }
           })
         })
+        console.log(this.showRecordatorios);
       });
       if(this.service.fromAddMedicine){   
         this.service.fromAddMedicine = false;   

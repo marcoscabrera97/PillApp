@@ -56,9 +56,16 @@ export class EditMedicineComponent implements OnInit {
   private recordatory: Recordatorio;
   medicamentDose;
   startDate: Date;
+  medicines: Medicina[];
+  public quantityMedicine: number;
+  public unityDoseMedicine: string;
+  public idMedicineSelected: string;
+  public defaultMedicine;
+
 
   constructor(private atp: AmazingTimePickerService, private activatedRouter: ActivatedRoute, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router) { 
     this.time = new Array();
+    this.medicines = new Array();
     this.medicine = new Medicina();
     this.recordatoryAux = new Recordatorio();
     this.buildForm(null);
@@ -71,8 +78,39 @@ export class EditMedicineComponent implements OnInit {
   ngOnInit() {
   }
 
+  searchMedicinesByUser(){
+    this.service.getMedicines().subscribe(medicines =>{
+      Object.keys(medicines).forEach(medicine => {
+        if(medicines[medicine].idUser == this.service.userToken){
+          this.medicines.push(medicines[medicine]);
+        }
+      })
+      console.log(this.defaultMedicine);
+      this.buildForm(null);
+    })
+  }
+
   buildForm(recordatory) {
-    if(recordatory == null){
+    console.log(this.defaultMedicine);
+    if(this.defaultMedicine  != undefined){
+      this.editMedicineForm = this.formBuilder.group({
+        nameMedicine: [this.defaultMedicine.name, Validators.required],
+        quantityDose: ['', Validators.required],
+        selectTimeHour0: ['', Validators.required],
+        selectTimeHour1: ['', Validators.required],
+        selectTimeHour2: ['', Validators.required],
+        selectTimeHour3: ['', Validators.required],
+        dateStart: ['', Validators.required],
+        numberDaysInput: ['', Validators.required],
+        monday: ['', Validators.required],
+        thursday: ['', Validators.required],
+        wednesday: ['', Validators.required],
+        tuesday: ['', Validators.required],
+        friday: ['', Validators.required],
+        saturday: ['', Validators.required],
+        sunday: ['', Validators.required]
+      });
+    }else if(recordatory == null){
       this.editMedicineForm = this.formBuilder.group({
         nameMedicine: ['', Validators.required],
         quantity: ['', Validators.required],
@@ -118,10 +156,10 @@ export class EditMedicineComponent implements OnInit {
           valueSunday = recordatory['daysWeek'][0];
         }
         this.editMedicineForm = this.formBuilder.group({
-          nameMedicine: [medicine['name'], Validators.required],
-          quantity: [medicine['quantity'], Validators.required],
-          quantityDose: [medicine['quantityDose'], Validators.required],
-          unityDose: [medicine['unityDose'], Validators.required],
+          nameMedicine: [this.defaultMedicine.name, Validators.required],
+          quantity: [this.defaultMedicine.quantity, Validators.required],
+          quantityDose: [recordatory['quantityDose'], Validators.required],
+          unityDose: [this.defaultMedicine.unityDose, Validators.required],
           selectTimeHour0: [recordatory['hour'], Validators.required],
           dateStart: [this.startDate, Validators.required],
           numberDaysInput: [recordatory['numberDays'], Validators.required],
@@ -138,12 +176,30 @@ export class EditMedicineComponent implements OnInit {
     
   }
 
+  medicineSelect(medicineName){
+    for(var i = 0; i < this.medicines.length; i++){
+      if(this.medicines[i].name == medicineName){
+        this.quantityMedicine = this.medicines[i].quantity;
+        this.unityDoseMedicine = this.medicines[i].unityDose;
+        this.medicamentDose = this.medicines[i].unityDose;
+        this.idMedicineSelected = this.medicines[i].idMedicine;
+        console.log(this.medicines[i]);
+        this.medicine = this.medicines[i];
+      }
+    }
+  }
+
   getRecordatory(){
     this.service.getRecordatory(this.recordatoryId).subscribe(recordatory => {
-      this.recordatoryHour = recordatory['hour'];
-      this.idMedicine = recordatory['idMedicine'];
-      this.time.push(recordatory['hour']);
-      this.buildForm(recordatory);
+      this.service.getMedicine(recordatory['idMedicine']).subscribe(medicine =>{
+        this.recordatoryHour = recordatory['hour'];
+        this.idMedicine = recordatory['idMedicine'];
+        this.time.push(recordatory['hour']);
+        this.defaultMedicine = medicine;
+        this.quantityMedicine = medicine['quantity'];
+        this.unityDoseMedicine = medicine['unityDose'];
+        this.searchMedicinesByUser();
+      })
     })
   }
 
@@ -181,10 +237,9 @@ export class EditMedicineComponent implements OnInit {
   updateRecordatory() {
     const editMedicineForm = this.editMedicineForm.value;
     this.medicine.idMedicine = this.idMedicine; 
-    this.medicine.name = editMedicineForm.nameMedicine;
-    this.medicine.quantity = editMedicineForm.quantity;
-    this.medicine.quantityDose = editMedicineForm.quantityDose;
-    this.medicine.unityDose = editMedicineForm.unityDose;
+    this.medicine.name = this.defaultMedicine.name;
+    this.medicine.quantity = this.defaultMedicine.quantity;
+    this.medicine.unityDose = this.defaultMedicine.unityDose;
     if(editMedicineForm.dateStart['_d'] != undefined) {
       this.recordatoryAux.startDate = editMedicineForm.dateStart['_d'].toUTCString();
     }else{
@@ -257,6 +312,7 @@ export class EditMedicineComponent implements OnInit {
       this.recordatory = new Recordatorio();
       this.recordatory = this.recordatoryAux;
       this.recordatory.hour = this.recordatoryHour;
+      this.recordatory.quantityDose = editMedicineForm.quantityDose;
       this.service.updateRecordatory(this.recordatory, this.recordatoryId).subscribe(recordatory => {
         this.service.updateMedicine(this.medicine, this.recordatory.idMedicine).subscribe(medicine => {
         });

@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent, DeleteRecordatory, DeleteRecordatoryOk, LoadRecordatories } from './components/home/home.component';
-import { ListaMedicamentosComponent, EditQuantityMedicine } from './components/lista-medicamentos/lista-medicamentos.component';
+import { ListaMedicamentosComponent, EditQuantityMedicine, DeleteMedicineWarning } from './components/lista-medicamentos/lista-medicamentos.component';
 import { CitasComponent } from './components/citas/citas.component';
 import { FarmaciasComponent } from './components/farmacias/farmacias.component';
 import { InformeComponent } from './components/informe/informe.component';
@@ -89,7 +89,8 @@ import { NewMedicineComponent, MedicineExist, EmptyParameters } from './componen
     ErrorAddCita,
     SearchInformeComponent,
     NewMedicineComponent,
-    DialogCipExistent
+    DialogCipExistent,
+    DeleteMedicineWarning
   ],
   imports: [
     BrowserModule,
@@ -154,7 +155,8 @@ import { NewMedicineComponent, MedicineExist, EmptyParameters } from './componen
     ErrorAddMedicine,
     ErrorAddCita,
     LoadRecordatories,
-    DialogCipExistent
+    DialogCipExistent,
+    DeleteMedicineWarning
   ]
 })
 export class AppModule { }

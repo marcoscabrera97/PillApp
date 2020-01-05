@@ -24,6 +24,10 @@ export class ServiceFirebaseService {
   private changeDate = new Subject<Date>();
   public changeDate$ = this.changeDate.asObservable();
 
+  private openMenu = new Subject<boolean>();
+  openMenuVar$ = this.openMenu.asObservable();
+
+
   constructor(private http: HttpClient, private afs: AngularFirestore) { 
     this.actualDate = new Date();
   }
@@ -54,7 +58,10 @@ export class ServiceFirebaseService {
     return this.userToken;
   }
   
-  
+  changeOpenMenuVar(openMenu: boolean){
+    this.openMenu.next(openMenu);
+  }
+
   getUser() {
     return this.http.get(this.url+'/USUARIO.json');
   }

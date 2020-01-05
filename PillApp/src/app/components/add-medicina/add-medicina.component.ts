@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import { ɵHttpInterceptingHandler } from '@angular/common/http';
 import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE, MatDialogRef, MatDialog } from '@angular/material';
@@ -61,6 +61,7 @@ export class AddMedicinaComponent implements OnInit {
   public unityDoseMedicine: string;
   opts:object = {value: "", disabled: true};
   stateCtrl = new FormControl();
+  public hideMatFormField: boolean;
 
 
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router, public dialog: MatDialog) {
@@ -79,7 +80,15 @@ export class AddMedicinaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
+
 
   searchMedicinesByUser(){
     this.service.getMedicines().subscribe(medicines =>{
@@ -193,6 +202,7 @@ export class AddMedicinaComponent implements OnInit {
         this.unityDoseMedicine = this.medicines[i].unityDose;
         this.medicamentDose = this.medicines[i].unityDose;
         this.idMedicineSelected = this.medicines[i].idMedicine;
+        this.medicine = this.medicines[i];
       }
     }
   }
@@ -201,10 +211,7 @@ export class AddMedicinaComponent implements OnInit {
     const addMedicineForm = this.addMedicineForm.value;
     var addMedicineOk = this.checkFormValues(addMedicineForm);
     if(addMedicineOk){
-      this.medicine.name = addMedicineForm.nameMedicine;
-      this.medicine.quantity = addMedicineForm.quantity;
-      this.medicine.quantityDose = addMedicineForm.quantityDose;
-      this.medicine.unityDose = addMedicineForm.unityDose;
+      
       this.recordatoryAux.startDate = addMedicineForm.dateStart['_d'].toUTCString(); /*date.date+"/"+(date.month+1)+"/"+date.year;*/
       if(addMedicineForm.numberDaysInput != '' && this.recordatoryAux.numberDays != -1){
         this.recordatoryAux.numberDays = addMedicineForm.numberDaysInput;
@@ -259,7 +266,7 @@ export class AddMedicinaComponent implements OnInit {
         this.recordatoryAux.daysWeek = [];
         this.recordatoryAux.daysWeek.push(-1);
       }
-
+      this.service.updateMedicine(this.medicine, this.idMedicineSelected).subscribe();
       this.medicine.idUser = this.service.userToken;
       console.log(this.idMedicineSelected);
       this.recordatoryAux.idMedicine = this.idMedicineSelected;
@@ -269,6 +276,7 @@ export class AddMedicinaComponent implements OnInit {
             this.recordatory = new Recordatorio();
             this.recordatory = this.recordatoryAux;
             this.recordatory.hour = hour;
+            this.recordatory.quantityDose = addMedicineForm.quantityDose;
             this.service.addRecordatory(this.recordatory).subscribe(resp => {
             })
           }

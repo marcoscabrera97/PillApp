@@ -2,7 +2,7 @@
     <h4 class="title-page title-margin">{{ 'add-medicine.title' | translate}}</h4>
     <form [formGroup]="addMedicineForm">
         <div class="flex">
-            <mat-form-field class="example-full-width select-patient">
+            <mat-form-field class="example-full-width select-patient" [ngClass]="{'hideMatForm': hideMatFormField}">
                 <mat-label>{{ 'add-medicine.name' | translate}}</mat-label>
                 <input matInput aria-label="State" [matAutocomplete]="auto" formControlName="nameMedicine" (ngModelChange)="medicineSelect($event)">
                 <mat-autocomplete #auto="matAutocomplete">
@@ -26,8 +26,8 @@
         </div>
         <div class="subTitle">{{ 'add-medicine.quantity_dose' | translate }}</div>
         <div class="flex">
-            <mat-form-field class="quantityDose">
-                <input matInput formControlName="quantityDose">
+            <mat-form-field class="quantityDose" [ngClass]="{'hideMatForm': hideMatFormField}">
+                <input matInput formControlName="quantityDose" type="number">
             </mat-form-field>
             <span class="unityDose">{{ medicamentDose }}</span>
         </div>
