@@ -2,9 +2,9 @@
     <div class="title">Farmacias más cercanas</div>
     <div class="list-pharmacies" *ngIf="!showMap">
         <div class="center-button">
-            <button mat-raised-button class="content-button" (click)="activateMap()">VER MAPA</button>
+            <button mat-raised-button class="content-button" (click)="activateMap()" [ngClass]="{'hideMatForm': hideMatFormField}">VER MAPA</button>
         </div>
-        <div class="card" *ngFor="let pharmacy of pharmacies;">
+        <div class="card" *ngFor="let pharmacy of pharmacies;" [ngClass]="{'hideMatForm': hideMatFormField}">
             <div class="card-1">
                 <div class="ubication-icon">
                     <i class="fas fa-map-marker-alt"></i>

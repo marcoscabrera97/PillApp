@@ -61,6 +61,7 @@ export class EditMedicineComponent implements OnInit {
   public unityDoseMedicine: string;
   public idMedicineSelected: string;
   public defaultMedicine;
+  hideMatFormField: boolean;
 
 
   constructor(private atp: AmazingTimePickerService, private activatedRouter: ActivatedRoute, private formBuilder: FormBuilder, private service: ServiceFirebaseService, private router: Router) { 
@@ -76,6 +77,13 @@ export class EditMedicineComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   searchMedicinesByUser(){

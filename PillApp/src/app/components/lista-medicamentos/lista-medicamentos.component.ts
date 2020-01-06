@@ -20,12 +20,20 @@ export class ListaMedicamentosComponent implements OnInit {
 
   public medicines;
   public quantity: number;
+  hideMatFormField: boolean;
 
   constructor(private service: ServiceFirebaseService, private dialog: MatDialog) { 
     this.medicines = new Array();
     this.getMedicines();
   }
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   getMedicines(){

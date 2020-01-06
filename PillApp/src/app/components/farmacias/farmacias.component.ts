@@ -15,7 +15,7 @@ export class FarmaciasComponent implements OnInit {
   coordenadas;
   showMap: boolean;
   pharmacies;
-
+  hideMatFormField: boolean;
 
 
   constructor(private service: ServiceFirebaseService) {
@@ -26,6 +26,13 @@ export class FarmaciasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   getLocation() {

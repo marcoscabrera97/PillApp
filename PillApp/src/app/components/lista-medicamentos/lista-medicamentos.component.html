@@ -7,7 +7,7 @@
         <div>{{ 'medicineList.header.quantity' | translate }}</div>
     </div>
     <div class="medicamentos" *ngFor="let medicine of medicines; let i = index;">
-        <div class="medicine-icons">
+        <div class="medicine-icons" [ngClass]="{'hideMatForm': hideMatFormField}">
             <i class="fas fa-edit edit-icon" (click)="openPopUpQuantity(medicine.idMedicine, i)"></i>
             <i class="fas fa-trash edit-icon" (click)="deleteRecordatory(medicine.idMedicine, i)"></i>
         </div>
