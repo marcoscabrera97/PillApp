@@ -28,12 +28,9 @@ export class InformeComponent implements OnInit {
 
   selectDateInform(){
     var actualDate = new Date();
+    this.startDateInform = new Date();
     var startDayInform = actualDate.getDate() - actualDate.getDay() + 1;
-    var startDayInformDate = new Date(startDayInform);
-    if(startDayInformDate.getDay() > actualDate.getDay()){
-      actualDate.setMonth(actualDate.getMonth() - 1);
-    }
-    this.startDateInform = new Date(actualDate.setDate(startDayInform));
+    this.startDateInform.setDate(startDayInform);
   }
 
   createReport(){
