@@ -35,6 +35,8 @@ export class HomeComponent implements OnInit {
   recordatoryIdHistoric;
   dialogRef;
   closeModal: boolean;
+  private recordatoriosHistoricos;
+  public collapseRecordatories: boolean;
 
   constructor(private service: ServiceFirebaseService, private sendPush: SendPushNotifactionService, public dialog: MatDialog, private activatedRouter: ActivatedRoute, private router: Router) {
     
@@ -56,6 +58,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(){
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.collapseRecordatories = true;
+      }else{
+        this.collapseRecordatories = false;
+      }
+    });
+
     this.actualDateRef = this.service.changeDate$.subscribe((resp)  =>{
       this.actualDate = this.service.actualDate.toLocaleDateString();
       this.showRecordatorios = [];
@@ -105,15 +115,16 @@ export class HomeComponent implements OnInit {
   }
 
   openCollapse(id) {
-    if(this.collapse[id]) {
-      this.collapse[id] = false;
-    }else{
+    if(!this.collapse[id]) {
       this.collapse[id] = true;
+    }else{
+      this.collapse[id] = false;
     }
   }
 
   showRecordatories(valor){
-    //this.dialog.open(LoadRecordatories);
+    this.dialog.open(LoadRecordatories);
+
     this.service.getMedicines().subscribe(medicines => {
       var medicineIds = [];
       this.medicinesArray = medicines;
@@ -126,6 +137,8 @@ export class HomeComponent implements OnInit {
         var recordatoryHistoric = false;
         var cierraPanel = false;
         var count = 0;
+        this.recordatoriosHistoricos = new Array();
+
         Object.keys(recordatories).forEach(recordatory => {
           count = count + 1;
           Object.keys(medicineIds).forEach(medicineId => {
@@ -146,31 +159,35 @@ export class HomeComponent implements OnInit {
                 if(dateValueRecordatorio <= new Date()){
                     recordatoryHistoric = true;
                     recordatorio['historic'] = true
-                    console.log(count);
+                    this.recordatoriosHistoricos.push(recordatory);
                     if(count == Object.keys(recordatories).length){
                       cierraPanel = true;
-                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], true);
+                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], true, recordatory);
                     }else{
                       cierraPanel = false;
-                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], false);
+                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], false, recordatory);
                     }
+
                     recordatorio['take'] = true;
 
                 }else{
                   recordatorio['historic'] = false;
-                  this.showRecordatorios.push(recordatorio);
-                  console.log(recordatoryHistoric);
-                  console.log(cierraPanel);
-                  if((count == Object.keys(recordatories).length && !recordatoryHistoric) || (recordatoryHistoric && !cierraPanel && count == Object.keys(recordatories).length)){
-                    this.showRecordatorios.push('fin');
-                  }
+                  this.showRecordatorios.push(recordatorio);                  
                 }
-
+                console.log(recordatoryHistoric);
+                console.log(this.recordatoriosHistoricos);
+                if(count == Object.keys(recordatories).length && !recordatoryHistoric){
+                  this.showRecordatorios.push('fin');
+                }
               }
             }
           })
         })
         console.log(this.showRecordatorios);
+        if(recordatories == null){
+          console.log('dentro if');
+          this.showRecordatorios.push('fin');
+        }
       });
       if(this.service.fromAddMedicine){   
         this.service.fromAddMedicine = false;   
@@ -187,7 +204,7 @@ export class HomeComponent implements OnInit {
     this.service.updateRecordatoryHistoric(idRecordatory, recordatory).subscribe();
   }
 
-  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine, lastRecordatoryOfDay){
+  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine, lastRecordatoryOfDay, recordatory){
     this.service.getRecordatoriesHistoric().subscribe(recordatories => {  
       if(recordatories == null){
         let historicRecordatory = new RecordatorioHistorico();
@@ -262,7 +279,9 @@ export class HomeComponent implements OnInit {
           }
         })
       }
-      if(lastRecordatoryOfDay){
+    
+      this.recordatoriosHistoricos.splice(recordatory, 1);
+      if(0 == Object.keys(this.recordatoriosHistoricos).length) {
         this.showRecordatorios.push("fin");
       }
     });

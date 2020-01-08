@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import undefined from 'firebase/empty-import';
 import { SendPushNotifactionService } from 'src/app/services/send-push-notifaction.service';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-citas',
@@ -14,7 +15,7 @@ export class CitasComponent implements OnInit {
   public idDate;
   private datesSendPush;
 
-  constructor(public service: ServiceFirebaseService, public sendPushService: SendPushNotifactionService) { 
+  constructor(public service: ServiceFirebaseService, public sendPushService: SendPushNotifactionService, public dialog: MatDialog) { 
     this.getDatesPatient();
     setInterval(() => {
       this.sendDateRecordatory();
@@ -24,23 +25,23 @@ export class CitasComponent implements OnInit {
   ngOnInit() {
   }
 
+  closeModalReload(){
+    this.dialog.closeAll();
+  }
+
   getDatesPatient(){
+    this.dialog.open(LoadDates);
     this.datesSendPush = new Array();
     var currentMonth: string[] = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];  
     this.datesPatient = new Array();
     this.service.getDatesPatient().subscribe(dates => {
+      var count = 0;
       this.service.getHospitals().subscribe(hospitals =>{
-        console.log(dates);
         Object.keys(dates).forEach(date => {
-          console.log(date);
           if(dates[date] != null){
-            console.log(dates[date].cip);
             this.service.getSpecificUser(this.service.userToken).subscribe(user => {
-              console.log(user);
               if(dates[date].cip == user['cip']) {
-              console.log('dentro');
               this.idDate = date;
-              console.log(dates[date]);
               const dateDate = new Date(dates[date].fecha);
               const dateAux = new Date(dates[date].fecha);
               dateAux.setDate(dateAux.getDate()- 1);
@@ -64,8 +65,15 @@ export class CitasComponent implements OnInit {
               dates[date].nombre_hospital = hospitals[dates[date].id_hospital].nombre_hosp;
               this.datesPatient.push(dates[date]);
               }
+              count = count + 1;
+              if(count == Object.keys(dates).length){
+                this.datesPatient.push("fin")
+            }
             })
+          }else{
+            this.datesPatient.push("fin");
           }
+          
         });
             
       });
@@ -79,4 +87,18 @@ export class CitasComponent implements OnInit {
     })
   }
 
+}
+
+@Component({
+  selector: 'loadDates',
+  templateUrl: 'loadDates.html',
+})
+export class LoadDates {
+
+  constructor(
+    public dialogRef: MatDialogRef<LoadDates>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

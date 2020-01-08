@@ -48,6 +48,7 @@ import { CitasDoctorComponent, ErrorAddCita } from './components/citas-doctor/ci
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchInformeComponent } from './components/search-informe/search-informe.component';
 import { NewMedicineComponent, MedicineExist, EmptyParameters } from './components/new-medicine/new-medicine.component';
+import { LoadDates } from './components/citas/citas.component';
 
 
 
@@ -90,7 +91,8 @@ import { NewMedicineComponent, MedicineExist, EmptyParameters } from './componen
     SearchInformeComponent,
     NewMedicineComponent,
     DialogCipExistent,
-    DeleteMedicineWarning
+    DeleteMedicineWarning,
+    LoadDates
   ],
   imports: [
     BrowserModule,
@@ -156,7 +158,8 @@ import { NewMedicineComponent, MedicineExist, EmptyParameters } from './componen
     ErrorAddCita,
     LoadRecordatories,
     DialogCipExistent,
-    DeleteMedicineWarning
+    DeleteMedicineWarning,
+    LoadDates
   ]
 })
 export class AppModule { }

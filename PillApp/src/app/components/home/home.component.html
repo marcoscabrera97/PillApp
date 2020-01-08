@@ -1,21 +1,20 @@
 <div class="container">
     <h4 class="title-page">{{ 'home.title' | translate }}</h4>
     <h5 class="date">{{actualDate}}</h5>
-    {{showRecordatorios.length}}
     <div class="accordion" *ngFor="let recordatory of showRecordatorios; let i=index; let last = last">
         <div *ngIf="recordatory != 'fin'">
             <p class="pill-banner">
                 <button class="btn btn-primary" data-toggle="collapse" (click)="openCollapse(i)" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <div class="arrow-img" *ngIf="!collapse[i]">
+                    <div class="arrow-img" *ngIf="!collapse[i] || collapseRecordatories">
                         <img src="../../../assets/images/row-bottom.png">
                     </div>
-                    <div class="arrow-img" *ngIf="collapse[i]">
+                    <div class="arrow-img" *ngIf="collapse[i] && !collapseRecordatories">
                         <img src="../../../assets/images/row-top.png">
                     </div>
                     <div class="text-pill">{{recordatory.hour}}</div>
                 </button>
             </p>
-            <div [ngClass]="{collapse: !collapse[i]}">
+            <div [ngClass]="{collapse: !collapse[i] || collapseRecordatories}">
                 <div class="card card-body">
                         <div class="content-card">
                             <div class="checkbox" *ngIf="recordatory.take">
@@ -36,7 +35,7 @@
             </div>
             <div class="separation-banner">&nbsp;</div>
         </div>
-        <div *ngIf="recordatory == 'fin'">dentro {{closeModalReload()}}</div>
+        <div *ngIf="recordatory == 'fin'">{{closeModalReload()}}</div>
     </div>
 </div>
 
