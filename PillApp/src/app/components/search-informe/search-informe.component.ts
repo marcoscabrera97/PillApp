@@ -18,6 +18,7 @@ export class SearchInformeComponent implements OnInit {
   private startDateInform;
   private finishDateInform;
   public days;
+  public hideMatFormField: boolean;
 
   constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService) { 
     this.days = new Array();
@@ -28,6 +29,13 @@ export class SearchInformeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   buildForm(){

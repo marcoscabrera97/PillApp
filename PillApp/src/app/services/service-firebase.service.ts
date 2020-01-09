@@ -20,6 +20,7 @@ export class ServiceFirebaseService {
   typeUser: string;
   actualDate;
   fromAddMedicine: boolean;
+  fromAddCitaDoctor: boolean;
 
   private changeDate = new Subject<Date>();
   public changeDate$ = this.changeDate.asObservable();

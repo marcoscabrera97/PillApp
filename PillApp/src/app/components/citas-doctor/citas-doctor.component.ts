@@ -2,16 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import { DialogOverviewExampleDialog } from '../crear-cuenta/crear-cuenta.component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog, DateAdapter } from '@angular/material';
 import { Consulta } from '../home-doctor/consulta.module';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../crear-cuenta/usuario.module';
+import * as _moment from 'moment';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+
+
+import {default as _rollupMoment} from 'moment';
+
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 @Component({
   selector: 'app-citas-doctor',
   templateUrl: './citas-doctor.component.html',
-  styleUrls: ['./citas-doctor.component.scss']
+  styleUrls: ['./citas-doctor.component.scss'],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ]
 })
 export class CitasDoctorComponent implements OnInit {
 
@@ -19,6 +43,8 @@ export class CitasDoctorComponent implements OnInit {
   public time: string;
   public addCita: Consulta;
   public patients: Usuario[];
+  public hideMatFormField: boolean;
+
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, public dialog: MatDialog, public service: ServiceFirebaseService, private router: Router) { 
     this.time = "   :";
     this.patients = [];
@@ -29,11 +55,17 @@ export class CitasDoctorComponent implements OnInit {
         }
       })
     });
-    console.log(this.patients);
     this.buildForm();
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   buildForm(){
@@ -55,13 +87,11 @@ export class CitasDoctorComponent implements OnInit {
   saveCita(){
     const addCitaForm = this.addCitaForm.value;
     var formOk = this.checkValueForm(addCitaForm);
-    if(formOk){
-      console.log(addCitaForm);
-      
+    if(formOk){      
       this.service.getSpecificUser(this.service.userToken).subscribe(user => {
         this.addCita = new Consulta();
         this.addCita.cip = addCitaForm.paciente;
-        this.addCita.fecha = addCitaForm.dateConsulta.toUTCString();
+        this.addCita.fecha = addCitaForm.dateConsulta['_d'].toUTCString();
         var auxFecha = new Date(this.addCita.fecha);
         var horaString = this.time.substr(0,2);
         var hora = +horaString;
@@ -78,15 +108,16 @@ export class CitasDoctorComponent implements OnInit {
         this.addCita.puerta = user['puerta'];
         this.addCita.especialidad = user['especialidad'];
         this.addCita.visitaRealizada = false;
-        this.service.addConsulta(this.addCita).subscribe();
-        this.router.navigate(['homeDoctor']);
+        this.service.addConsulta(this.addCita).subscribe(resp => {
+          this.service.fromAddCitaDoctor = true;
+          this.router.navigate(['homeDoctor']);
+        });
       });
     }else{
       const dialogRef = this.dialog.open(ErrorAddCita, {
         width: '250px'
       });
     }
-    this.router.navigate(['homeDoctor']);
   }
 
   checkValueForm(addCitaForm){

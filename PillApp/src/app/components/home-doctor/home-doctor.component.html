@@ -6,7 +6,7 @@
             <div class="consulta">
                 <!--<div class="checkbox" *ngIf="recordatory.take">-->
                 <div class="checkbox">
-                    <mat-checkbox class="checkbox-input checkbox-input-doctor" (change)="changeConsulta(consulta.id, $event.checked)" [(ngModel)]="consultaRealizada[consulta.id]"></mat-checkbox>
+                    <mat-checkbox class="checkbox-input checkbox-input-doctor" (change)="changeConsulta(consulta.id, $event.checked)" [(ngModel)]="consultaRealizada[consulta.id]" [ngClass]="{hideMatForm: 'hideMatFormField'}"></mat-checkbox>
                 </div>
                 <div class="name-patient">
                     <span [ngClass]="{'green': consultaRealizada[consulta.id], 'red': !consultaRealizada[consulta.id]}">{{ consulta.name }}</span>

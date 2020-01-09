@@ -14,6 +14,7 @@ export class HomeDoctorComponent implements OnInit {
   private actualDateRef: Subscription = null;
   public consultas: Consulta [];
   public consultaRealizada: boolean[];
+  public hideMatFormField: boolean;
 
 
   constructor(private service: ServiceFirebaseService) { 
@@ -27,6 +28,13 @@ export class HomeDoctorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
     this.actualDateRef = this.service.changeDate$.subscribe((resp)  =>{
       this.actualDate = this.service.actualDate.toLocaleDateString();
       this.showConsultas();
@@ -80,7 +88,12 @@ export class HomeDoctorComponent implements OnInit {
         })
       }
       });
+      if(this.service.fromAddCitaDoctor){   
+        this.service.fromAddCitaDoctor = false;   
+        window.location.reload();
+      }
     })
+    
   }
 
 }
