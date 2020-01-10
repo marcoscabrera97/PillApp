@@ -10,7 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent, DeleteRecordatory, DeleteRecordatoryOk, LoadRecordatories } from './components/home/home.component';
 import { ListaMedicamentosComponent, EditQuantityMedicine, DeleteMedicineWarning } from './components/lista-medicamentos/lista-medicamentos.component';
 import { CitasComponent } from './components/citas/citas.component';
-import { FarmaciasComponent } from './components/farmacias/farmacias.component';
+import { FarmaciasComponent, LoadFarmacias } from './components/farmacias/farmacias.component';
 import { InformeComponent } from './components/informe/informe.component';
 import { IniciarSesionComponent, DialogFailSignIn } from './components/iniciar-sesion/iniciar-sesion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -92,7 +92,8 @@ import { LoadDates } from './components/citas/citas.component';
     NewMedicineComponent,
     DialogCipExistent,
     DeleteMedicineWarning,
-    LoadDates
+    LoadDates,
+    LoadFarmacias
   ],
   imports: [
     BrowserModule,
@@ -159,7 +160,8 @@ import { LoadDates } from './components/citas/citas.component';
     LoadRecordatories,
     DialogCipExistent,
     DeleteMedicineWarning,
-    LoadDates
+    LoadDates,
+    LoadFarmacias
   ]
 })
 export class AppModule { }

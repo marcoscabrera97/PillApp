@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class FarmaciasComponent implements OnInit {
   hideMatFormField: boolean;
 
 
-  constructor(private service: ServiceFirebaseService) {
+  constructor(private service: ServiceFirebaseService, public dialog: MatDialog) {
     this.showMap = false;
     this.pharmacies = new Array();
     this.coordenadas = new Array();
@@ -36,6 +37,7 @@ export class FarmaciasComponent implements OnInit {
   }
 
   getLocation() {
+    this.dialog.open(LoadFarmacias);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: Position) => {
         if (position) {
@@ -47,10 +49,18 @@ export class FarmaciasComponent implements OnInit {
           .then(response => response.text())
           .then(contents => {
             var json = JSON.parse(contents)
+            var count = 0;
             json['results'].forEach(pharmacy => {
               this.pharmacies.push(pharmacy);
+              count = count + 1;
               this.coordenadas.push([pharmacy['geometry'].location.lat, pharmacy['geometry'].location.lng]);
+              if(count == json['results'].length){
+                this.pharmacies.push('fin');
+              }
             })
+            if(json['results'].length == 0){
+              this.pharmacies.push('fin');
+            }
           })
           .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"));
         }
@@ -61,6 +71,15 @@ export class FarmaciasComponent implements OnInit {
     }
   }
 
+  customMarker(){
+    return require("../../../assets/images/customMarker.png");
+  }
+
+  closeModalReload(){
+    //console.log(this.showRecordatorios);
+    this.dialog.closeAll();
+  }
+
   activateMap(){
     if(this.showMap) {
       this.showMap = false;
@@ -69,4 +88,18 @@ export class FarmaciasComponent implements OnInit {
     }
   }
 
+}
+
+@Component({
+  selector: 'loadFarmacias',
+  templateUrl: 'loadFarmacias.html',
+})
+export class LoadFarmacias {
+
+  constructor(
+    public dialogRef: MatDialogRef<LoadFarmacias>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

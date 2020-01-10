@@ -5,28 +5,33 @@
             <button mat-raised-button class="content-button" (click)="activateMap()" [ngClass]="{'hideMatForm': hideMatFormField}">VER MAPA</button>
         </div>
         <div class="card" *ngFor="let pharmacy of pharmacies;" [ngClass]="{'hideMatForm': hideMatFormField}">
-            <div class="card-1">
-                <div class="ubication-icon">
-                    <i class="fas fa-map-marker-alt"></i>
+            <div *ngIf="pharmacy != 'fin'">
+                <div class="card-1">
+                    <div class="ubication-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="list">
+                        <ul>
+                            <li>{{ pharmacy.name }}</li>
+                            <li>{{ pharmacy.vicinity }}</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="list">
-                    <ul>
-                        <li>{{ pharmacy.name }}</li>
-                        <li>{{ pharmacy.vicinity }}</li>
-                    </ul>
+                <div class="card-2">
+                    <div class="hour-icon">
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <div class="list">
+                        <ul>
+                            <li *ngIf="pharmacy.opening_hours != undefined && pharmacy.opening_hours.open_now == true">Actualmente abierto</li>
+                            <li *ngIf="pharmacy.opening_hours != undefined && pharmacy.opening_hours.open_now == false">Actualmente cerrado</li>
+                            <li *ngIf="pharmacy.opening_hours == undefined">Actualmente cerrado</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="card-2">
-                <div class="hour-icon">
-                    <i class="far fa-clock"></i>
-                </div>
-                <div class="list">
-                    <ul>
-                        <li *ngIf="pharmacy.opening_hours != undefined && pharmacy.opening_hours.open_now == true">Actualmente abierto</li>
-                        <li *ngIf="pharmacy.opening_hours != undefined && pharmacy.opening_hours.open_now == false">Actualmente cerrado</li>
-                        <li *ngIf="pharmacy.opening_hours == undefined">Actualmente cerrado</li>
-                    </ul>
-                </div>
+            <div *ngIf="pharmacy == 'fin'">
+                {{closeModalReload()}}
             </div>
         </div>
     </div>
@@ -35,7 +40,8 @@
                 <button mat-raised-button class="content-button" (click)="activateMap()">VER LISTADO</button>
             </div>
         <agm-map [zoom]="15" [latitude]="lat" [longitude]="lng" [streetViewControl]="false">
-            <agm-marker *ngFor="let coordenada of coordenadas" [latitude]="coordenada[0]" [longitude]="coordenada[1]"></agm-marker>
+            <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]='{"url": customMarker(),"scaledSize": {"height": 20, "width": 20}}'></agm-marker>
+            <agm-marker *ngFor="let coordenada of coordenadas" [latitude]="coordenada[0]" [longitude]="coordenada[1]" ></agm-marker>
         </agm-map>
     </div>
 </div>

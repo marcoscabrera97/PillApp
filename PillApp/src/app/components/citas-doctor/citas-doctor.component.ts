@@ -48,6 +48,7 @@ export class CitasDoctorComponent implements OnInit {
   constructor(private atp: AmazingTimePickerService, private formBuilder: FormBuilder, public dialog: MatDialog, public service: ServiceFirebaseService, private router: Router) { 
     this.time = "   :";
     this.patients = [];
+    this.hideMatFormField = false;
     this.service.getUser().subscribe(users => {
       Object.keys(users).forEach(idUser => {
         if(users[idUser].userType == 'patient'){
