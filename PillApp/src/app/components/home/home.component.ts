@@ -84,10 +84,50 @@ export class HomeComponent implements OnInit {
   }
   
   closeModalReload(){
-    //console.log(this.showRecordatorios);
     if(this.closeModal){
       this.dialog.closeAll();
     }
+  }
+
+  setActualDate(date: string){
+    var dateArray = date.split(":");
+
+    var hour = dateArray[0];
+    var minutes = dateArray[1];
+    var actualDate = new Date();
+    actualDate.setHours(parseInt(hour));
+    actualDate.setMinutes(parseInt(minutes));
+
+    return actualDate;
+  }
+
+  orderRecordatories(){
+    var auxShowRecordatorios = [];
+    var count = Object.keys(this.showRecordatorios).length - 1;
+    for(var i = 0; i < count; i++){
+      var firsTime = true;
+      var minimunValue = new Date();
+      var element;
+      var indexDelete;
+      minimunValue.setHours(0);
+      minimunValue.setMinutes(0);
+      minimunValue.setSeconds(0);
+      for(var j = 0; j < Object.keys(this.showRecordatorios).length; j++){
+        if(this.showRecordatorios[j] != "fin"){
+          var actualDate = this.setActualDate(this.showRecordatorios[j].hour);
+          if(firsTime || minimunValue >= actualDate){
+            firsTime = false;
+            minimunValue = actualDate;
+            element = this.showRecordatorios[j];
+            indexDelete = j;
+          }
+        }
+      }
+      this.showRecordatorios.splice(indexDelete,1);
+      auxShowRecordatorios.push(element);
+    }
+    auxShowRecordatorios.push('fin');
+    this.showRecordatorios = auxShowRecordatorios;
   }
 
   checkRecordatories(){
@@ -174,18 +214,15 @@ export class HomeComponent implements OnInit {
                   recordatorio['historic'] = false;
                   this.showRecordatorios.push(recordatorio);                  
                 }
-                console.log(recordatoryHistoric);
-                console.log(this.recordatoriosHistoricos);
                 if(count == Object.keys(recordatories).length && !recordatoryHistoric){
                   this.showRecordatorios.push('fin');
+                  this.orderRecordatories();
                 }
               }
             }
           })
         })
-        console.log(this.showRecordatorios);
         if(recordatories == null){
-          console.log('dentro if');
           this.showRecordatorios.push('fin');
         }
       });
@@ -193,9 +230,8 @@ export class HomeComponent implements OnInit {
         this.service.fromAddMedicine = false;   
         window.location.reload();
       }
+      
     });
-
-    console.log(this.showRecordatorios);
   }
 
   takeMedicine(idRecordatory, recordatory: any,event?: any){
@@ -282,7 +318,8 @@ export class HomeComponent implements OnInit {
     
       this.recordatoriosHistoricos.splice(recordatory, 1);
       if(0 == Object.keys(this.recordatoriosHistoricos).length) {
-        this.showRecordatorios.push("fin");
+        this.showRecordatorios.push('fin');
+        this.orderRecordatories();
       }
     });
   }
