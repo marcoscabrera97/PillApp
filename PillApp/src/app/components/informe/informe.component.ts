@@ -29,7 +29,12 @@ export class InformeComponent implements OnInit {
   selectDateInform(){
     var actualDate = new Date();
     this.startDateInform = new Date();
-    var startDayInform = actualDate.getDate() - actualDate.getDay() + 1;
+    var startDayInform;
+    if(actualDate.getDay() == 0){
+      startDayInform = actualDate.getDate() - 6;
+    }else{
+      startDayInform = actualDate.getDate() - actualDate.getDay() + 1;
+    }
     this.startDateInform.setDate(startDayInform);
   }
 
