@@ -278,12 +278,12 @@ export class AddMedicinaComponent implements OnInit {
             this.recordatory.hour = hour;
             this.recordatory.quantityDose = addMedicineForm.quantityDose;
             this.service.addRecordatory(this.recordatory).subscribe(resp => {
+              this.service.fromAddMedicine = true;
+              this.router.navigate(['home']);
             })
           }
           count++;
         }
-        this.service.fromAddMedicine = true;
-        this.router.navigate(['home']);
     }
     
   }

@@ -93,13 +93,11 @@ export class EditMedicineComponent implements OnInit {
           this.medicines.push(medicines[medicine]);
         }
       })
-      console.log(this.defaultMedicine);
       this.buildForm(null);
     })
   }
 
   buildForm(recordatory) {
-    console.log(this.defaultMedicine);
     if(this.defaultMedicine  != undefined){
       this.editMedicineForm = this.formBuilder.group({
         nameMedicine: [this.defaultMedicine.name, Validators.required],
@@ -191,7 +189,6 @@ export class EditMedicineComponent implements OnInit {
         this.unityDoseMedicine = this.medicines[i].unityDose;
         this.medicamentDose = this.medicines[i].unityDose;
         this.idMedicineSelected = this.medicines[i].idMedicine;
-        console.log(this.medicines[i]);
         this.medicine = this.medicines[i];
       }
     }
@@ -323,9 +320,10 @@ export class EditMedicineComponent implements OnInit {
       this.recordatory.quantityDose = editMedicineForm.quantityDose;
       this.service.updateRecordatory(this.recordatory, this.recordatoryId).subscribe(recordatory => {
         this.service.updateMedicine(this.medicine, this.recordatory.idMedicine).subscribe(medicine => {
+          this.router.navigate(['home']);
         });
       });
-      this.router.navigate(['home']);
+      
   }
 
 }

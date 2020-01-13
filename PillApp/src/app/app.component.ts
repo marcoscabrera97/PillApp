@@ -18,8 +18,7 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    const userId = 'user001';
-    this.messagingService.getPermission();
+    this.messagingService.requestPermission();
     this.messagingService.receiveMessage();
     this.message = this.messagingService.currentMessage;
   }

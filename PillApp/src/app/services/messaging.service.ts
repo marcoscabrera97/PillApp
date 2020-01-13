@@ -1,50 +1,32 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase';
-
-import 'rxjs/add/operator/take';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { SendPushNotifactionService } from './send-push-notifaction.service';
-
+import { AngularFireMessaging } from '@angular/fire/messaging';
+import { BehaviorSubject } from 'rxjs'
 @Injectable()
 export class MessagingService {
-  messaging = firebase.messaging();
-  currentMessage = new BehaviorSubject(null);
-
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private sendPush: SendPushNotifactionService) {}
-
-  updateToken(token) {
-    this.afAuth.authState.take(1).subscribe(user => {
-      if (!user) {
-        return;
-      }
-      const data = { [user.uid]: token };
-      this.db.object('fcmTokens/').update(data);
-    });
-  }
-
-  getPermission() {
-    this.messaging
-      .requestPermission()
-      .then(() => {
-        console.log('Notification permission granted.');
-        return this.messaging.getToken();
-      })
-      .then(token => {
-        console.log('This ia a token', token);
-        this.sendPush.token = token;
-        this.updateToken(token);
-      })
-      .catch(err => {
-        console.log('Unable to get permission to notify.', err);
-      });
-  }
-
-  receiveMessage() {
-    this.messaging.onMessage(payload => {
-      console.log('Message received. ', payload);
-      this.currentMessage.next(payload);
-    });
-  }
+currentMessage = new BehaviorSubject(null);
+constructor(private angularFireMessaging: AngularFireMessaging) {
+this.angularFireMessaging.messaging.subscribe(
+(_messaging) => {
+_messaging.onMessage = _messaging.onMessage.bind(_messaging);
+_messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
+}
+)
+}
+requestPermission() {
+this.angularFireMessaging.requestToken.subscribe(
+(token) => {
+console.log(token);
+},
+(err) => {
+console.error('Unable to get permission to notify.', err);
+}
+);
+}
+receiveMessage() {
+this.angularFireMessaging.messages.subscribe(
+(payload) => {
+console.log("new message received. ", payload);
+this.currentMessage.next(payload);
+})
+}
 }
