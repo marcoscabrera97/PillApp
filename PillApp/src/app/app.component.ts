@@ -18,7 +18,7 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    this.messagingService.requestPermission();
+    this.messagingService.getPermission();
     this.messagingService.receiveMessage();
     this.message = this.messagingService.currentMessage;
   }
