@@ -15,8 +15,8 @@
             <div class="medicine-name">        
                 {{ medicine.name }}
             </div>
-            <div class="quantity red" *ngIf="(medicine.quantityDose*2 >= medicine.quantity);else notRed">{{ medicine.quantity }} {{medicine.unityDose}}</div>
-            <ng-template class="quantity" #notRed><div>{{ medicine.quantity }} {{medicine.unityDose}}</div></ng-template>
+            <div class="quantity red" *ngIf="((5 >= medicine.quantity && medicine.unityDose == 'pastillas') || ( 100 >= medicine.quantity && medicine.unityDose == 'ml'));else notRed">{{ medicine.quantity }} {{medicine.unityDose}}</div>
+            <ng-template #notRed><div class="quantity">{{ medicine.quantity }} {{medicine.unityDose}}</div></ng-template>
         </div>
     </div>
 </div>
