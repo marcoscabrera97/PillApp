@@ -19,11 +19,26 @@
 }
 
 .red{
-    color: red;
+    color: #ff0000;
 }
 
 .green{
-    color: green;
+    color: #418107;
+}
+
+.redButton{
+    background-color: #ff0000;
+}
+.btn-primary:not(:disabled):not(.disabled):active{
+    background-color: #0062cc !important;
+    border-color: #005cbf !important;
+}
+.greenButton{
+    background-color: #418107;
+}
+
+.colorLetterBtn{
+    color: #fff;
 }
 
 .pill-banner {
