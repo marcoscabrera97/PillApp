@@ -5,4 +5,7 @@ export class RecordatorioHistorico {
     idUser: string;
     take: boolean;
     name: string;
+    hour: string;
+    quantityDose: number;
+    unityDose: string;
 }

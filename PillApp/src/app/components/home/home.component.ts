@@ -182,6 +182,8 @@ export class HomeComponent implements OnInit {
         var count = 0;
         this.recordatoriosHistoricos = new Array();
         Object.keys(medicineIds).forEach(medicineId => {
+          console.log(medicineId);
+          console.log(medicineIds);
           count = count + 1;
           Object.keys(recordatories).forEach(recordatory => {
             var idMedicine = medicineIds[medicineId];
@@ -204,10 +206,10 @@ export class HomeComponent implements OnInit {
                     this.recordatoriosHistoricos.push(recordatory);
                     if(count == Object.keys(recordatories).length){
                       cierraPanel = true;
-                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], true, recordatory);
+                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], true, recordatories[recordatory], medicines[idMedicine]);
                     }else{
                       cierraPanel = false;
-                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], false, recordatory);
+                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], false, recordatories[recordatory], medicines[idMedicine]);
                     }
                     recordatorio['take'] = true;
                 }else{
@@ -236,7 +238,7 @@ export class HomeComponent implements OnInit {
     this.service.updateRecordatoryHistoric(idRecordatory, recordatory).subscribe();
   }
 
-  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine, lastRecordatoryOfDay, recordatory){
+  getRecordatoryHistoric(idRecordatory, dateValueRecordatorio, recordatorio, nameMedicine, lastRecordatoryOfDay, recordatory, medicine){
     let findHistory;
     this.service.getRecordatoriesHistoric().subscribe(recordatories => {  
       if(recordatories == null){
@@ -247,6 +249,9 @@ export class HomeComponent implements OnInit {
         historicRecordatory.take = false;
         historicRecordatory.name = nameMedicine;
         historicRecordatory.idUser = this.service.userToken;
+        historicRecordatory.hour = recordatory.hour;
+        historicRecordatory.quantityDose = recordatory.quantityDose;
+        historicRecordatory.unityDose = medicine.unityDose;
         recordatorio['recordatoryHist'] = historicRecordatory;
         recordatorio['take'] = true;
         this.service.addRecordatoryHistoric(historicRecordatory).subscribe(idRecordatoryHistoric => {
@@ -302,6 +307,9 @@ export class HomeComponent implements OnInit {
           historicRecordatory.take = false;
           historicRecordatory.name = nameMedicine;
           historicRecordatory.idUser = this.service.userToken;
+          historicRecordatory.hour = recordatory.hour;
+          historicRecordatory.quantityDose = recordatory.quantityDose;
+          historicRecordatory.unityDose = medicine.unityDose;
           recordatorio['recordatoryHist'] = historicRecordatory;
           recordatorio['take'] = true;
           this.recordatoryIdHistoric.push(idRecordatory);

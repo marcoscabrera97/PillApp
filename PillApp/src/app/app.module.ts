@@ -11,7 +11,7 @@ import { HomeComponent, DeleteRecordatory, DeleteRecordatoryOk, LoadRecordatorie
 import { ListaMedicamentosComponent, EditQuantityMedicine, DeleteMedicineWarning } from './components/lista-medicamentos/lista-medicamentos.component';
 import { CitasComponent } from './components/citas/citas.component';
 import { FarmaciasComponent, LoadFarmacias } from './components/farmacias/farmacias.component';
-import { InformeComponent } from './components/informe/informe.component';
+import { InformeComponent, LoadReport } from './components/informe/informe.component';
 import { IniciarSesionComponent, DialogFailSignIn } from './components/iniciar-sesion/iniciar-sesion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatFormFieldControl } from '@angular/material/form-field';
@@ -49,6 +49,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchInformeComponent } from './components/search-informe/search-informe.component';
 import { NewMedicineComponent, MedicineExist, EmptyParameters } from './components/new-medicine/new-medicine.component';
 import { LoadDates } from './components/citas/citas.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 
 
 
@@ -93,7 +94,9 @@ import { LoadDates } from './components/citas/citas.component';
     DialogCipExistent,
     DeleteMedicineWarning,
     LoadDates,
-    LoadFarmacias
+    LoadFarmacias,
+    LoadReport,
+    HomeAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -161,7 +164,8 @@ import { LoadDates } from './components/citas/citas.component';
     DialogCipExistent,
     DeleteMedicineWarning,
     LoadDates,
-    LoadFarmacias
+    LoadFarmacias,
+    LoadReport
   ]
 })
 export class AppModule { }
