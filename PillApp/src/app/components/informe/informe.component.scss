@@ -25,8 +25,8 @@
     }
 }
 
-.medicineNmae{
-    font-size: 20px;
+.medicineName{
+    width: 60%;
 }
 
 .takeReportYes{
@@ -37,4 +37,22 @@
 .takeReportNot{
     color: Red;
     margin-right: 8px;
+}
+
+.flex-recordatory{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.flex-info{
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+}
+
+.doseAlign{
+    display: flex;
+    width: 70px;
+    justify-content: flex-end;
 }

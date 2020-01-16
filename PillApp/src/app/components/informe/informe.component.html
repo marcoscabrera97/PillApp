@@ -15,7 +15,17 @@
                 <div class="recordatory">
                     <div *ngIf="recordatory.take" class="takeReportYes"><i class="fas fa-check-circle"></i></div>
                     <div *ngIf="!recordatory.take" class="takeReportNot"><i class="fas fa-times-circle"></i></div>
-                    <div class="medicineName">{{recordatory.name}}</div>
+                    <div class="flex-recordatory">
+                        <div class="medicineName">{{recordatory.name}}</div>
+                        <div class="flex-info">
+                            <div class="doseAlign">
+                                <div style="margin-right: 4px;">{{ recordatory.quantityDose }}</div>
+                                <div>{{ recordatory.unityDose }}</div> 
+                            </div>
+                            <div>{{ recordatory.hour }}</div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

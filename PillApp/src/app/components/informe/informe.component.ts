@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
+import { MatDialogRef, MatDialog } from '@angular/material';
+
 
 @Component({
   selector: 'app-informe',
@@ -15,7 +17,7 @@ export class InformeComponent implements OnInit {
   private startDateInform;
 
 
-  constructor(private service: ServiceFirebaseService) { 
+  constructor(private service: ServiceFirebaseService, private dialog: MatDialog) { 
     this.recordatories = new Array();
     this.days = new Array();
     this.percentatge = 0;
@@ -38,7 +40,12 @@ export class InformeComponent implements OnInit {
     this.startDateInform.setDate(startDayInform);
   }
 
+  closeLoadReport(){
+    this.dialog.closeAll();    
+  }
+
   createReport(){
+    this.dialog.open(LoadReport);
     var currentMonth: string[] = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];  
       this.service.getRecordatoriesHistoric().subscribe(recordatories => {
         var count = 0;
@@ -68,12 +75,14 @@ export class InformeComponent implements OnInit {
             
           });
         if(this.recordatories.length != 0){
+          console.log(this.recordatories);
           this.days.push(this.recordatories);
         }
 
         i++;
       }
       this.certainPercentage();
+      this.closeLoadReport();
     })
   }
 
@@ -96,5 +105,19 @@ export class InformeComponent implements OnInit {
     date.setMinutes(0);
     date.setSeconds(0);
     return date;
+  }
+}
+
+@Component({
+  selector: 'loadReport',
+  templateUrl: 'loadReport.html',
+})
+export class LoadReport {
+
+  constructor(
+    public dialogRef: MatDialogRef<LoadReport>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
