@@ -17,6 +17,8 @@ import { DetallesCitaComponent } from './components/detalles-cita/detalles-cita.
 import { CitasDoctorComponent } from './components/citas-doctor/citas-doctor.component';
 import { SearchInformeComponent } from './components/search-informe/search-informe.component';
 import { NewMedicineComponent } from './components/new-medicine/new-medicine.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { GuardAuthAdminGuard } from './guards/guard-auth-admin.guard';
 
 
 const routes: Routes = [
@@ -27,6 +29,7 @@ const routes: Routes = [
     { path: 'newMedicine', component: NewMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
+    { path: 'homeAdmin', component: HomeAdminComponent, canActivate: [GuardAuthAdminGuard] },
     { path: 'buscarInforme', component: SearchInformeComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'verMas/:idDate', component: DetallesCitaComponent, canActivate: [GuardAuthPatientGuard] },

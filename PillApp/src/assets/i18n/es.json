@@ -171,6 +171,10 @@
     "deleteMedicineWarning":{
         "title": "¿Desea eliminar el medicamento seleccionado?",
         "description": "Si elimina el medicamento seleccionado, se eliminará todos los recordatorios asociados a este medicamento."
+    },
+    "adminHome":{
+        "username": "Nombre de usuario",
+        "title": "Administración de usuarios"
     }
 
 }

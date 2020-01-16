@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   closeMenuVar: boolean;
   date;
   show: boolean;
-  isPatient: boolean;
+  typeUser: string;
   showAddMedicine: boolean;
 
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
     this.service.changeOpenMenuVar(false);
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
-        if(val.url == '/home' || val.url == '/homeDoctor'){
+        if(val.url == '/home' || val.url == '/homeDoctor' ){
           this.isHome = true;
         }else{
           this.isHome = false;
@@ -60,9 +60,11 @@ export class NavbarComponent implements OnInit {
       this.show = true;
     }
     if(localStorage.getItem('typeUser') == 'patient'){
-      this.isPatient = true;
-    }else{
-      this.isPatient = false;
+      this.typeUser = 'patient';
+    }else if(localStorage.getItem('typeUser') == 'doctor'){
+      this.typeUser = 'doctor';
+    }else if(localStorage.getItem('typeUser') == 'admin'){
+      this.typeUser = 'admin';
     }
   }
 

@@ -5,13 +5,12 @@ import { ServiceFirebaseService } from '../services/service-firebase.service';
 @Injectable({
   providedIn: 'root'
 })
-export class GuardAuthPatientGuard implements CanActivate {
-
+export class GuardAuthAdminGuard implements CanActivate {
   constructor(private service: ServiceFirebaseService, private router: Router){}
-
+  
   canActivate() {
     if(this.service.isAuthenticated() != null){
-      if(this.service.typeUser == "patient") {
+      if(this.service.typeUser == "admin") {
         return true;
       }else{
         this.router.navigateByUrl('/login');
@@ -22,6 +21,5 @@ export class GuardAuthPatientGuard implements CanActivate {
       return false;
     }
   }
-  
   
 }

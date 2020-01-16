@@ -15,36 +15,36 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown" [ngClass]="{ show: show }">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <ng-container *ngIf="isPatient">
+        <ng-container *ngIf="typeUser == 'patient'">
             <a class="nav-link" (click)="classShow()"  [routerLink]="['home']">{{ 'navbar.home' | translate}}<span class="sr-only">(current)</span></a>
         </ng-container>
-        <ng-container *ngIf="!isPatient">
+        <ng-container *ngIf="typeUser == 'doctor'">
             <a class="nav-link" (click)="classShow()" [routerLink]="['homeDoctor']">{{ 'navbar.home' | translate}}<span class="sr-only">(current)</span></a>
         </ng-container>      
       </li>
       <li class="nav-item">
-        <ng-container *ngIf="isPatient">
+        <ng-container *ngIf="typeUser == 'patient'">
             <a class="nav-link" (click)="classShow()"  [routerLink]="['listaMedicamentos']">{{ 'navbar.medicine_list' | translate}}</a>
         </ng-container>
-        <ng-container *ngIf="!isPatient">
+        <ng-container *ngIf="typeUser == 'doctor'">
           <a class="nav-link" (click)="classShow()"  [routerLink]="['citasDoctor']">{{ 'navbar.add_date' | translate}}</a>
         </ng-container>
       </li>
       <li class="nav-item">
-          <ng-container *ngIf="isPatient">
+          <ng-container *ngIf="typeUser == 'patient'">
             <a class="nav-link" (click)="classShow()"  [routerLink]="['citas']">{{ 'navbar.meetings' | translate}}</a>
           </ng-container>
       </li>
       <li class="nav-item">
-          <ng-container *ngIf="isPatient">
+          <ng-container *ngIf="typeUser == 'patient'">
             <a class="nav-link" (click)="classShow()"  [routerLink]="['farmacias']">{{ 'navbar.pharmacy' | translate}}</a>
           </ng-container>
-          <ng-container *ngIf="!isPatient">
+          <ng-container *ngIf="typeUser == 'doctor'">
             <a class="nav-link" (click)="classShow()"  [routerLink]="['buscarInforme']">{{ 'navbar.search_report' | translate}}</a>
           </ng-container>
       </li>
       <li class="nav-item">
-        <ng-container *ngIf="isPatient">
+        <ng-container *ngIf="typeUser == 'patient'">
           <a class="nav-link" (click)="classShow()"  [routerLink]="['informe']">{{ 'navbar.report' | translate}}</a>
         </ng-container>        
       </li>

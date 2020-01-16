@@ -1,0 +1,9 @@
+<div class="container">
+    <h4 class="title-page margin-top">{{ 'adminHome.title' | translate }}</h4>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="{{ 'adminHome.username' | translate}}" (keyup)="searchUser($event)">
+    </mat-form-field>
+    <div *ngFor="let user of showUsers">
+        <div class="username">{{ user.username }}</div>
+    </div>
+</div>

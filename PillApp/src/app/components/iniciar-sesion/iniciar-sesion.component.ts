@@ -60,6 +60,10 @@ export class IniciarSesionComponent implements OnInit {
             findObjectUser = true;
             this.service.saveToken(idToken, userFind.userType);
            this.route.navigate(['/homeDoctor']);
+          }else if(userFind.userType == "admin" && userFind.password == password){
+            findObjectUser = true;
+            this.service.saveToken(idToken, userFind.userType);
+           this.route.navigate(['/homeAdmin']);
           }
         }
       });
