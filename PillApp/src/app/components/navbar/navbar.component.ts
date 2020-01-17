@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
     this.service.changeOpenMenuVar(false);
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
-        if(val.url == '/home' || val.url == '/homeDoctor' ){
+        if(val.url == '/home' || val.url == '/homeDoctor'){
           this.isHome = true;
         }else{
           this.isHome = false;

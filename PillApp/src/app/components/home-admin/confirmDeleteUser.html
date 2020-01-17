@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ 'confirmDeleteUser.title' | translate }}</h1>
+<div mat-dialog-content>
+  <p>{{ 'confirmDeleteUser.description' | translate }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{ 'confirmDeleteUser.cancel' | translate }}</button>
+  <button mat-button cdkFocusInitial (click)="confirmDeleteUser(data.userId)">{{ 'confirmDeleteUser.ok' | translate }}</button>
+</div>

@@ -3,7 +3,11 @@
     <mat-form-field class="example-full-width">
         <input matInput placeholder="{{ 'adminHome.username' | translate}}" (keyup)="searchUser($event)">
     </mat-form-field>
-    <div *ngFor="let user of showUsers">
+    <div *ngFor="let user of showUsers" class="flex">
         <div class="username">{{ user.username }}</div>
+        <div class="flex-icons">
+            <div class="pencil-icon"><i class="fas fa-edit" [routerLink]="['/editUser', user.id]"></i></div>
+            <div class="trash-icon"><i class="fas fa-trash" (click)="deleteUser(user.id)"></i></div>
+        </div>  
     </div>
 </div>

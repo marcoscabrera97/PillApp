@@ -19,6 +19,7 @@ import { SearchInformeComponent } from './components/search-informe/search-infor
 import { NewMedicineComponent } from './components/new-medicine/new-medicine.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { GuardAuthAdminGuard } from './guards/guard-auth-admin.guard';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
     { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'homeAdmin', component: HomeAdminComponent, canActivate: [GuardAuthAdminGuard] },
+    { path: 'editUser/:id', component: EditUserComponent, canActivate: [GuardAuthAdminGuard] },
     { path: 'buscarInforme', component: SearchInformeComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'verMas/:idDate', component: DetallesCitaComponent, canActivate: [GuardAuthPatientGuard] },

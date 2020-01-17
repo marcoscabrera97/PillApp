@@ -1,0 +1,28 @@
+<div class="container">
+    <h4 class="title-page margin-top">{{ 'edit-user.title' | translate }}</h4>
+    <div *ngIf="user != undefined">
+        <form [formGroup]="editUserForm">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{ 'edit-user.username' | translate}}" value="{{user.username}}" formControlName="username">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{ 'edit-user.password' | translate}}" value="{{user.password}}" formControlName="password">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{ 'edit-user.name' | translate}}" value="{{user.name}}" formControlName="name">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{ 'edit-user.surname' | translate}}" value="{{user.surname}}" formControlName="surname">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{ 'edit-user.cip' | translate}}" value="{{user.cip}}" formControlName="cip">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{ 'edit-user.email' | translate}}" value="{{user.email}}" formControlName="email">
+            </mat-form-field>
+        </form>
+        <div class="center-button">
+            <button mat-raised-button class="content-button" (click)="updateUser()">{{ 'edit-user.buttonText' | translate }}</button>
+        </div>
+    </div>
+</div>

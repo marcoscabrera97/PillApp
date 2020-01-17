@@ -175,6 +175,22 @@
     "adminHome":{
         "username": "Nombre de usuario",
         "title": "Administración de usuarios"
+    },
+    "confirmDeleteUser":{
+        "title": "Eliminar usuario",
+        "description": "¿Desea eliminar el usuario seleccionado?",
+        "cancel": "No",
+        "ok": "Sí"
+    },
+    "edit-user":{
+        "title": "Editar usuario",
+        "username": "Nombre de usuario",
+        "password": "Contraseña",
+        "name": "Nombre",
+        "surname": "Apellidos",
+        "cip": "CIP",
+        "email": "Correo electrónico",
+        "buttonText": "Guardar"
     }
 
 }

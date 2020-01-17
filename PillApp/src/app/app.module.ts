@@ -49,7 +49,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchInformeComponent } from './components/search-informe/search-informe.component';
 import { NewMedicineComponent, MedicineExist, EmptyParameters } from './components/new-medicine/new-medicine.component';
 import { LoadDates } from './components/citas/citas.component';
-import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { HomeAdminComponent, ConfirmDeleteUser } from './components/home-admin/home-admin.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 
@@ -96,7 +97,9 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
     LoadDates,
     LoadFarmacias,
     LoadReport,
-    HomeAdminComponent
+    HomeAdminComponent,
+    ConfirmDeleteUser,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
@@ -165,7 +168,8 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
     DeleteMedicineWarning,
     LoadDates,
     LoadFarmacias,
-    LoadReport
+    LoadReport,
+    ConfirmDeleteUser
   ]
 })
 export class AppModule { }

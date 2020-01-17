@@ -42,6 +42,11 @@ export class ServiceFirebaseService {
     );
   }
 
+  deleteUserBd(userId: string){
+    console.log(userId);
+    return this.http.delete(this.url + '/USUARIO/' + userId + '.json');
+  }
+
   saveToken(idToken: string, typeUser?: string) {
     this.userToken = idToken;
     this.typeUser = typeUser;
@@ -69,6 +74,10 @@ export class ServiceFirebaseService {
 
   getSpecificUser(idUser){
     return this.http.get(this.url + '/USUARIO/' + idUser + '.json');
+  }
+
+  updateUser(idUser, user){
+    return this.http.put(this.url + '/USUARIO/' + idUser + '.json', user);
   }
 
   deleteUser() {

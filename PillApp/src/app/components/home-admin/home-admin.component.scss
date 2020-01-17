@@ -4,4 +4,25 @@
 
 .username{
     line-height: 28px;
+    width: 50%;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-icons{
+    width: 40%;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+}
+
+.trash-icon{
+    font-size: 19px;
+    margin-left: 7px;
+}
+
+.pencil-icon{
+    font-size: 19px;
 }
