@@ -268,7 +268,6 @@ export class AddMedicinaComponent implements OnInit {
       }
       this.service.updateMedicine(this.medicine, this.idMedicineSelected).subscribe();
       this.medicine.idUser = this.service.userToken;
-      console.log(this.idMedicineSelected);
       this.recordatoryAux.idMedicine = this.idMedicineSelected;
         var count = 0;
         for(let hour of this.hoursRecordatory ){

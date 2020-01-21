@@ -14,11 +14,19 @@ export class EditUserComponent implements OnInit {
   public user;
   public editUserForm;
   private idUser;
+  public typeUser;
+  public showCip: boolean;
 
   constructor(private service: ServiceFirebaseService, private activatedRouter: ActivatedRoute, private formBuilder: FormBuilder, private router: Router) { 
     this.activatedRouter.params.subscribe(params =>{
       this.idUser = params['id'];
-      this.getUser(this.idUser);
+      this.typeUser = localStorage.getItem('typeUser');
+      this.service.getSpecificUser(this.idUser).subscribe(user => {
+        if(localStorage.getItem('typeUser') == 'patient' || localStorage.getItem('typeUser') == 'doctor'){
+          this.idUser = localStorage.getItem('token');
+        }
+        this.getUser(this.idUser);
+      })
     })
   }
 
@@ -28,6 +36,11 @@ export class EditUserComponent implements OnInit {
   getUser(idUser){
     this.service.getSpecificUser(idUser).subscribe(user => {
       this.user = user;
+      if(this.user['userType'] == 'patient'){
+        this.showCip = true;
+      }else{
+        this.showCip = false;
+      }
       this.buildForm();
     });
   }
@@ -47,7 +60,13 @@ export class EditUserComponent implements OnInit {
   updateUser(){
     const editUserForm = this.editUserForm.value;
     this.service.updateUser(this.idUser, editUserForm).subscribe(resp => {
-      this.router.navigate(['homeAdmin']);
+      if(this.typeUser == 'patient'){
+        this.router.navigate(['home']);
+      }else if(this.typeUser == 'doctor'){
+        this.router.navigate(['homeDoctor']);
+      }else{
+        this.router.navigate(['homeAdmin']);
+      }
     });
   }
 

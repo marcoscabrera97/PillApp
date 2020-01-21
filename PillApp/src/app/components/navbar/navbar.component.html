@@ -52,6 +52,11 @@
         </ng-container>     
       </li>
       <li class="nav-item">
+        <ng-container>
+          <a class="nav-link" (click)="classShow()"  [routerLink]="['editUser', idUser]">{{ 'navbar.edit_user' | translate}}</a>
+        </ng-container>       
+      </li>
+      <li class="nav-item">
         <a class="nav-link" (click)="logout(); classShow()">{{ 'navbar.logout' | translate}}</a>
       </li>
     </ul>

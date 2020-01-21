@@ -16,8 +16,11 @@ export class NavbarComponent implements OnInit {
   show: boolean;
   typeUser: string;
   showAddMedicine: boolean;
+  idUser: string;
 
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
+    this.idUser = localStorage.getItem('token');
+    console.log(this.idUser);
     this.show = false;
     this.service.changeOpenMenuVar(false);
     router.events.subscribe(val => {

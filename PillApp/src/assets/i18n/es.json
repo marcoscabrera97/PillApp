@@ -9,7 +9,8 @@
         "dates": "Citas",
         "add_date": "Añadir cita",
         "search_report": "Buscar informe",
-        "add_patient": "Añadir paciente"
+        "add_patient": "Añadir paciente",
+        "edit_user": "Editar usuario"
     },
     "sign": {
         "in":{

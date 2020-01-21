@@ -14,7 +14,7 @@
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="{{ 'edit-user.surname' | translate}}" value="{{user.surname}}" formControlName="surname">
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="example-full-width" *ngIf="showCip">
                 <input matInput placeholder="{{ 'edit-user.cip' | translate}}" value="{{user.cip}}" formControlName="cip">
             </mat-form-field>
             <mat-form-field class="example-full-width">
