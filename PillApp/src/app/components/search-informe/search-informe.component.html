@@ -2,20 +2,12 @@
     <div class="container">
         <h4 class="title-page title-margin">{{ 'search-informe.title' | translate}}</h4>
         <form [formGroup]="searchInforme">
-            <mat-form-field class="example-full-width" [ngClass]="{ 'hideMatForm': hideMatFormField }">
-                <mat-label>{{ 'search-informe.name' | translate}}</mat-label>
-                <input matInput formControlName="namePatient">
-            </mat-form-field>
-            <mat-form-field class="example-full-width" [ngClass]="{ 'hideMatForm': hideMatFormField }">
-                <mat-label>{{ 'search-informe.surname' | translate}}</mat-label>
-                <input matInput formControlName="surnamePatient">
-            </mat-form-field>
             <mat-form-field class="example-full-width">
                 <mat-label>{{ 'search-informe.cip' | translate}}</mat-label>
                 <input matInput formControlName="cipPatient">
             </mat-form-field>
         </form>
-        <button class="content-button" (click)="searchInform()"><span>{{ 'search-informe.searchInforme' | translate}}</span></button>
+        <button mat-raised-button class="content-button" (click)="searchInform()"><span>{{ 'search-informe.searchInforme' | translate}}</span></button>
     </div>
 </div>
 <div *ngIf="showInform">

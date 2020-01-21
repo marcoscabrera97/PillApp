@@ -40,8 +40,6 @@ export class SearchInformeComponent implements OnInit {
 
   buildForm(){
     this.searchInforme = this.formBuilder.group({
-      namePatient: ['', Validators.required],
-      surnamePatient: ['', Validators.required],
       cipPatient: ['', Validators.required]
     })
   }
