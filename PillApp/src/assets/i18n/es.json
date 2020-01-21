@@ -8,7 +8,8 @@
         "logout": "Logout",
         "dates": "Citas",
         "add_date": "Añadir cita",
-        "search_report": "Buscar informe"
+        "search_report": "Buscar informe",
+        "add_patient": "Añadir paciente"
     },
     "sign": {
         "in":{
@@ -104,7 +105,8 @@
         }
     },
     "nextDate":{
-        "title": "Próximas citas"
+        "title": "Próximas citas",
+        "title-historic": "Citas realizadas"
     },
     "dates":{
         "seeMore": "Ver más..."
@@ -191,6 +193,9 @@
         "cip": "CIP",
         "email": "Correo electrónico",
         "buttonText": "Guardar"
+    },
+    "addPatient":{
+        "title": "Añadir paciente"
     }
 
 }

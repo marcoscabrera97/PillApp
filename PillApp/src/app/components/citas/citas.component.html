@@ -13,4 +13,18 @@
         <div *ngIf="date != 'fin'" class="hourDate">{{ date.hour }}</div>
         <div *ngIf="date == 'fin'">{{closeModalReload()}}</div>
     </div>
+    <div class="title">
+        {{ 'nextDate.title-historic' | translate }}
+    </div>
+    <div class="date" *ngFor="let date of datesPatientDone;">
+        <div *ngIf="date != 'fin'" class="infoDate">
+            <p class="dateDate">{{ date.fecha }}</p>
+            <p class="name">{{ date.nombre_doctor }}</p>
+            <p class="investigationWild">({{ date.especialidad }})</p>
+            <p class="hospital">{{ date.nombre_hospital }}</p>
+            <a [routerLink]="['/verMas', idDate]">{{ 'dates.seeMore' | translate }}</a>
+        </div>
+        <div *ngIf="date != 'fin'" class="hourDate">{{ date.hour }}</div>
+        <div *ngIf="date == 'fin'">{{closeModalReload()}}</div>
+    </div>
 </div>

@@ -46,7 +46,10 @@
       <li class="nav-item">
         <ng-container *ngIf="typeUser == 'patient'">
           <a class="nav-link" (click)="classShow()"  [routerLink]="['informe']">{{ 'navbar.report' | translate}}</a>
-        </ng-container>        
+        </ng-container>   
+        <ng-container *ngIf="typeUser == 'doctor'">
+          <a class="nav-link" (click)="classShow()"  [routerLink]="['addPatient']">{{ 'navbar.add_patient' | translate}}</a>
+        </ng-container>     
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="logout(); classShow()">{{ 'navbar.logout' | translate}}</a>
