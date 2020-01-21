@@ -1,7 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { DialogData } from '../lista-medicamentos/lista-medicamentos.component';
+
+export interface DialogDeleteUser{
+  userId: string;
+}
 
 @Component({
   selector: 'app-home-admin',
@@ -75,13 +78,13 @@ export class HomeAdminComponent implements OnInit {
 export class ConfirmDeleteUser {
 
   constructor(
-    public dialogRef: MatDialogRef<ConfirmDeleteUser>, private service: ServiceFirebaseService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    public dialogRef: MatDialogRef<ConfirmDeleteUser>, private service: ServiceFirebaseService, @Inject(MAT_DIALOG_DATA) public data) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
   confirmDeleteUser(userId){
-    this.service.deleteUserBd(userId).subscribe(    resp => {
+    this.service.deleteUserBd(userId).subscribe(resp => {
       this.dialogRef.close();
     });
   }
