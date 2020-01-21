@@ -51,6 +51,14 @@ import { NewMedicineComponent, MedicineExist, EmptyParameters } from './componen
 import { LoadDates } from './components/citas/citas.component';
 import { HomeAdminComponent, ConfirmDeleteUser } from './components/home-admin/home-admin.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { AddPatientComponent } from './components/add-patient/add-patient.component';
+import { DialogOkRegistrationAddPatient } from './components/add-patient/add-patient.component'
+import { DialogOverviewExampleDialogAddPatient } from './components/add-patient/add-patient.component'
+import { DialogErrorRegistrationAddPatient } from './components/add-patient/add-patient.component'
+import { DialogUserExistentAddPatient } from './components/add-patient/add-patient.component'
+import { DialogMailExistentAddPatient } from './components/add-patient/add-patient.component'
+import { DialogEmptyParameterAddPatient } from './components/add-patient/add-patient.component'
+import { DialogCipExistentAddPatient } from './components/add-patient/add-patient.component'
 
 
 
@@ -99,7 +107,15 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     LoadReport,
     HomeAdminComponent,
     ConfirmDeleteUser,
-    EditUserComponent
+    EditUserComponent,
+    AddPatientComponent,
+    DialogOkRegistrationAddPatient,
+    DialogOverviewExampleDialogAddPatient,
+    DialogErrorRegistrationAddPatient,
+    DialogUserExistentAddPatient,
+    DialogMailExistentAddPatient,
+    DialogEmptyParameterAddPatient,
+    DialogCipExistentAddPatient
   ],
   imports: [
     BrowserModule,
@@ -169,7 +185,14 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     LoadDates,
     LoadFarmacias,
     LoadReport,
-    ConfirmDeleteUser
+    ConfirmDeleteUser,
+    DialogOkRegistrationAddPatient,
+    DialogOverviewExampleDialogAddPatient,
+    DialogErrorRegistrationAddPatient,
+    DialogUserExistentAddPatient,
+    DialogMailExistentAddPatient,
+    DialogEmptyParameterAddPatient,
+    DialogCipExistentAddPatient
   ]
 })
 export class AppModule { }

@@ -1,38 +1,35 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Usuario } from './usuario.module';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { Usuario } from '../crear-cuenta/usuario.module';
 import { ServiceFirebaseService } from 'src/app/services/service-firebase.service';
 import { Router } from '@angular/router';
 
 
-@Component({
-  selector: 'app-crear-cuenta',
-  templateUrl: './crear-cuenta.component.html',
-  styleUrls: ['./crear-cuenta.component.scss']
-})
-export class CrearCuentaComponent implements OnInit {
 
-  public signUpForm: FormGroup;
+
+@Component({
+  selector: 'app-add-patient',
+  templateUrl: './add-patient.component.html',
+  styleUrls: ['./add-patient.component.scss']
+})
+export class AddPatientComponent implements OnInit {
+
+  public addPatientForm: FormGroup;
   public userModule: Usuario;
   private regiterNotOk: boolean;
   private emptyParameter: boolean;
 
-  
+
   constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private service: ServiceFirebaseService, private router: Router) { 
     this.buildForm();
-    this.userModule = new Usuario();
-    this.regiterNotOk = false;
-    this.emptyParameter = false;
   }
 
   ngOnInit() {
-    var navbar = document.getElementById('navbar');
-    navbar.classList.add('display-none');
   }
 
   private buildForm() {
-    this.signUpForm = this.formBuilder.group({
+    this.addPatientForm = this.formBuilder.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
       username: ['', Validators.required],
@@ -54,44 +51,44 @@ export class CrearCuentaComponent implements OnInit {
   }
 
   throwErrorMessagePasswords() {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialogAddPatient, {
       width: '250px'
     });
   }
 
   throwFailRegisterDialog() {
-    const dialogRef = this.dialog.open(DialogErrorRegistration, {
+    const dialogRef = this.dialog.open(DialogErrorRegistrationAddPatient, {
       width: '250px'
     });
   }
 
   throwOkDialog() {
-    const dialogRef = this.dialog.open(DialogOkRegistration, {
+    const dialogRef = this.dialog.open(DialogOkRegistrationAddPatient, {
       width: '250px'
     });
-    this.router.navigate(['iniciar_sesion']);
+    this.router.navigate(['homeDoctor']);
   }
 
   throwEqualUserNameDialog() {
-    const dialogRef = this.dialog.open(DialogUserExistent, {
+    const dialogRef = this.dialog.open(DialogUserExistentAddPatient, {
       width: '250px'
     });
   }
 
   throwEqualMailDialog() {
-    const dialogRef = this.dialog.open(DialogMailExistent, {
+    const dialogRef = this.dialog.open(DialogMailExistentAddPatient, {
       width: '250px'
     });
   }
 
   throwEqualCipDialog(){
-    const dialogRef = this.dialog.open(DialogCipExistent, {
+    const dialogRef = this.dialog.open(DialogCipExistentAddPatient, {
       width: '250px'
     });
   }
 
   throwEmptyParameter(){
-    const dialogRef = this.dialog.open(DialogEmptyParameter, {
+    const dialogRef = this.dialog.open(DialogEmptyParameterAddPatient, {
       width: '250px'
     });
   }
@@ -112,10 +109,11 @@ export class CrearCuentaComponent implements OnInit {
   }
 
   register() {
+    this.userModule = new Usuario();
     var notEqualPasswords = false;
     var registerFail = false;
 
-    const userRegister = this.signUpForm.value;
+    const userRegister = this.addPatientForm.value;
     this.userModule.name = userRegister.name;
     this.userModule.surname = userRegister.surname;
     this.userModule.username = userRegister.username;
@@ -131,8 +129,8 @@ export class CrearCuentaComponent implements OnInit {
       registerFail = this.checkUsername(this.userModule.username);
     }
 
-    var password1 = this.signUpForm.controls.password1.value;
-    var password2 = this.signUpForm.controls.password2.value;
+    var password1 = this.addPatientForm.controls.password1.value;
+    var password2 = this.addPatientForm.controls.password2.value;
 
     if(password1 != password2) {
       notEqualPasswords = true;
@@ -173,12 +171,12 @@ export class CrearCuentaComponent implements OnInit {
 
 @Component({
   selector: 'dialog-error-passwords',
-  templateUrl: 'dialog-error-passwords.html',
+  templateUrl: '../crear-cuenta/dialog-error-passwords.html',
 })
-export class DialogOverviewExampleDialog {
+export class DialogOverviewExampleDialogAddPatient {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogAddPatient>) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -187,12 +185,12 @@ export class DialogOverviewExampleDialog {
 
 @Component({
   selector: 'dialog-fail-registration',
-  templateUrl: 'dialog-fail-registration.html',
+  templateUrl: '../crear-cuenta/dialog-fail-registration.html',
 })
-export class DialogErrorRegistration {
+export class DialogErrorRegistrationAddPatient {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogAddPatient>) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -201,12 +199,12 @@ export class DialogErrorRegistration {
 
 @Component({
   selector: 'dialog-ok-registration',
-  templateUrl: 'dialog-ok-registration.html',
+  templateUrl: '../crear-cuenta/dialog-ok-registration.html',
 })
-export class DialogOkRegistration {
+export class DialogOkRegistrationAddPatient {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogAddPatient>) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -215,12 +213,12 @@ export class DialogOkRegistration {
 
 @Component({
   selector: 'dialog-user-existent',
-  templateUrl: 'dialog-user-existent.html',
+  templateUrl: '../crear-cuenta/dialog-user-existent.html',
 })
-export class DialogUserExistent {
+export class DialogUserExistentAddPatient {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogAddPatient>) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -230,12 +228,12 @@ export class DialogUserExistent {
 
 @Component({
   selector: 'dialog-mail-existent',
-  templateUrl: 'dialog-mail-existent.html',
+  templateUrl: '../crear-cuenta/dialog-mail-existent.html',
 })
-export class DialogMailExistent {
+export class DialogMailExistentAddPatient {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogAddPatient>) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -244,12 +242,12 @@ export class DialogMailExistent {
 
 @Component({
   selector: 'dialog-empty-parameter',
-  templateUrl: 'dialog-empty-parameter.html',
+  templateUrl: '../crear-cuenta/dialog-empty-parameter.html',
 })
-export class DialogEmptyParameter {
+export class DialogEmptyParameterAddPatient {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogAddPatient>) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -258,12 +256,12 @@ export class DialogEmptyParameter {
 
 @Component({
   selector: 'dialog-cip-existent',
-  templateUrl: 'dialog-cip-existent.html',
+  templateUrl: '../crear-cuenta/dialog-cip-existent.html',
 })
-export class DialogCipExistent {
+export class DialogCipExistentAddPatient {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialogAddPatient>) {}
 
   onNoClick(): void {
     this.dialogRef.close();

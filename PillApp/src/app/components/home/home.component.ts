@@ -182,8 +182,6 @@ export class HomeComponent implements OnInit {
         var count = 0;
         this.recordatoriosHistoricos = new Array();
         Object.keys(medicineIds).forEach(medicineId => {
-          console.log(medicineId);
-          console.log(medicineIds);
           count = count + 1;
           Object.keys(recordatories).forEach(recordatory => {
             var idMedicine = medicineIds[medicineId];
