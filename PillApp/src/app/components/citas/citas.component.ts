@@ -15,8 +15,10 @@ export class CitasComponent implements OnInit {
   public datesPatientDone;
   public idDate;
   private datesSendPush;
+  private currentMonth: string[];
 
   constructor(public service: ServiceFirebaseService, public sendPushService: SendPushNotifactionService, public dialog: MatDialog) { 
+    this.currentMonth= ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];  
     this.getDatesPatient();
     setInterval(() => {
       this.sendDateRecordatory();
@@ -30,13 +32,11 @@ export class CitasComponent implements OnInit {
     this.dialog.closeAll();
   }
 
-  setActualDate(date:string, dateHour: string){
+  setActualDate(date:Date, dateHour: string){
     var dateArray = dateHour.split(":");
     var hour = dateArray[0];
     var minutes = dateArray[1];
     var actualDate = new Date(date);
-    console.log(date);
-    console.log(actualDate);
     actualDate.setHours(parseInt(hour));
     actualDate.setMinutes(parseInt(minutes));
 
@@ -97,10 +97,18 @@ export class CitasComponent implements OnInit {
     this.datesPatientDone = auxShowRecordatorios;
   }
 
+  getDate(date: string){
+    var dateArray = date.split(/[ ,]+/);
+    var currentDate = new Date();
+    currentDate.setDate(parseInt(dateArray[0]));
+    currentDate.setMonth(this.currentMonth.indexOf(dateArray[1]));
+    currentDate.setFullYear(parseInt(dateArray[2]));
+    return currentDate;
+  }
+
   getDatesPatient(){
     this.dialog.open(LoadDates);
     this.datesSendPush = new Array();
-    var currentMonth: string[] = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];  
     this.datesPatient = new Array();
     this.datesPatientDone = new Array();
     this.service.getDatesPatient().subscribe(dates => {
@@ -120,7 +128,7 @@ export class CitasComponent implements OnInit {
                   this.datesSendPush.push(dates[date]);
                 } 
 
-                dates[date].fecha = dateDate.getDate()+' '+currentMonth[dateDate.getMonth()]+', '+dateDate.getFullYear();
+                dates[date].fecha = dateDate.getDate()+' '+this.currentMonth[dateDate.getMonth()]+', '+dateDate.getFullYear();
                 
                 if(dateDate.getHours() < 10 && dateDate.getMinutes() <10){
                   dates[date].hour = '0'+dateDate.getHours()+':0'+dateDate.getMinutes()+'h';
@@ -132,16 +140,19 @@ export class CitasComponent implements OnInit {
                   dates[date].hour = dateDate.getHours()+':'+dateDate.getMinutes()+'h';
                 }
                 dates[date].nombre_hospital = hospitals[dates[date].id_hospital].nombre_hosp;
-                var actualDate = this.setActualDate(dates[date].fecha, dates[date].hour);
+                var currentDate = this.getDate(dates[date].fecha);
+                var actualDate = this.setActualDate(currentDate, dates[date].hour);
                 console.log(actualDate);
                 if(actualDate >= new Date()){
                   this.datesPatient.push(dates[date]);
+                  console.log(this.datesPatient);
                 }else{
                   this.datesPatientDone.push(dates[date]);
                 }
               }
               count = count + 1;
-              if(count == Object.keys(dates).length){
+
+              if(count == Object.keys(dates).length - 1){
                 this.orderDatesPatient();
                 this.orderDatesPatientDone();
                 this.datesPatient.push("fin")
