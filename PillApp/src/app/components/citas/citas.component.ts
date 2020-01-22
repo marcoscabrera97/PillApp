@@ -44,30 +44,32 @@ export class CitasComponent implements OnInit {
   }
 
   orderDatesPatient(){
-    var auxShowRecordatorios = [];
+    var auxShowRecordatoriosToDo = new Array();
     var count = Object.keys(this.datesPatient).length - 1;
-    for(var i = 0; i < count; i++){
-      var firsTime = true;
-      var minimunValue = new Date();
-      var element;
-      var indexDelete;
-      minimunValue.setHours(0);
-      minimunValue.setMinutes(0);
-      minimunValue.setSeconds(0);
-      for(var j = 0; j < Object.keys(this.datesPatient).length; j++){
-        var actualDate = this.setActualDate(this.datesPatient[j].fecha, this.datesPatient[j].hour);
-        if(firsTime || minimunValue >= actualDate){
-          firsTime = false;
-          minimunValue = actualDate;
-          element = this.datesPatient[j];
-          indexDelete = j;
+    if(count != 0){
+      for(var i = 0; i < count; i++){
+        var firstTime = true;
+        var minimunValue = new Date();
+        var element;
+        var indexDelete;
+        minimunValue.setHours(0);
+        minimunValue.setMinutes(0);
+        minimunValue.setSeconds(0);
+        for(var j = 0; j < Object.keys(this.datesPatient).length; j++){
+          var actualDate = this.setActualDate(this.datesPatient[j].fecha, this.datesPatient[j].hour);
+          if(firstTime || minimunValue >= actualDate){
+            firstTime = false;
+            minimunValue = actualDate;
+            element = this.datesPatient[j];
+            indexDelete = j;
+          }
         }
+        this.datesPatient.splice(indexDelete,1);
+        auxShowRecordatoriosToDo.push(element);
       }
-      this.datesPatient.splice(indexDelete,1);
-      auxShowRecordatorios.push(element);
+      auxShowRecordatoriosToDo.reverse();
+      this.datesPatient = auxShowRecordatoriosToDo;
     }
-    auxShowRecordatorios.reverse();
-    this.datesPatient = auxShowRecordatorios;
   }
 
   orderDatesPatientDone(){
@@ -113,9 +115,9 @@ export class CitasComponent implements OnInit {
     this.datesPatientDone = new Array();
     this.service.getDatesPatient().subscribe(dates => {
       var count = 0;
+      if(dates != null){
       this.service.getHospitals().subscribe(hospitals =>{
         Object.keys(dates).forEach(date => {
-          if(dates[date] != null){
             this.service.getSpecificUser(this.service.userToken).subscribe(user => {
               if(dates[date].cip == user['cip']) {
                 this.idDate = date;
@@ -127,7 +129,6 @@ export class CitasComponent implements OnInit {
                 if(dateAuxStr == actualDateStr) {
                   this.datesSendPush.push(dates[date]);
                 } 
-
                 dates[date].fecha = dateDate.getDate()+' '+this.currentMonth[dateDate.getMonth()]+', '+dateDate.getFullYear();
                 
                 if(dateDate.getHours() < 10 && dateDate.getMinutes() <10){
@@ -142,30 +143,28 @@ export class CitasComponent implements OnInit {
                 dates[date].nombre_hospital = hospitals[dates[date].id_hospital].nombre_hosp;
                 var currentDate = this.getDate(dates[date].fecha);
                 var actualDate = this.setActualDate(currentDate, dates[date].hour);
-                console.log(actualDate);
                 if(actualDate >= new Date()){
                   this.datesPatient.push(dates[date]);
-                  console.log(this.datesPatient);
                 }else{
                   this.datesPatientDone.push(dates[date]);
                 }
               }
               count = count + 1;
-
               if(count == Object.keys(dates).length - 1){
                 this.orderDatesPatient();
                 this.orderDatesPatientDone();
-                this.datesPatient.push("fin")
+                this.datesPatient.push("fin");
               }
             })
-          }else{
-            this.datesPatient.push("fin");
-          }
+         
           
         });
             
       });
-    })
+      }else{
+        this.datesPatient.push("fin");
+      }
+    });
   }
     
 
