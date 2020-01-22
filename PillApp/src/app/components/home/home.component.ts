@@ -138,12 +138,12 @@ export class HomeComponent implements OnInit {
         let dayOfTheWeek = this.date.getDay();
         if(new Date(currentRecordatory.startDate) <= this.date && (currentRecordatory.numberDays == -1 || currentRecordatory.numberDays > 0) && currentRecordatory.hour == currentHour && (currentRecordatory.daysWeek.indexOf(dayOfTheWeek) != -1 || currentRecordatory.daysWeek.indexOf(-1) == 0)){
           let currentMedicine = currentMedicines[currentRecordatory.idMedicine];
-          if(currentRecordatory.quantityDose*2 <= currentMedicine.quantity){
-            if(currentMedicine.quantity > 0){
-              currentMedicine.quantity = currentMedicine.quantity - currentRecordatory.quantityDose;
-              this.service.updateMedicine(currentMedicine, currentRecordatory.idMedicine).subscribe();
-            }
-          }else{
+          var preventDose = currentRecordatory.quantityDose * 2;
+          if(currentMedicine.quantity > 0){
+            currentMedicine.quantity = currentMedicine.quantity - currentRecordatory.quantityDose;
+            this.service.updateMedicine(currentMedicine, currentRecordatory.idMedicine).subscribe();
+          }
+          if(preventDose > currentMedicine.quantity){
             this.sendPush.sendBuyMedicine();
           }
           this.sendPush.medicineName = currentMedicine.name;
