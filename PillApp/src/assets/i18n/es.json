@@ -193,6 +193,10 @@
         "surname": "Apellidos",
         "cip": "CIP",
         "email": "Correo electrónico",
+        "speciality": "Especialidad",
+        "floor": "Planta",
+        "door": "Puerta",
+        "hospital": "Hospital",
         "buttonText": "Guardar"
     },
     "addPatient":{
