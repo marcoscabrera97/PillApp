@@ -56,7 +56,8 @@ export class CitasComponent implements OnInit {
         minimunValue.setMinutes(0);
         minimunValue.setSeconds(0);
         for(var j = 0; j < Object.keys(this.datesPatient).length; j++){
-          var actualDate = this.setActualDate(this.datesPatient[j].fecha, this.datesPatient[j].hour);
+          let date = this.getDate(this.datesPatientDone[j].fecha);
+          var actualDate = this.setActualDate(date, this.datesPatient[j].hour);
           if(firstTime || minimunValue >= actualDate){
             firstTime = false;
             minimunValue = actualDate;
@@ -67,7 +68,9 @@ export class CitasComponent implements OnInit {
         this.datesPatient.splice(indexDelete,1);
         auxShowRecordatoriosToDo.push(element);
       }
-      auxShowRecordatoriosToDo.reverse();
+      if(Object.keys(this.datesPatient).length > 0){
+        auxShowRecordatoriosToDo[count] = this.datesPatient[0];
+      }
       this.datesPatient = auxShowRecordatoriosToDo;
     }
   }
@@ -84,7 +87,8 @@ export class CitasComponent implements OnInit {
       minimunValue.setMinutes(0);
       minimunValue.setSeconds(0);
       for(var j = 0; j < Object.keys(this.datesPatientDone).length; j++){
-        var actualDate = this.setActualDate(this.datesPatientDone[j].fecha, this.datesPatientDone[j].hour);
+        let date = this.getDate(this.datesPatientDone[j].fecha);
+        var actualDate = this.setActualDate(date, this.datesPatientDone[j].hour);
         if(firsTime || minimunValue >= actualDate){
           firsTime = false;
           minimunValue = actualDate;
@@ -94,6 +98,9 @@ export class CitasComponent implements OnInit {
       }
       this.datesPatientDone.splice(indexDelete,1);
       auxShowRecordatorios.push(element);
+    }
+    if(Object.keys(this.datesPatient).length > 0){
+      auxShowRecordatorios[count] = this.datesPatient[0];
     }
     auxShowRecordatorios.reverse();
     this.datesPatientDone = auxShowRecordatorios;
@@ -150,7 +157,7 @@ export class CitasComponent implements OnInit {
                 }
               }
               count = count + 1;
-              if(count == Object.keys(dates).length - 1){
+              if(count == Object.keys(dates).length){
                 this.orderDatesPatient();
                 this.orderDatesPatientDone();
                 this.datesPatient.push("fin");
