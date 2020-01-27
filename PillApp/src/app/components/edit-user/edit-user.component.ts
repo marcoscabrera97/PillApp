@@ -43,18 +43,20 @@ export class EditUserComponent implements OnInit {
       if(this.user['userType'] == 'patient'){
         this.showCip = true;
         this.isDoctor = false;
-        this.buildForm();
+        this.buildFormPatient();
       }else{
         this.showCip = false;
         this.isDoctor = true;
         this.service.getHospitals().subscribe(hospitals => {
           this.hospitals = new Array();
-          Object.keys(this.hospitals).forEach(hospital => {
-            this.hospitals.push(hospital);
+          Object.keys(hospitals).forEach(hospital => {
+            hospitals[hospital]['id'] = hospital;
+            this.hospitals.push(hospitals[hospital]);
           });
           this.service.getHospital(this.user.id_hospital).subscribe(hospital =>{
             this.hospital = hospital;
-            this.buildForm();
+            this.hospital['id'] = this.user.id_hospital; 
+            this.buildFormDoctor();
           });
         });
       }
@@ -70,15 +72,15 @@ export class EditUserComponent implements OnInit {
       surname: ['', Validators.required],
       cip: ['', Validators.required],
       email: ['', Validators.required],
-      speciality: ['', Validators.required],
-      floor: ['', Validators.required],
-      door: ['', Validators.required],
-      hospital: ['', Validators.required],
+      especialidad: ['', Validators.required],
+      planta: ['', Validators.required],
+      puerta: ['', Validators.required],
+      id_hospital: ['', Validators.required],
       userType: ['']
     });
   }
 
-  buildForm(){
+  buildFormDoctor(){
     this.editUserForm = this.formBuilder.group({
       username: [this.user.username, Validators.required],
       password: [this.user.password, Validators.required],
@@ -86,16 +88,39 @@ export class EditUserComponent implements OnInit {
       surname: [this.user.surname, Validators.required],
       cip: [this.user.cip, Validators.required],
       email: [this.user.email, Validators.required],
-      speciality: [this.user.especialidad, Validators.required],
-      floor: [this.user.planta, Validators.required],
-      door: [this.user.puerta, Validators.required],
-      hospital: [this.hospital.nombre_hosp, Validators.required],
+      especialidad: [this.user.especialidad, Validators.required],
+      planta: [this.user.planta, Validators.required],
+      puerta: [this.user.puerta, Validators.required],
+      id_hospital: [this.hospital, Validators.required],
       userType: [this.user.userType]
     });
   }
 
+  buildFormPatient(){
+    this.editUserForm = this.formBuilder.group({
+      username: [this.user.username, Validators.required],
+      password: [this.user.password, Validators.required],
+      name: [this.user.name, Validators.required],
+      surname: [this.user.surname, Validators.required],
+      cip: [this.user.cip, Validators.required],
+      email: [this.user.email, Validators.required],
+      userType: [this.user.userType]
+    });
+  }
+
+  displayFn(hospital?): string | undefined {    
+    return hospital ? hospital['nombre_hosp'] : undefined;
+  }
+
   updateUser(){
     const editUserForm = this.editUserForm.value;
+    if(this.user['userType'] == 'doctor'){
+      if(this.hospital == undefined){
+        editUserForm['id_hospital'] = this.hospital['id'];     
+      }else{
+        editUserForm['id_hospital'] = editUserForm.id_hospital['id'];       
+      }
+    }
     this.service.updateUser(this.idUser, editUserForm).subscribe(resp => {
       if(this.typeUser == 'patient'){
         this.router.navigate(['home']);

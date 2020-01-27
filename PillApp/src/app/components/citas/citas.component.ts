@@ -156,10 +156,7 @@ export class CitasComponent implements OnInit {
                 this.datesPatient.push("fin");
               }
             })
-         
-          
         });
-            
       });
       }else{
         this.datesPatient.push("fin");

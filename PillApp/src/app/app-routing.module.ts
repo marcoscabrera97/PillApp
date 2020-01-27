@@ -21,6 +21,7 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
 import { GuardAuthAdminGuard } from './guards/guard-auth-admin.guard';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AddPatientComponent } from './components/add-patient/add-patient.component';
+import { AllGuardsGuard } from './guards/all-guards.guard';
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
     { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'homeAdmin', component: HomeAdminComponent, canActivate: [GuardAuthAdminGuard] },
-    { path: 'editUser/:id', component: EditUserComponent },
+    { path: 'editUser/:id', component: EditUserComponent, canActivate: [AllGuardsGuard] },
     { path: 'buscarInforme', component: SearchInformeComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'addPatient', component: AddPatientComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'listaMedicamentos', component: ListaMedicamentosComponent, canActivate: [GuardAuthPatientGuard] },

@@ -21,22 +21,21 @@
                 <input matInput placeholder="{{ 'edit-user.email' | translate}}" value="{{user.email}}" formControlName="email">
             </mat-form-field>
             <mat-form-field class="example-full-width" *ngIf="isDoctor">
-                <input matInput placeholder="{{ 'edit-user.speciality' | translate}}" value="{{user.especialidad}}" formControlName="speciality">
+                <input matInput placeholder="{{ 'edit-user.speciality' | translate}}" value="{{user.especialidad}}" formControlName="especialidad">
             </mat-form-field>
             <mat-form-field class="example-full-width" *ngIf="isDoctor">
-                <input matInput placeholder="{{ 'edit-user.hospital' | translate}}" [matAutocomplete]="auto" formControlName="hospital">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let hospital of hospitals" [value]="hospital.nombre_hosp">
-                        {{hospital}}
-                    <span>{{hospital.nombre_hosp}}</span> |
+                <input matInput placeholder="{{ 'edit-user.hospital' | translate}}" [matAutocomplete]="auto" formControlName="id_hospital">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let hospital of hospitals" [value]="hospital">
+                        <span>{{hospital.nombre_hosp}}</span>
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="example-full-width" *ngIf="isDoctor">
-                <input matInput placeholder="{{ 'edit-user.floor' | translate}}" value="{{user.planta}}" formControlName="floor">
+                <input matInput placeholder="{{ 'edit-user.floor' | translate}}" value="{{user.planta}}" formControlName="planta">
             </mat-form-field>
             <mat-form-field class="example-full-width" *ngIf="isDoctor">
-                <input matInput placeholder="{{ 'edit-user.door' | translate}}" value="{{user.puerta}}" formControlName="door">
+                <input matInput placeholder="{{ 'edit-user.door' | translate}}" value="{{user.puerta}}" formControlName="puerta">
             </mat-form-field>
         </form>
         <div class="center-button">
