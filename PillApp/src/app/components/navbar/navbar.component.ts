@@ -17,11 +17,12 @@ export class NavbarComponent implements OnInit {
   typeUser: string;
   showAddMedicine: boolean;
   idUser: string;
+  showButton: boolean;
 
   constructor(private router: Router, private service: ServiceFirebaseService, private route:ActivatedRoute) {
     this.idUser = localStorage.getItem('token');
-    console.log(this.idUser);
     this.show = false;
+    this.showButton = true;
     this.service.changeOpenMenuVar(false);
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
@@ -34,6 +35,15 @@ export class NavbarComponent implements OnInit {
           this.showAddMedicine = true;
         }else{
           this.showAddMedicine = false;
+        }
+        if(val.url == '/farmacias'){
+          this.service.showMap$.subscribe(showMap => {
+            if(showMap){
+              this.showButton = false;
+            }else{
+              this.showButton = true;
+            }
+          });
         }
       }
     });

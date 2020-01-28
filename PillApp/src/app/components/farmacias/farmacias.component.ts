@@ -20,7 +20,8 @@ export class FarmaciasComponent implements OnInit {
 
 
   constructor(private service: ServiceFirebaseService, public dialog: MatDialog) {
-    this.showMap = false;
+    this.showMap = false;      
+    this.service.changeShowMap(false);
     this.pharmacies = new Array();
     this.coordenadas = new Array();
     this.getLocation();
@@ -83,8 +84,10 @@ export class FarmaciasComponent implements OnInit {
   activateMap(){
     if(this.showMap) {
       this.showMap = false;
+      this.service.changeShowMap(false);
     }else{
       this.showMap = true;
+      this.service.changeShowMap(true);
     }
   }
 

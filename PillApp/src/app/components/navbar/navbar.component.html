@@ -1,8 +1,9 @@
 <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-blue">
-  
-    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" (click)="classShow()" >
-      <span class="navbar-toggler-icon img-navbar"></span>
-    </button>
+    <div *ngIf="showButton" class="static">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" (click)="classShow()" >
+        <span class="navbar-toggler-icon img-navbar"></span>
+      </button>
+    </div>
     <div class="navbar-brand">PillApp</div>
     <div *ngIf="isHome">
         <mat-form-field class="example-full-width" style="visibility: hidden;">

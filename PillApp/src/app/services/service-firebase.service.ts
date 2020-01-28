@@ -28,6 +28,8 @@ export class ServiceFirebaseService {
   private openMenu = new Subject<boolean>();
   openMenuVar$ = this.openMenu.asObservable();
 
+  private showMap = new Subject<boolean>();
+  showMap$ = this.showMap.asObservable();
 
   constructor(private http: HttpClient, private afs: AngularFirestore) { 
     this.actualDate = new Date();
@@ -66,6 +68,10 @@ export class ServiceFirebaseService {
   
   changeOpenMenuVar(openMenu: boolean){
     this.openMenu.next(openMenu);
+  }
+
+  changeShowMap(showMap: boolean){
+    this.showMap.next(showMap);
   }
 
   getUser() {
