@@ -41,6 +41,36 @@ export class HomeDoctorComponent implements OnInit {
     });
   }
 
+  orderDates(){
+    var count = 0;
+    var length = Object.keys(this.consultas).length;
+    var auxConsultas = new Array();
+    for(var i = 0; i < length; i++){
+      var firstTime = true;
+      var minimunValue = new Date();
+      var element;
+      var indexDelete;
+      minimunValue.setHours(0);
+      minimunValue.setMinutes(0);
+      minimunValue.setSeconds(0);
+      for(var j = 0; j < Object.keys(this.consultas).length; j++){
+        var actualDate = new Date(this.consultas[j].fecha);
+        if(firstTime || minimunValue >= actualDate){
+          firstTime = false;
+          minimunValue = actualDate;
+          element = this.consultas[j];
+          indexDelete = j;
+        }
+      }
+      this.consultas.splice(indexDelete,1);
+      auxConsultas.push(element);
+    }
+    if(Object.keys(this.consultas).length > 0){
+      auxConsultas[count] = this.consultas[0];
+    }
+    this.consultas = auxConsultas;
+  }
+
   changeConsulta(idConsulta, event){
     this.service.getSpecificConsulta(idConsulta).subscribe(consulta => {
       var auxConsulta = consulta;
@@ -51,7 +81,7 @@ export class HomeDoctorComponent implements OnInit {
   }
 
   showConsultas(){
-    this.consultas = [];
+    this.consultas = new Array();
     this.service.getConsultas().subscribe(consultas => {
       Object.keys(consultas).forEach(consulta => {
         var actualDateAux = this.service.actualDate;
@@ -61,8 +91,6 @@ export class HomeDoctorComponent implements OnInit {
         actualDateAux = actualDateAux.getTime() - actualDateAux.getTime()%1000;
         var fechaCita = new Date(consultas[consulta].fecha);
         if(this.service.actualDate.getDate() == fechaCita.getDate() && this.service.actualDate.getMonth() == fechaCita.getMonth() && this.service.actualDate.getFullYear() == fechaCita.getFullYear()){
-          console.log(fechaCita.getHours());
-          console.log(fechaCita.getUTCMinutes());
           var horas;
           var minutos;
           if(fechaCita.getHours() <= 9){
@@ -88,6 +116,9 @@ export class HomeDoctorComponent implements OnInit {
         })
       }
       });
+      setTimeout(() => {
+        this.orderDates();
+      }, 1000);
       if(this.service.fromAddCitaDoctor){   
         this.service.fromAddCitaDoctor = false;   
         window.location.reload();
