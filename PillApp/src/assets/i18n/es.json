@@ -171,6 +171,15 @@
     "loadRecordatory":{
         "title": "ESPERE POR FAVOR, SE ESTÁ CARGANDO LOS DIFERENTES RECORDATORIOS"
     },
+    "loadDate":{
+        "title": "ESPERE POR FAVOR, SE ESTÁ CARGANDO LAS DIFERENTES CITAS"
+    },
+    "loadReport":{
+        "title": "ESPERE POR FAVOR, SE ESTÁ CARGANDO EL INFORME"
+    },
+    "loadPharmacy":{
+        "title": "ESPERE POR FAVOR, SE ESTÁ CARGANDO LAS DIFERENTES FARMACIAS"
+    },
     "deleteMedicineWarning":{
         "title": "¿Desea eliminar el medicamento seleccionado?",
         "description": "Si elimina el medicamento seleccionado, se eliminará todos los recordatorios asociados a este medicamento."
