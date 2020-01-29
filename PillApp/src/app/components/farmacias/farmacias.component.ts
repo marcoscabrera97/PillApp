@@ -77,7 +77,6 @@ export class FarmaciasComponent implements OnInit {
   }
 
   closeModalReload(){
-    //console.log(this.showRecordatorios);
     this.dialog.closeAll();
   }
 

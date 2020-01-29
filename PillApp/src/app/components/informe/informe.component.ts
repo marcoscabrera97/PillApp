@@ -75,7 +75,6 @@ export class InformeComponent implements OnInit {
             
           });
         if(this.recordatories.length != 0){
-          console.log(this.recordatories);
           this.days.push(this.recordatories);
         }
 

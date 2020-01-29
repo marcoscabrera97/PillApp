@@ -45,7 +45,6 @@ export class ServiceFirebaseService {
   }
 
   deleteUserBd(userId: string){
-    console.log(userId);
     return this.http.delete(this.url + '/USUARIO/' + userId + '.json');
   }
 
@@ -93,8 +92,6 @@ export class ServiceFirebaseService {
   addMedicine(medicine: Medicina){
     return this.http.post(this.url+'/MEDICAMENTO.json', medicine).pipe(
       map(resp => {
-        //this.saveToken(resp['name']);
-        console.log(resp);
         return resp;
       })
     );
@@ -103,8 +100,6 @@ export class ServiceFirebaseService {
   addRecordatory(recordatory: Recordatorio){
     return this.http.post(this.url+'/RECORDATORIO.json', recordatory).pipe(
       map(resp => {
-        console.log(resp);
-        //this.saveToken(resp['name']);
         return resp;
       })
     );
@@ -166,7 +161,6 @@ export class ServiceFirebaseService {
   addRecordatoryHistoric(recordatory){
     return this.http.post(this.url+'/RECORDATORIO_HISTORICO.json', recordatory).pipe(
       map(resp => {
-        console.log(resp);
         return resp;
       })
     );
@@ -191,7 +185,6 @@ export class ServiceFirebaseService {
   addConsulta(consulta){
     return this.http.post(this.url+'CITA_PACIENTE.json', consulta).pipe(
       map(resp => {
-        console.log(resp);
         return resp;
       })
     );

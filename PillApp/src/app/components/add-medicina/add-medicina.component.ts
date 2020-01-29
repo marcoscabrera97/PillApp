@@ -106,9 +106,6 @@ export class AddMedicinaComponent implements OnInit {
   }
 
   buildForm() {
-    console.log(this.medicines);
-    console.log(typeof(this.medicines));
-
     if(this.medicines.length == 0){
       this.addMedicineForm = this.formBuilder.group({
         nameMedicine: [{value: '', disabled: true}],
@@ -195,7 +192,6 @@ export class AddMedicinaComponent implements OnInit {
   }
 
   medicineSelect(medicineName){
-    console.log(this.medicines);
     for(var i = 0; i < this.medicines.length; i++){
       if(this.medicines[i].name == medicineName){
         this.quantityMedicine = this.medicines[i].quantity;
@@ -315,8 +311,6 @@ export class AddMedicinaComponent implements OnInit {
           formOk = false;
         }
       }
-      console.log(formOk);
-      console.log(element);
     });
  
     let countHoursRecordatory = 0;

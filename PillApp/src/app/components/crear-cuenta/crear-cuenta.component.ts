@@ -97,7 +97,6 @@ export class CrearCuentaComponent implements OnInit {
   }
 
   checkUserExist(users, idToken){
-    console.log(users[idToken].cip);
     if(this.userModule.username == users[idToken].username) {
       this.throwEqualUserNameDialog();
       return true;

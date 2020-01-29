@@ -11,7 +11,6 @@ export class GuardAuthGuard implements CanActivate {
   constructor(private service: ServiceFirebaseService, private router: Router){}
 
   canActivate() {
-    console.log(this.service.isAuthenticated());
     if(this.service.isAuthenticated() != null){
       return true;
     }else{

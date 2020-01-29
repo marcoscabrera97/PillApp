@@ -43,7 +43,6 @@ export class ListaMedicamentosComponent implements OnInit {
           this.medicines.push(medicines[medicine]);
         }
       });
-      console.log(this.medicines);
     })
   }
 
@@ -108,8 +107,6 @@ export class DeleteMedicineWarning {
     public dialogRef: MatDialogRef<DeleteMedicineWarning>, private service: ServiceFirebaseService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   acceptDeleteMedicine(idMedicine:number, index:number){
-    console.log(idMedicine);
-    console.log(index);
     this.service.getMedicines().subscribe(medicines => {
       Object.keys(medicines).forEach(medicine => {
         if(medicines[medicine].idMedicine == idMedicine){
