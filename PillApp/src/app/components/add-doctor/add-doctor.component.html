@@ -1,0 +1,55 @@
+<div class="container">
+    <h4 class="title-page title-margin">{{ 'addDoctor.title' | translate }}</h4>
+    <form [formGroup]="addDoctor">
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.name' | translate }}</mat-label>
+            <input type="text" matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.surname' | translate }}</mat-label>
+            <input type="text" matInput formControlName="surname">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.username' | translate }}</mat-label>
+            <input type="text" matInput formControlName="username">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.password' | translate }}</mat-label>
+            <input type="text" matInput formControlName="password" type="password">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.password1' | translate }}</mat-label>
+            <input type="text" matInput formControlName="password1" type="password">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.email' | translate }}</mat-label>
+            <input type="text" matInput formControlName="email" type="email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.speciality' | translate }}</mat-label>
+            <input type="text" matInput formControlName="especialidad">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="{{ 'addDoctor.hospital' | translate}}" [matAutocomplete]="auto" formControlName="id_hospital">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let hospital of hospitals" [value]="hospital">
+                    <span>{{hospital.nombre_hosp}}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.floor' | translate }}</mat-label>
+            <input type="text" matInput formControlName="planta" type="number">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'addDoctor.door' | translate }}</mat-label>
+            <input type="text" matInput formControlName="puerta" type="number">
+        </mat-form-field>
+    </form>
+
+    <div class="center-button-div">
+        <div class="center-button">
+            <button mat-raised-button class="sign-up-button" (click)="addDoctorFunction()">{{ 'addDoctor.title' | translate}}</button>
+        </div>
+    </div>
+</div>

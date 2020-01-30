@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit {
     this.showRecordatorios = []
     this.recordatoriesUser = new Array();
     this.closeModal = true;
+    this.service.inShowRecordatories = false;
     
     this.showRecordatories('constructor');
     this.actualDate = this.service.actualDate.toLocaleDateString();
@@ -69,7 +70,9 @@ export class HomeComponent implements OnInit {
     this.actualDateRef = this.service.changeDate$.subscribe((resp)  =>{
       this.actualDate = this.service.actualDate.toLocaleDateString();
       this.showRecordatorios = [];
-      this.showRecordatories('ngOnInit');
+      if(!this.service.inShowRecordatories){
+        this.showRecordatories('ngOnInit');
+      }
     });
     
     setInterval(() => {
@@ -162,7 +165,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  showRecordatories(valor){
+  showRecordatories(valor){    
+    this.service.inShowRecordatories = true;
     this.dialog.open(LoadRecordatories);
 
     this.service.getMedicines().subscribe(medicines => {
@@ -174,9 +178,6 @@ export class HomeComponent implements OnInit {
         }
       });
       this.service.getRecordatories().subscribe(recordatories => {
-        if(recordatories == null){
-          this.showRecordatorios.push('fin');
-        }
         var recordatoryHistoric = false;
         var cierraPanel = false;
         var count = 0;
@@ -226,6 +227,9 @@ export class HomeComponent implements OnInit {
           this.service.fromAddMedicine = false;   
           window.location.reload();
         }
+        if(this.showRecordatorios.length == 0){
+          this.showRecordatorios.push('fin');
+        }
       });
     });
   }
@@ -257,7 +261,7 @@ export class HomeComponent implements OnInit {
           this.showRecordatorios.push(recordatorio);
           this.recordatoryIdHistoric.push(idRecordatory);
           this.take[idRecordatoryHistoric['name']] = false;
-
+          this.service.inShowRecordatories = false;
         });
       }else{
         findHistory = false;
@@ -315,6 +319,7 @@ export class HomeComponent implements OnInit {
             recordatorio['idHistoric'] = idRecordatoryHistoric['name'];
             this.showRecordatorios.push(recordatorio);
             this.take[idRecordatoryHistoric['name']] = false;
+            this.service.inShowRecordatories = false;
           }); 
         }
       }

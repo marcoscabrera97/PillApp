@@ -60,7 +60,6 @@ export class EditUserComponent implements OnInit {
           });
         });
       }
-        
     });
   }
 
@@ -131,5 +130,4 @@ export class EditUserComponent implements OnInit {
       }
     });
   }
-
 }

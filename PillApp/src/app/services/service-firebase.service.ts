@@ -21,6 +21,7 @@ export class ServiceFirebaseService {
   actualDate;
   fromAddMedicine: boolean;
   fromAddCitaDoctor: boolean;
+  inShowRecordatories: boolean;
 
   private changeDate = new Subject<Date>();
   public changeDate$ = this.changeDate.asObservable();
@@ -36,12 +37,7 @@ export class ServiceFirebaseService {
   }
 
   addUser(user: Usuario) {
-    return this.http.post(this.url+'/USUARIO.json', user).pipe(
-      map(resp => {
-        this.saveToken(resp['name']);
-        return resp;
-      })
-    );
+    return this.http.post(this.url+'/USUARIO.json', user);
   }
 
   deleteUserBd(userId: string){

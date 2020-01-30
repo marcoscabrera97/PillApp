@@ -33,6 +33,9 @@
         <ng-container *ngIf="typeUser == 'doctor'">
           <a class="nav-link" (click)="classShow()"  [routerLink]="['citasDoctor']">{{ 'navbar.add_date' | translate}}</a>
         </ng-container>
+        <ng-container *ngIf="typeUser == 'admin'">
+          <a class="nav-link" (click)="classShow()" [routerLink]="['addDoctor']">{{ 'navbar.add_doctor' | translate}}</a>
+      </ng-container>    
       </li>
       <li class="nav-item">
           <ng-container *ngIf="typeUser == 'patient'">
