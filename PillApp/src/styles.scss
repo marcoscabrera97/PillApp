@@ -5,8 +5,8 @@
 .display-block {
     display: block;
 }
-html { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html { height: calc(100% - 51px) }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: calc(100% - 51px)}
 .sign-in {
     .mat-form-field-infix {
         width: 250px !important;

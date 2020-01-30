@@ -58,7 +58,9 @@ import { DialogErrorRegistrationAddPatient } from './components/add-patient/add-
 import { DialogUserExistentAddPatient } from './components/add-patient/add-patient.component'
 import { DialogMailExistentAddPatient } from './components/add-patient/add-patient.component'
 import { DialogEmptyParameterAddPatient } from './components/add-patient/add-patient.component'
-import { DialogCipExistentAddPatient } from './components/add-patient/add-patient.component'
+import { DialogCipExistentAddPatient } from './components/add-patient/add-patient.component';
+import { AddDoctorComponent } from './components/add-doctor/add-doctor.component';
+import { InfoAppComponentComponent } from './components/info-app-component/info-app-component.component'
 
 
 
@@ -115,7 +117,9 @@ import { DialogCipExistentAddPatient } from './components/add-patient/add-patien
     DialogUserExistentAddPatient,
     DialogMailExistentAddPatient,
     DialogEmptyParameterAddPatient,
-    DialogCipExistentAddPatient
+    DialogCipExistentAddPatient,
+    AddDoctorComponent,
+    InfoAppComponentComponent
   ],
   imports: [
     BrowserModule,

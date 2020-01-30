@@ -21,7 +21,10 @@
         </ng-container>
         <ng-container *ngIf="typeUser == 'doctor'">
             <a class="nav-link" (click)="classShow()" [routerLink]="['homeDoctor']">{{ 'navbar.home' | translate}}<span class="sr-only">(current)</span></a>
-        </ng-container>      
+        </ng-container>
+        <ng-container *ngIf="typeUser == 'admin'">
+          <a class="nav-link" (click)="classShow()" [routerLink]="['homeAdmin']">{{ 'navbar.home' | translate}}<span class="sr-only">(current)</span></a>
+      </ng-container>            
       </li>
       <li class="nav-item">
         <ng-container *ngIf="typeUser == 'patient'">
@@ -56,6 +59,11 @@
         <ng-container>
           <a class="nav-link" (click)="classShow()"  [routerLink]="['editUser', idUser]">{{ 'navbar.edit_user' | translate}}</a>
         </ng-container>       
+      </li>
+      <li class="nav-item">
+        <ng-container>
+          <a class="nav-link" (click)="classShow()"  [routerLink]="['infoApp']">{{ 'navbar.infoApp' | translate}}</a>
+        </ng-container>   
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="logout(); classShow()">{{ 'navbar.logout' | translate}}</a>

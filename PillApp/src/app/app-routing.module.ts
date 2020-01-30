@@ -22,6 +22,8 @@ import { GuardAuthAdminGuard } from './guards/guard-auth-admin.guard';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AddPatientComponent } from './components/add-patient/add-patient.component';
 import { AllGuardsGuard } from './guards/all-guards.guard';
+import { AddDoctorComponent } from './components/add-doctor/add-doctor.component';
+import { InfoAppComponentComponent } from './components/info-app-component/info-app-component.component';
 
 
 const routes: Routes = [
@@ -33,6 +35,7 @@ const routes: Routes = [
     { path: 'editMedicine/:id', component: EditMedicineComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'homeAdmin', component: HomeAdminComponent, canActivate: [GuardAuthAdminGuard] },
+    { path: 'addDoctor', component: AddDoctorComponent, canActivate: [GuardAuthAdminGuard] },
     { path: 'editUser/:id', component: EditUserComponent, canActivate: [AllGuardsGuard] },
     { path: 'buscarInforme', component: SearchInformeComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'addPatient', component: AddPatientComponent, canActivate: [GuardAuthDoctorGuard] },
@@ -42,6 +45,7 @@ const routes: Routes = [
     { path: 'citasDoctor', component: CitasDoctorComponent, canActivate: [GuardAuthDoctorGuard] },
     { path: 'farmacias', component: FarmaciasComponent, canActivate: [GuardAuthPatientGuard] },
     { path: 'informe', component: InformeComponent, canActivate: [GuardAuthPatientGuard] },
+    { path: 'infoApp', component: InfoAppComponentComponent, canActivate: [AllGuardsGuard] },
     { path: 'logout', component: LogoutComponent },
     { path: '**', component: IniciarSesionComponent }
 ];

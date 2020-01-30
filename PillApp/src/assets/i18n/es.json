@@ -10,7 +10,9 @@
         "add_date": "Añadir cita",
         "search_report": "Buscar informe",
         "add_patient": "Añadir paciente",
-        "edit_user": "Editar usuario"
+        "edit_user": "Editar usuario",
+        "add_doctor": "Añadir doctor",
+        "infoApp": "Información sobre la aplicación"
     },
     "sign": {
         "in":{
@@ -210,6 +212,21 @@
     },
     "addPatient":{
         "title": "Añadir paciente"
+    },
+    "addDoctor":{
+        "title": "Añadir doctor",
+        "name": "Nombre del doctor",
+        "surname": "Apellidos",
+        "username": "Nombre de usuario",
+        "email":"Correo electrónico",
+        "speciality": "Especialidad",
+        "hospital": "Nombre del hospital",
+        "floor": "Planta",
+        "door": "Puerta",
+        "password": "Contraseña",
+        "password1": "Vuelva a introducir la contraseña"
+    },
+    "appInfo":{
+        "version": "Versión"
     }
-
 }

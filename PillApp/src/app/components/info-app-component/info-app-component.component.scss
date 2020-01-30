@@ -1,0 +1,31 @@
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.center{
+    justify-content: center;
+}
+.logo{
+    font-family: 'Housemate';
+    font-size: 100px;
+    color: #0788FF;
+    display: flex;
+    justify-content: center;
+}
+.version{
+    display: flex;
+    justify-content: center;
+    color: #808080;
+}
+.title{
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+}
+.copyright{
+    display: flex;
+    justify-content: center;
+    color: #808080;
+}
