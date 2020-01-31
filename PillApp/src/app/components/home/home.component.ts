@@ -182,47 +182,51 @@ export class HomeComponent implements OnInit {
         var cierraPanel = false;
         var count = 0;
         this.recordatoriosHistoricos = new Array();
-        Object.keys(medicineIds).forEach(medicineId => {
-          count = count + 1;
-          Object.keys(recordatories).forEach(recordatory => {
-            var idMedicine = medicineIds[medicineId];
-            if(recordatories[recordatory].idMedicine == idMedicine){
-              let recordatorio = recordatories[recordatory];
-              recordatorio.id = recordatory;
-              recordatorio.quantityDose = recordatorio.quantityDose;
-              this.recordatoriesUser.push(recordatorio);
-              this.medicine = medicines[idMedicine];
-              let date = this.service.actualDate;
-              let dayOfTheWeek = date.getDay();
-              if((recordatorio.daysWeek[dayOfTheWeek] == 1 || recordatorio.daysWeek[0] == -1 ) && new Date(recordatorio.startDate) <= date){
-                let dateRecordatorio = date;
-                dateRecordatorio.setHours(recordatorio.hour.substring(0,2));
-                dateRecordatorio.setMinutes(recordatorio.hour.substring(3,5));
-                let dateValueRecordatorio = new Date(dateRecordatorio);
-                if(dateValueRecordatorio <= new Date() ){
-                    recordatoryHistoric = true;
-                    recordatorio['historic'] = true
-                    this.recordatoriosHistoricos.push(recordatory);
-                    if(count == Object.keys(recordatories).length){
-                      cierraPanel = true;
-                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], true, recordatories[recordatory], medicines[idMedicine]);
+        if(medicineIds != null){
+          Object.keys(medicineIds).forEach(medicineId => {
+            count = count + 1;
+            if(recordatories != null){
+              Object.keys(recordatories).forEach(recordatory => {
+                var idMedicine = medicineIds[medicineId];
+                if(recordatories[recordatory].idMedicine == idMedicine){
+                  let recordatorio = recordatories[recordatory];
+                  recordatorio.id = recordatory;
+                  recordatorio.quantityDose = recordatorio.quantityDose;
+                  this.recordatoriesUser.push(recordatorio);
+                  this.medicine = medicines[idMedicine];
+                  let date = this.service.actualDate;
+                  let dayOfTheWeek = date.getDay();
+                  if((recordatorio.daysWeek[dayOfTheWeek] == 1 || recordatorio.daysWeek[0] == -1 ) && new Date(recordatorio.startDate) <= date){
+                    let dateRecordatorio = date;
+                    dateRecordatorio.setHours(recordatorio.hour.substring(0,2));
+                    dateRecordatorio.setMinutes(recordatorio.hour.substring(3,5));
+                    let dateValueRecordatorio = new Date(dateRecordatorio);
+                    if(dateValueRecordatorio <= new Date() ){
+                        recordatoryHistoric = true;
+                        recordatorio['historic'] = true
+                        this.recordatoriosHistoricos.push(recordatory);
+                        if(count == Object.keys(recordatories).length){
+                          cierraPanel = true;
+                          this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], true, recordatories[recordatory], medicines[idMedicine]);
+                        }else{
+                          cierraPanel = false;
+                          this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], false, recordatories[recordatory], medicines[idMedicine]);
+                        }
+                        recordatorio['take'] = true;
                     }else{
-                      cierraPanel = false;
-                      this.getRecordatoryHistoric(recordatorio.id, dateValueRecordatorio, recordatorio, this.medicine['name'], false, recordatories[recordatory], medicines[idMedicine]);
+                      recordatorio['historic'] = false;
+                      this.showRecordatorios.push(recordatorio);                  
                     }
-                    recordatorio['take'] = true;
-                }else{
-                  recordatorio['historic'] = false;
-                  this.showRecordatorios.push(recordatorio);                  
+                    if(count == Object.keys(recordatories).length && !recordatoryHistoric){
+                      this.showRecordatorios.push('fin');
+                      this.orderRecordatories();
+                    }
+                  }
                 }
-                if(count == Object.keys(recordatories).length && !recordatoryHistoric){
-                  this.showRecordatorios.push('fin');
-                  this.orderRecordatories();
-                }
-              }
+              })
             }
           })
-        })
+        }
         if(this.service.fromAddMedicine){   
           this.service.fromAddMedicine = false;   
           window.location.reload();
