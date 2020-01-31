@@ -19,6 +19,7 @@ export class SearchInformeComponent implements OnInit {
   private finishDateInform;
   public days;
   public hideMatFormField: boolean;
+  public cips;
 
   constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService) { 
     this.days = new Array();
@@ -40,6 +41,8 @@ export class SearchInformeComponent implements OnInit {
 
   buildForm(){
     this.searchInforme = this.formBuilder.group({
+      namePatient: ['', Validators.required],
+      surnamePatient: ['', Validators.required],
       cipPatient: ['', Validators.required]
     })
   }
@@ -53,12 +56,21 @@ export class SearchInformeComponent implements OnInit {
     this.finishDateInform = new Date(actualDate.setDate(finishDayInform));
   }
 
+  getCipsPatient(name, surname){
+    this.cips = new Array();
+    this.service.getUser().subscribe(users => {
+      Object.keys(users).forEach(user => {
+        if(name == users[user].name && surname == users[user].surname){
+          this.cips.push(users[user].cip);
+        }
+      })
+    });
+  }
+
   searchInform(){
     var currentMonth: string[] = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agost", "Sept", "Oct", "Nov", "Dic"];  
     this.showInform = true;
-    const searchInformValues = this.searchInforme.value;
-    //this.selectDateInform();
-    
+    const searchInformValues = this.searchInforme.value;    
     this.service.getUser().subscribe(users => {
       Object.keys(users).forEach(user => {
         if(users[user].cip == searchInformValues.cipPatient && users[user].userType == 'patient'){
