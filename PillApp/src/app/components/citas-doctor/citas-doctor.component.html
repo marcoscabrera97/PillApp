@@ -22,10 +22,6 @@
         <div>
             <input class="timeInput border-none" value="{{time}}" (click)="open()" readonly="readonly"/>
         </div>
-        <h4 class="title-page title-margin comentario">{{ 'addCita.comentario' | translate }}</h4>
-        <mat-form-field>
-            <textarea matInput formControlName="comentarios"></textarea>
-        </mat-form-field>
     </form>
     <div class="center-button">
         <button mat-raised-button class="content-button" (click)="saveCita()">{{ 'add-medicine.save' | translate}}</button>

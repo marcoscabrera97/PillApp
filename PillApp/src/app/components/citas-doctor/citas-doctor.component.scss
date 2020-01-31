@@ -1,3 +1,7 @@
+.container{
+    height: 100%;
+}
+
 .title-margin {
     margin-top: 26px;
 }
@@ -14,8 +18,9 @@
 }
 
 .center-button {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    height: 35%;
+    display: flex;
+    align-items: flex-end;
 }
 
 .hideMatForm{
