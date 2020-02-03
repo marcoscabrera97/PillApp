@@ -21,6 +21,7 @@ export class SearchInformeComponent implements OnInit {
   public hideMatFormField: boolean;
   public cips;
 
+
   constructor(private formBuilder: FormBuilder, private service: ServiceFirebaseService) { 
     this.days = new Array();
     this.showInform = false;

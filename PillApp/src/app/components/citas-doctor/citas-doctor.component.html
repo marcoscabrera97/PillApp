@@ -12,7 +12,7 @@
             </mat-autocomplete>
         </mat-form-field>
         <h4 class="title-page title-margin">{{ 'addCita.calendar' | translate }}</h4>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addCita.start_date' | translate}}</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="dateConsulta">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

@@ -15,6 +15,8 @@ export class HomeAdminComponent implements OnInit {
   
   private user: string;
   public showUsers;
+  public hideMatFormField: boolean;
+
 
   constructor(private service: ServiceFirebaseService, public dialog: MatDialog,) { 
     this.user = "";
@@ -25,6 +27,13 @@ export class HomeAdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   searchAllUsers(){

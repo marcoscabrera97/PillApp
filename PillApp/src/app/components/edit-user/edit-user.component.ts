@@ -19,6 +19,8 @@ export class EditUserComponent implements OnInit {
   public isDoctor: boolean;
   public hospitals;
   public hospital;
+  public hideMatFormField: boolean;
+
 
   constructor(private service: ServiceFirebaseService, private activatedRouter: ActivatedRoute, private formBuilder: FormBuilder, private router: Router) { 
     this.buildFormEmpty();
@@ -35,6 +37,13 @@ export class EditUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   getUser(idUser){
