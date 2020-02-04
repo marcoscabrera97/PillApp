@@ -1,35 +1,35 @@
 <div class="container">
     <h4 class="title-page title-margin">{{ 'addDoctor.title' | translate }}</h4>
     <form [formGroup]="addDoctor">
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.name' | translate }}</mat-label>
             <input type="text" matInput formControlName="name">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.surname' | translate }}</mat-label>
             <input type="text" matInput formControlName="surname">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.username' | translate }}</mat-label>
             <input type="text" matInput formControlName="username">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.password' | translate }}</mat-label>
             <input type="text" matInput formControlName="password" type="password">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.password1' | translate }}</mat-label>
             <input type="text" matInput formControlName="password1" type="password">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.email' | translate }}</mat-label>
             <input type="text" matInput formControlName="email" type="email">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.speciality' | translate }}</mat-label>
             <input type="text" matInput formControlName="especialidad">
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="example-full-width" [ngClass]="{'hideMatForm': hideMatFormField}">
             <input matInput placeholder="{{ 'addDoctor.hospital' | translate}}" [matAutocomplete]="auto" formControlName="id_hospital">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let hospital of hospitals" [value]="hospital">
@@ -37,11 +37,11 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.floor' | translate }}</mat-label>
             <input type="text" matInput formControlName="planta" type="number">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field [ngClass]="{'hideMatForm': hideMatFormField}">
             <mat-label>{{ 'addDoctor.door' | translate }}</mat-label>
             <input type="text" matInput formControlName="puerta" type="number">
         </mat-form-field>

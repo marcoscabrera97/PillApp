@@ -16,6 +16,8 @@ export class AddDoctorComponent implements OnInit {
 
   public hospitals;
   public addDoctor;
+  public hideMatFormField: boolean;
+
 
   constructor(private service: ServiceFirebaseService, private formBuilder: FormBuilder, private dialog: MatDialog, private router: Router) {
     this.getHospitals();
@@ -23,6 +25,13 @@ export class AddDoctorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.openMenuVar$.subscribe(openMenu => {
+      if(openMenu){
+        this.hideMatFormField = true;
+      }else{
+        this.hideMatFormField = false;
+      }
+    });
   }
 
   getHospitals(){
